@@ -1,0 +1,40 @@
+@mixin hidden {
+    position: absolute;
+    top: auto;
+    left: -1000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+@mixin px-rem($prop, $val...) {
+    $n: length($val);
+    $i: 1;
+
+    $px-list: ();
+    $rem-list: ();
+
+    @while $i <= $n {
+        $px-list: append($px-list, fix8_unit_to_px(nth($val, $i)));
+        $rem-list: append($rem-list, fix8_unit_to_rem(nth($val, $i)));
+        $i: $i + 1;
+    }
+
+    #{$prop}: $px-list;
+    #{$prop}: $rem-list;
+}
+
+@mixin font-size($size: 1, $line: $size * 1.5) {
+    //usage @ include font-size(2, 3) or without vars = 1rem font-size and 1.5rem line-height
+    //usage or just with one value for the line height to be automatically applied
+
+    font-size     : ($size * $unit-default) + px;
+    line-height   : ($line * $unit-default) + px;
+    font-size     : $size + rem;
+    line-height   : $line + rem;
+}
+
+@mixin margin-bottom($margin: 1.6) {
+    margin-bottom: $margin * $unit-default + px;
+    margin-bottom: $margin + rem;
+}

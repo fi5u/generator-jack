@@ -1,0 +1,4 @@
+%backgroundsize {
+    /*place backgroundsize.min.htc in the web root folder then @extend this selector */
+    -ms-behavior: url(/backgroundsize.min.htc);
+}

@@ -1,0 +1,28 @@
+@function fix8_unit_to_px($val) {
+    //usage: @ include px-rem(padding, 1, 2, 3, 4)
+    //usage: @ include px-rem(margin-bottom, 10 auto 0 auto) - values can be used just like reg shorthand
+    //usage: can mix pixel and rems
+    //usage: apply as margin-bottom to p img ul etc to keep everything at the same rhythm
+
+    @if $val == auto {
+        @return $val;
+    }
+    @else {
+        @if unitless($val) {
+            @if $val == 0 { @return $val }
+            @else { @return $val * $unit-default-px};
+        } @else { @return $val};
+    }
+}
+
+@function fix8_unit_to_rem($val) {
+    @if $val == auto {
+        @return $val;
+    }
+    @else {
+        @if unitless($val) {
+            @if $val == 0 { @return $val }
+            @else { @return $val+rem};
+        } @else { @return $val};
+    }
+}

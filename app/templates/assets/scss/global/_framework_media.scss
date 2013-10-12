@@ -1,0 +1,34 @@
+%media {
+    overflow: hidden;
+    margin-bottom: 10px;
+
+    &:before {
+        content: " ";
+    }
+
+    &:after {
+        display: table;
+        clear: both;
+    }
+}
+
+%media__visual {
+    float: left;
+    margin-right: 10px;
+
+    img {
+        display: block;
+    }
+}
+
+%media__body {
+    overflow: hidden;
+}
+
+%media--rev {
+    %media__visual {
+        float: right;
+        margin-right: 0;
+        margin-left: 10px;
+    }
+}

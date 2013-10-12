@@ -1,0 +1,49 @@
+body {
+    font-family: $font-body;
+}
+
+p {
+    @include margin-bottom($size-padding-m);
+    @include font-size($font-size-m);
+
+    margin-top: 0;
+    font-weight: $font-weight-reg;
+
+    a { /* increase inline clickable area */
+        position: relative;
+        padding: .5em;
+        margin: -.5em;
+        /* */
+    }
+}
+
+a,
+a:visited {
+    @include font-size($font-size-m);
+    font-weight: $font-weight-reg;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    @include margin-bottom($size-padding-m);
+    font-family: $font-heading;
+    font-weight: $font-weight-heavy;
+}
+
+h1 {
+    @include font-size($font-size-xxl);
+}
+
+h2 {
+    @include font-size($font-size-xl);
+}
+
+h3 {
+    @include font-size($font-size-l);
+}
+
+h4 {
+    @include font-size($font-size-m);
+}
