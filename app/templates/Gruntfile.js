@@ -63,24 +63,19 @@ module.exports = function (grunt) {
         },
 
         concat: {
-            dev: {
-                src: [
-                    '<%%= yeoman.app %>/assets/js/variables.js',
-                    '<%%= yeoman.app %>/assets/js/functions.js',
-                    '<%%= yeoman.app %>/assets/js/script.js',
-                    '<%%= yeoman.app %>/assets/js/event.js'
-                ],
-                dest: '<%%= yeoman.dev %>/assets/js/main.js'
-            },
-
             dist: {
-                src: [
-                    '<%%= yeoman.app %>/assets/js/variables.js',
-                    '<%%= yeoman.app %>/assets/js/functions.js',
-                    '<%%= yeoman.app %>/assets/js/script.js',
-                    '<%%= yeoman.app %>/assets/js/event.js'
-                ],
-                dest: '<%%= yeoman.dist %>/assets/js/main.js'
+                files: {
+                    '<%%= yeoman.dist %>/assets/js/main.js': [
+                        '<%%= yeoman.app %>/assets/js/variables.js',
+                        '<%%= yeoman.app %>/assets/js/functions.js',
+                        '<%%= yeoman.app %>/assets/js/script.js',
+                        '<%%= yeoman.app %>/assets/js/event.js'
+                    ],
+                    '<%%= yeoman.dist %>/assets/js/lteie8.main.js': [
+                        '<%%= yeoman.app %>/assets/bower_components/selectivizr/selectivizr.js',
+                        '<%%= yeoman.app %>/assets/bower_components/respond/respond.min.js'
+                    ]
+                }
             }
         },
 
@@ -118,7 +113,7 @@ module.exports = function (grunt) {
     grunt.registerTask('server', []);
 
     grunt.registerTask('dev', [
-        'clean', 'copy:dev', 'compass:dev', 'concat:dev', 'replace'
+        'clean', 'copy:dev', 'compass:dev', 'replace'
     ]);
 
     grunt.registerTask('build', [
