@@ -54,6 +54,18 @@ module.exports = function (grunt) {
             }
         },
 
+        concat: {
+            dist: {
+                src: [
+                    '<%%= yeoman.app %>/assets/js/variables.js',
+                    '<%%= yeoman.app %>/assets/js/functions.js',
+                    '<%%= yeoman.app %>/assets/js/script.js',
+                    '<%%= yeoman.app %>/assets/js/event.js'
+                ],
+                dest: '<%%= yeoman.dist %>/assets/js/main.js'
+            }
+        },
+
         replace: {
             dist: {
                 options: {
@@ -67,20 +79,30 @@ module.exports = function (grunt) {
                     }]
                 },
                 files: [
-                    {src:  ['app/index.html'], dest: 'dist/index.html'}
+                    {src:  ['app/index.html'], dest: 'app/index.html'}
                 ]
             }
-        }
+        },
 
+        processhtml: {
+            options: {
+                process: true
+            },
+            dist: {
+                files: {
+                    '<%%= yeoman.dist %>/index.html': ['<%%= yeoman.app %>/index.html']
+                }
+            }
+        }
     });
 
     grunt.registerTask('server', []);
 
     grunt.registerTask('dev', [
-        'clean', 'copy', 'compass:dev', 'replace'
+        'clean', 'copy', 'compass:dev', 'concat', 'replace', 'processhtml'
     ]);
 
     grunt.registerTask('build', [
-        'clean', 'copy', 'compass:dist', 'replace'
+        'clean', 'copy', 'compass:dist', 'concat', 'replace', 'processhtml'
     ]);
 };

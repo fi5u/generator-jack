@@ -73,6 +73,10 @@ SiteGenerator.prototype.app = function app() {
     this.copy('assets/scss/object/_header_nav.scss', 'app/assets/scss/object/_header_nav.scss');
     this.copy('assets/scss/object/_page_footer.scss', 'app/assets/scss/object/_page_footer.scss');
 
+    this.copy('assets/js/variables.js', 'app/assets/js/variables.js');
+    this.copy('assets/js/functions.js', 'app/assets/js/functions.js');
+    this.copy('assets/js/script.js', 'app/assets/js/script.js');
+    this.copy('assets/js/events.js', 'app/assets/js/events.js');
 };
 
 SiteGenerator.prototype.runtime = function runtime() {
