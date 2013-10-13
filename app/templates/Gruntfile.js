@@ -107,12 +107,6 @@ module.exports = function (grunt) {
                 process: true
             },
 
-            dev: {
-                files: {
-                    '<%%= yeoman.dev %>/index.html': ['<%%= yeoman.app %>/index.html']
-                }
-            },
-
             dist: {
                 files: {
                     '<%%= yeoman.dist %>/index.html': ['<%%= yeoman.app %>/index.html']
@@ -124,7 +118,7 @@ module.exports = function (grunt) {
     grunt.registerTask('server', []);
 
     grunt.registerTask('dev', [
-        'clean', 'copy:dev', 'compass:dev', 'concat:dev', 'replace', 'processhtml:dev'
+        'clean', 'copy:dev', 'compass:dev', 'concat:dev', 'replace'
     ]);
 
     grunt.registerTask('build', [
