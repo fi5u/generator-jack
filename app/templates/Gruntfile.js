@@ -8,6 +8,7 @@ module.exports = function (grunt) {
     // configurable paths
     var yeomanConfig = {
         app: 'app',
+        dev: 'dev',
         dist: 'dist'
     };
 
@@ -28,7 +29,14 @@ module.exports = function (grunt) {
         },
 
         copy: {
-            build: {
+            dev: {
+                cwd: '<%%= yeoman.app %>',
+                src: [ '**', '!**/scss/**' ],
+                dest: '<%%= yeoman.dev %>',
+                expand: true
+            },
+
+            dist: {
                 cwd: '<%%= yeoman.app %>',
                 src: [ '**', '!**/scss/**' ],
                 dest: '<%%= yeoman.dist %>',
@@ -40,7 +48,7 @@ module.exports = function (grunt) {
             dev: {
                 options: {
                     sassDir: '<%%= yeoman.app %>/assets/scss',
-                    cssDir: '<%%= yeoman.dist %>/assets/css',
+                    cssDir: '<%%= yeoman.dev %>/assets/css',
                     environment: 'development'
                 }
             },
@@ -55,6 +63,16 @@ module.exports = function (grunt) {
         },
 
         concat: {
+            dev: {
+                src: [
+                    '<%%= yeoman.app %>/assets/js/variables.js',
+                    '<%%= yeoman.app %>/assets/js/functions.js',
+                    '<%%= yeoman.app %>/assets/js/script.js',
+                    '<%%= yeoman.app %>/assets/js/event.js'
+                ],
+                dest: '<%%= yeoman.dev %>/assets/js/main.js'
+            },
+
             dist: {
                 src: [
                     '<%%= yeoman.app %>/assets/js/variables.js',
@@ -88,6 +106,13 @@ module.exports = function (grunt) {
             options: {
                 process: true
             },
+
+            dev: {
+                files: {
+                    '<%%= yeoman.dev %>/index.html': ['<%%= yeoman.app %>/index.html']
+                }
+            },
+
             dist: {
                 files: {
                     '<%%= yeoman.dist %>/index.html': ['<%%= yeoman.app %>/index.html']
@@ -99,10 +124,10 @@ module.exports = function (grunt) {
     grunt.registerTask('server', []);
 
     grunt.registerTask('dev', [
-        'clean', 'copy', 'compass:dev', 'concat', 'replace', 'processhtml'
+        'clean', 'copy:dev', 'compass:dev', 'concat:dev', 'replace', 'processhtml:dev'
     ]);
 
     grunt.registerTask('build', [
-        'clean', 'copy', 'compass:dist', 'concat', 'replace', 'processhtml'
+        'clean', 'copy:dist', 'compass:dist', 'concat:dist', 'replace', 'processhtml:dist'
     ]);
 };
