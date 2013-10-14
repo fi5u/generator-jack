@@ -88,7 +88,7 @@ module.exports = function (grunt) {
             }
         },
 
-        concat: {
+        uglify: {
             dist: {
                 files: {
                     '<%%= yeoman.dist %>/assets/js/main.js': [
@@ -99,7 +99,7 @@ module.exports = function (grunt) {
                     ],
                     '<%%= yeoman.dist %>/assets/js/lteie8.main.js': [
                         '<%%= yeoman.app %>/assets/bower_components/selectivizr/selectivizr.js',
-                        '<%%= yeoman.app %>/assets/bower_components/respond/respond.min.js'
+                        '<%%= yeoman.app %>/assets/bower_components/respond/respond.src.js'
                     ]
                 }
             }
@@ -190,6 +190,6 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('build', [
-        'clean', 'copy:dist', 'compass:dist', 'concat:dist', 'replace:dist', 'processhtml:dist'
+        'clean', 'copy:dist', 'compass:dist', 'uglify:dist', 'replace:dist', 'processhtml:dist'
     ]);
 };
