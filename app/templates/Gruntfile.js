@@ -30,17 +30,17 @@ module.exports = function (grunt) {
 
         copy: {
             dev: {
-                cwd: '<%%= yeoman.app %>',
-                src: [ '**', '!**/scss/**' ],
-                dest: '<%%= yeoman.dev %>',
-                expand: true
+                files: [
+                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/scss/**'], dest: '<%%= yeoman.dev %>'},
+                    {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dev %>/assets/css/fonts'}
+                ]
             },
 
             dist: {
-                cwd: '<%%= yeoman.app %>',
-                src: [ '**', '!**/scss/**', '!**/js/*.js' ],
-                dest: '<%%= yeoman.dist %>',
-                expand: true
+                files: [
+                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/scss/**'], dest: '<%%= yeoman.dist %>'},
+                    {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dist %>/assets/css/fonts'}
+                ]
             }
         },
 

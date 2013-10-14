@@ -35,16 +35,10 @@ SiteGenerator.prototype.askFor = function askFor() {
 };
 
 SiteGenerator.prototype.app = function app() {
-    this.mkdir('app/assets/css/fonts');
-
-    this.mkdir('app/assets/scss/lib');
-
     this.mkdir('app/assets/img');
-
+    this.mkdir('app/assets/scss/fonts');
     this.mkdir('app/assets/js/lib');
-
     this.mkdir('app/assets/php');
-
 
     this.template('Gruntfile.js', 'Gruntfile.js');
     this.template('index.html', 'app/index.html');
@@ -54,6 +48,7 @@ SiteGenerator.prototype.app = function app() {
     this.template('_package.json', 'package.json');
 
     this.copy('assets/scss/style.scss', 'app/assets/scss/style.scss');
+    this.copy('assets/scss/lteie8.scss', 'app/assets/scss/lteie8.scss');
 
     this.copy('assets/scss/global/_fonts.scss', 'app/assets/scss/global/_fonts.scss');
     this.copy('assets/scss/global/_variables.scss', 'app/assets/scss/global/_variables.scss');
