@@ -32,7 +32,19 @@ module.exports = function (grunt) {
             dev: {
                 files: [
                     {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/scss/**'], dest: '<%%= yeoman.dev %>'},
-                    {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dev %>/assets/css/fonts'}
+                    {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dev %>/assets/css/fonts'},
+                    {expand: true, cwd: '<%%= yeoman.app %>/assets/bower_components/jquery', src: ['jquery.min.js'], dest: '<%%= yeoman.dev %>/assets/js/lib', rename: function (dest) {
+                        var jQconf = grunt.file.readJSON('app/assets/bower_components/jquery/bower.json');
+                        return dest + '/jquery.' + jQconf.version + '.min.js';
+                    }},
+                    {expand: true, cwd: '<%%= yeoman.app %>/assets/bower_components/jquery-migrate', src: ['jquery-migrate.min.js'], dest: '<%%= yeoman.dev %>/assets/js/lib', rename: function (dest) {
+                        var jqMigconf = grunt.file.readJSON('app/assets/bower_components/jquery-migrate/.bower.json');
+                        return dest + '/jquery-migrate.' + jqMigconf.version + '.min.js';
+                    }},
+                    {expand: true, cwd: '<%%= yeoman.app %>/assets/bower_components/jquery-legacy', src: ['jquery.min.js'], dest: '<%%= yeoman.dev %>/assets/js/lib', rename: function (dest) {
+                        var jQconf = grunt.file.readJSON('app/assets/bower_components/jquery-legacy/.bower.json');
+                        return dest + '/jquery.' + jQconf.version + '.min.js';
+                    }}
                 ]
             },
 
