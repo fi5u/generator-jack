@@ -38,7 +38,7 @@ module.exports = function (grunt) {
 
             dist: {
                 cwd: '<%%= yeoman.app %>',
-                src: [ '**', '!**/scss/**' ],
+                src: [ '**', '!**/scss/**', '!**/js/*.js' ],
                 dest: '<%%= yeoman.dist %>',
                 expand: true
             }
@@ -98,11 +98,17 @@ module.exports = function (grunt) {
         },
 
         processhtml: {
-            options: {
-                process: true
+            dev: {
+                files: {
+                    '<%%= yeoman.dev %>/index.html': ['<%%= yeoman.app %>/index.html']
+                }
             },
-
             dist: {
+                options: {
+                    data: {
+                        message: '.min'
+                    }
+                },
                 files: {
                     '<%%= yeoman.dist %>/index.html': ['<%%= yeoman.app %>/index.html']
                 }
@@ -113,7 +119,7 @@ module.exports = function (grunt) {
     grunt.registerTask('server', []);
 
     grunt.registerTask('dev', [
-        'clean', 'copy:dev', 'compass:dev', 'replace'
+        'clean', 'copy:dev', 'compass:dev', 'replace', 'processhtml:dev'
     ]);
 
     grunt.registerTask('build', [
