@@ -21,11 +21,13 @@ module.exports = function (grunt) {
             },
             css: {
                 files: ['<%%= yeoman.app %>/assets/scss/*.scss'],
-                tasks: ['compass']
+                tasks: ['compass:dev']
             },
             html: {
-                files: ['<%%= yeoman.app %>/*.html'],
-                tasks: ['copy']
+                //files: ['<%%= yeoman.app %>/{,*/}*.html'],
+                //files: ['<%%= yeoman.app %>/*.html', '<%%= yeoman.app %>/*/*.html'],
+                files: ['<%%= yeoman.app %>/**/*.html'],
+                tasks: ['copy:html', 'replace', 'processhtml:dev']
             }
         },
 
@@ -83,6 +85,12 @@ module.exports = function (grunt) {
                     }},
                     // Only copy over the minified migrate plugin
                     {expand: true, cwd: '<%%= yeoman.app %>/assets/bower_components/jquery-migrate', src: ['jquery-migrate.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'}
+                ]
+            },
+
+            html: {
+                files: [
+                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['{,*/}*.html'], dest: '<%%= yeoman.dev %>'}
                 ]
             }
         },
@@ -212,41 +220,12 @@ module.exports = function (grunt) {
                 dirs: ['<%%= yeoman.dist %>']
             },
             html: ['<%%= yeoman.dist %>/*.html']
-            /*html: ['** /*.html'],
-            css: ['** /*.css']*/
         }
-
     });
 
-    grunt.registerTask('server', function (target) {
-        if (target === 'dev') {
-            return grunt.task.run(['dev', 'watchit:dev']);
-        }
-
-        if (target === 'build') {
-            return grunt.task.run(['build', 'watchit:dist']);
-        }
-
-        grunt.task.run([
-            'connect:livereload',
-            'watch'
-        ]);
-    });
-
-    grunt.registerTask('watchit', function (type) {
-        grunt.config('connect.livereload.options.base', '<%%= yeoman.' + type + ' %>');
-
-        if (type === 'dev') {
-            grunt.config('watch.html.tasks', ['copy:' + type, 'replace', 'processhtml:' + type]);
-        }
-        if (type === 'dist') {
-            grunt.config('watch.html.tasks', ['copy:' + type, 'replace', 'modernizr', 'processhtml:' + type, 'useminPrepare', 'concat', 'uglify', 'rev', 'usemin']);
-        }
-
-        grunt.config('watch.css.tasks', 'compass:' + type);
-        grunt.task.run('connect:livereload');
-        grunt.task.run('watch');
-    });
+    grunt.registerTask('server', [
+        'dev', 'connect:livereload', 'watch'
+    ]);
 
     grunt.registerTask('dev', [
         'clean', 'copy:dev', 'compass:dev', 'replace', 'processhtml:dev'
