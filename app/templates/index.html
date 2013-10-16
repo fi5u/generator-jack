@@ -18,18 +18,19 @@
 
     <link rel="stylesheet" href="assets/css/style.css">
 
+    <!-- build:[src]:dist assets/js/lib/modernizr-custom.min.js -->
     <script src="assets/bower_components/modernizr/modernizr.js"></script>
-
+    <!-- /build -->
 
     <!--[if lt IE 9]>
         <link rel="stylesheet" href="assets/css/lteie8.css">
         <script src="@jquery-legacy-cdn"></script>
-        <script>window.jQuery || document.write('<script src="@jquery-legacy-local"><\/script>')</script>
+        <script>window.jQuery || document.write('<script src="{!= jqLegMinLocal !}"><\/script>')</script>
 
-        <!-- build:js:dist assets/js/lteie8.main.js -->
+        <!-- build:js assets/js/lteie8.main.js -->
         <script src="assets/bower_components/selectivizr/selectivizr.js"></script>
         <script src="assets/bower_components/respond/respond.src.js"></script>
-        <!-- /build -->
+        <!-- endbuild -->
     <![endif]-->
 
 </head>
@@ -52,16 +53,16 @@
 
     <!--[if gte IE 9]><!-->
         <script src="@jquery-cdn"></script>
-        <script>window.jQuery || document.write('<script src="@jquery-local"><\/script>')</script>
-        <script src="@jquery-migrate-local"></script>
+        <script>window.jQuery || document.write('<script src="{!= jqMinLocal !}"><\/script>')</script>
+        <script src="{!= jqMigrate !}"></script>
     <!--<![endif]-->
 
-    <!-- build:js:dist assets/js/main.js -->
+    <!-- build:js assets/js/main.js -->
     <script src="assets/js/variables.js"></script>
     <script src="assets/js/functions.js"></script>
     <script src="assets/js/script.js"></script>
     <script src="assets/js/events.js"></script>
-    <!-- /build -->
+    <!-- endbuild -->
 
     <!--
     <script>

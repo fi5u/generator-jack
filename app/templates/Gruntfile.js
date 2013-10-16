@@ -15,6 +15,43 @@ module.exports = function (grunt) {
     grunt.initConfig({
         yeoman: yeomanConfig,
 
+        watch: {
+            options: {
+                livereload: true,
+            },
+            css: {
+                files: ['<%%= yeoman.app %>/assets/scss/*.scss'],
+                tasks: ['compass']
+            },
+            html: {
+                files: ['<%%= yeoman.app %>/*.html'],
+                tasks: ['copy']
+            }
+        },
+
+        connect: {
+            options: {
+                port: 9000,
+                livereload: 35729,
+                hostname: '0.0.0.0',
+                base: '<%%= yeoman.dev %>'
+            },
+            livereload: {
+                options: {
+                    open: 'http://localhost:<%%= connect.options.port %>',
+                    base: [
+                        '<%%= yeoman.dev %>'
+                    ]
+                }
+            }
+        },
+
+        open: {
+            server: {
+                path: 'http://localhost:<%%= connect.options.port %>'
+            }
+        },
+
         clean: {
             dist: {
                 files: [{
@@ -32,20 +69,7 @@ module.exports = function (grunt) {
             dev: {
                 files: [
                     {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/scss/**'], dest: '<%%= yeoman.dev %>'},
-                    {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dev %>/assets/css/fonts'},
-                    {expand: true, cwd: '<%%= yeoman.app %>/assets/bower_components/jquery', src: ['jquery.min.js'], dest: '<%%= yeoman.dev %>/assets/js/lib', rename: function (dest) {
-                        var jQConf = grunt.file.readJSON('app/assets/bower_components/jquery/bower.json');
-                        return dest + '/jquery-' + jQConf.version + '.min.js';
-                    }},
-                    {expand: true, cwd: '<%%= yeoman.app %>/assets/bower_components/jquery-legacy', src: ['jquery.min.js'], dest: '<%%= yeoman.dev %>/assets/js/lib', rename: function (dest) {
-                        var jQLegConf = grunt.file.readJSON('app/assets/bower_components/jquery-legacy/.bower.json');
-                        return dest + '/jquery-' + jQLegConf.version + '.min.js';
-                    }},
-                    // Only copy over the unminified migrate plugin
-                    {expand: true, cwd: '<%%= yeoman.app %>/assets/bower_components/jquery-migrate', src: ['jquery-migrate.js'], dest: '<%%= yeoman.dev %>/assets/js/lib', rename: function (dest) {
-                        var jqMigConf = grunt.file.readJSON('app/assets/bower_components/jquery-migrate/.bower.json');
-                        return dest + '/jquery-migrate-' + jqMigConf.version + '.js';
-                    }}
+                    {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dev %>/assets/css/fonts'}
                 ]
             },
 
@@ -53,19 +77,12 @@ module.exports = function (grunt) {
                 files: [
                     {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/scss/**', '!**/js/*.js', '!**/bower_components/**'], dest: '<%%= yeoman.dist %>'},
                     {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dist %>/assets/css/fonts'},
-                    {expand: true, cwd: '<%%= yeoman.app %>/assets/bower_components/jquery', src: ['jquery.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib', rename: function (dest) {
-                        var jQConf = grunt.file.readJSON('app/assets/bower_components/jquery/bower.json');
-                        return dest + '/jquery-' + jQConf.version + '.min.js';
-                    }},
+                    {expand: true, cwd: '<%%= yeoman.app %>/assets/bower_components/jquery', src: ['jquery.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'},
                     {expand: true, cwd: '<%%= yeoman.app %>/assets/bower_components/jquery-legacy', src: ['jquery.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib', rename: function (dest) {
-                        var jQLegConf = grunt.file.readJSON('app/assets/bower_components/jquery-legacy/.bower.json');
-                        return dest + '/jquery-' + jQLegConf.version + '.min.js';
+                        return dest + '/jquery-legacy.min.js';
                     }},
                     // Only copy over the minified migrate plugin
-                    {expand: true, cwd: '<%%= yeoman.app %>/assets/bower_components/jquery-migrate', src: ['jquery-migrate.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib', rename: function (dest) {
-                        var jqMigConf = grunt.file.readJSON('app/assets/bower_components/jquery-migrate/.bower.json');
-                        return dest + '/jquery-migrate-' + jqMigConf.version + '.min.js';
-                    }}
+                    {expand: true, cwd: '<%%= yeoman.app %>/assets/bower_components/jquery-migrate', src: ['jquery-migrate.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'}
                 ]
             }
         },
@@ -88,7 +105,7 @@ module.exports = function (grunt) {
             }
         },
 
-        uglify: {
+/*        uglify: {
             dist: {
                 files: {
                     '<%%= yeoman.dist %>/assets/js/main.js': [
@@ -103,22 +120,9 @@ module.exports = function (grunt) {
                     ]
                 }
             }
-        },
+        },*/
 
         replace: {
-            dev: {
-                options: {
-                    patterns: [{
-                        match: '/@jquery-migrate-local/g',
-                        replacement: function () {
-                            var jQMigConf = grunt.file.readJSON('app/assets/bower_components/jquery-migrate/.bower.json');
-                            return 'assets/js/lib/jquery-migrate-' + jQMigConf.version + '.js';
-                        },
-                        expression: true
-                    }]
-                }
-            },
-
             dist: {
                 options: {
                     patterns: [{
@@ -135,27 +139,6 @@ module.exports = function (grunt) {
                             return '//ajax.googleapis.com/ajax/libs/jquery/' + jQLegConf.version + '/jquery.min.js';
                         },
                         expression: true
-                    }, {
-                        match: '/@jquery-local/g',
-                        replacement: function () {
-                            var jQConf = grunt.file.readJSON('app/assets/bower_components/jquery/bower.json');
-                            return 'assets/js/lib/jquery-' + jQConf.version + '.min.js';
-                        },
-                        expression: true
-                    }, {
-                        match: '/@jquery-legacy-local/g',
-                        replacement: function () {
-                            var jQLegConf = grunt.file.readJSON('app/assets/bower_components/jquery-legacy/bower.json');
-                            return 'assets/js/lib/jquery-' + jQLegConf.version + '.min.js';
-                        },
-                        expression: true
-                    }, {
-                        match: '/@jquery-migrate-local/g',
-                        replacement: function () {
-                            var jQMigConf = grunt.file.readJSON('app/assets/bower_components/jquery-migrate/.bower.json');
-                            return 'assets/js/lib/jquery-migrate-' + jQMigConf.version + '.min.js';
-                        },
-                        expression: true
                     }]
                 },
                 files: [
@@ -165,7 +148,21 @@ module.exports = function (grunt) {
         },
 
         processhtml: {
+            options: {
+                process: true,
+                templateSettings: {
+                    opener: '{!',
+                    closer: '!}'
+                }
+            },
             dev: {
+                options: {
+                    data: {
+                        jqMinLocal: 'assets/bower_components/jquery/jquery.min.js',
+                        jqLegMinLocal: 'assets/bower_components/jquery-legacy/jquery.min.js',
+                        jqMigrate: 'assets/bower_components/jquery-migrate/jquery-migrate.js'
+                    }
+                },
                 files: {
                     '<%%= yeoman.dev %>/index.html': ['<%%= yeoman.app %>/index.html']
                 }
@@ -173,23 +170,76 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     data: {
-                        message: '.min'
+                        jqMinLocal: 'assets/js/lib/jquery.min.js',
+                        jqLegMinLocal: 'assets/js/lib/jquery-legacy.min.js',
+                        jqMigrate: 'assets/js/lib/jquery-migrate.min.js'
                     }
                 },
                 files: {
                     '<%%= yeoman.dist %>/index.html': ['<%%= yeoman.app %>/index.html']
                 }
             }
+        },
+
+        modernizr: {
+            'devFile' : '<%%= yeoman.app %>/assets/bower_components/modernizr/modernizr.js',
+            'outputFile' : '<%%= yeoman.dist %>/assets/js/lib/modernizr-custom.min.js',
+            'files' : ['<%%= yeoman.dist %>/**/*.js', '<%%= yeoman.dist %>/**/*.css', '<%%= yeoman.dist %>/**/*.scss']
+        },
+
+        useminPrepare: {
+            options: {
+                dest: '<%%= yeoman.dist %>'
+            },
+            html: '<%%= yeoman.app %>/index.html'
+        },
+
+        usemin: {
+            options: {
+                dirs: ['<%%= yeoman.dist %>']
+            },
+            html: ['<%%= yeoman.dist %>/*.html']
+            /*html: ['** /*.html'],
+            css: ['** /*.css']*/
         }
+
     });
 
-    grunt.registerTask('server', []);
+    grunt.registerTask('server', function (target) {
+        if (target === 'dev') {
+            return grunt.task.run(['dev', 'watchit:dev']);
+        }
+
+        if (target === 'build') {
+            return grunt.task.run(['build', 'watchit:dist']);
+        }
+
+        grunt.task.run([
+            'connect:livereload',
+            'watch'
+        ]);
+    });
+
+    grunt.registerTask('watchit', function (type) {
+        grunt.config('connect.livereload.options.base', '<%%= yeoman.' + type + ' %>');
+
+        if (type === 'dev') {
+            grunt.config('watch.html.tasks', ['copy:' + type, 'replace', 'processhtml:' + type]);
+        }
+        if (type === 'dist') {
+            grunt.config('watch.html.tasks', ['copy:' + type, 'replace', 'modernizr', 'processhtml:' + type, 'useminPrepare', 'concat', 'uglify', 'usemin']);
+        }
+
+        grunt.config('watch.css.tasks', 'compass:' + type);
+        grunt.task.run('connect:livereload');
+        grunt.task.run('watch');
+    });
 
     grunt.registerTask('dev', [
         'clean', 'copy:dev', 'compass:dev', 'replace', 'processhtml:dev'
     ]);
 
     grunt.registerTask('build', [
-        'clean', 'copy:dist', 'compass:dist', 'uglify:dist', 'replace:dist', 'processhtml:dist'
+        'clean', 'copy:dist', 'compass:dist', 'replace:dist', 'modernizr', 'processhtml:dist', 'useminPrepare', 'concat', 'uglify', 'usemin'
     ]);
 };

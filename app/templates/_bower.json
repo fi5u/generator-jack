@@ -7,6 +7,7 @@
         "jquery-migrate": "latest",
         "selectivizr": "latest",
         "respond": "latest",
-        "normalize.scss": "latest"
+        "normalize.scss": "latest",
+        "modernizr": "latest"
     }
 }
