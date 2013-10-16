@@ -187,6 +187,19 @@ module.exports = function (grunt) {
             'files' : ['<%%= yeoman.dist %>/**/*.js', '<%%= yeoman.dist %>/**/*.css', '<%%= yeoman.dist %>/**/*.scss']
         },
 
+        rev: {
+            dist: {
+                files: {
+                    src: [
+                        '<%%= yeoman.dist %>/assets/js/{,*/}*.js',
+                        '<%%= yeoman.dist %>/assets/css/{,*/}*.css',
+                        '<%%= yeoman.dist %>/assets/img/{,*/}*.{png,jpg,jpeg,gif,webp}',
+                        '<%%= yeoman.dist %>/assets/css/fonts/*'
+                    ]
+                }
+            }
+        },
+
         useminPrepare: {
             options: {
                 dest: '<%%= yeoman.dist %>'
@@ -227,7 +240,7 @@ module.exports = function (grunt) {
             grunt.config('watch.html.tasks', ['copy:' + type, 'replace', 'processhtml:' + type]);
         }
         if (type === 'dist') {
-            grunt.config('watch.html.tasks', ['copy:' + type, 'replace', 'modernizr', 'processhtml:' + type, 'useminPrepare', 'concat', 'uglify', 'usemin']);
+            grunt.config('watch.html.tasks', ['copy:' + type, 'replace', 'modernizr', 'processhtml:' + type, 'useminPrepare', 'concat', 'uglify', 'rev', 'usemin']);
         }
 
         grunt.config('watch.css.tasks', 'compass:' + type);
@@ -240,6 +253,6 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('build', [
-        'clean', 'copy:dist', 'compass:dist', 'replace:dist', 'modernizr', 'processhtml:dist', 'useminPrepare', 'concat', 'uglify', 'usemin'
+        'clean', 'copy:dist', 'compass:dist', 'replace:dist', 'modernizr', 'processhtml:dist', 'useminPrepare', 'concat', 'uglify', 'rev', 'usemin'
     ]);
 };
