@@ -189,6 +189,17 @@ module.exports = function (grunt) {
             }
         },
 
+        // htmlmin: {
+        //     dist: {
+        //         options: {
+        //             collapseWhitespace: true
+        //         },
+        //         files: {
+        //             '<%%= yeoman.dist %>/**/*.html': '<%%= yeoman.dist %>/**/*.html'
+        //         }
+        //     }
+        // },
+
         modernizr: {
             'devFile' : '<%%= yeoman.app %>/assets/bower_components/modernizr/modernizr.js',
             'outputFile' : '<%%= yeoman.dist %>/assets/js/lib/modernizr-custom.min.js',
