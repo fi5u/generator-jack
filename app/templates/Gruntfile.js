@@ -17,7 +17,7 @@ module.exports = function (grunt) {
 
         watch: {
             options: {
-                livereload: true,
+                livereload: true
             },
             css: {
                 files: ['<%%= yeoman.app %>/assets/scss/*.scss'],
@@ -208,6 +208,17 @@ module.exports = function (grunt) {
             }
         },
 
+        imagemin: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '<%%= yeoman.app %>/assets/img/',
+                    src: ['**/*.{png,jpg,jpeg,gif}'],
+                    dest: '<%%= yeoman.dist %>/assets/img/'
+                }]
+            }
+        },
+
         useminPrepare: {
             options: {
                 dest: '<%%= yeoman.dist %>'
@@ -232,6 +243,6 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('build', [
-        'clean', 'copy:dist', 'compass:dist', 'replace:dist', 'modernizr', 'processhtml:dist', 'useminPrepare', 'concat', 'uglify', 'rev', 'usemin'
+        'clean', 'copy:dist', 'compass:dist', 'replace:dist', 'modernizr', 'processhtml:dist', 'imagemin:dist', 'useminPrepare', 'concat', 'uglify', 'rev', 'usemin'
     ]);
 };
