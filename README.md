@@ -1,4 +1,4 @@
-# generator-site [![Build Status](https://secure.travis-ci.org/tommybfisher/generator-site.png?branch=master)](https://travis-ci.org/tommybfisher/generator-site)
+# generator-site
 
 A generator for [Yeoman](http://yeoman.io).
 With options for working with Compass / Susy, Bourbon / Neat, or with no framework.
