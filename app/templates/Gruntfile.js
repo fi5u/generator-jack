@@ -135,24 +135,6 @@ module.exports = function (grunt) {
         },
         <% } %>
 
-
-/*        uglify: {
-            dist: {
-                files: {
-                    '<%%= yeoman.dist %>/assets/js/main.js': [
-                        '<%%= yeoman.app %>/assets/js/variables.js',
-                        '<%%= yeoman.app %>/assets/js/functions.js',
-                        '<%%= yeoman.app %>/assets/js/script.js',
-                        '<%%= yeoman.app %>/assets/js/event.js'
-                    ],
-                    '<%%= yeoman.dist %>/assets/js/lteie8.main.js': [
-                        '<%%= yeoman.app %>/assets/bower_components/selectivizr/selectivizr.js',
-                        '<%%= yeoman.app %>/assets/bower_components/respond/respond.src.js'
-                    ]
-                }
-            }
-        },*/
-
         replace: {
             dist: {
                 options: {
