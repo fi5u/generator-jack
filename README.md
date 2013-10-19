@@ -1,7 +1,8 @@
 # generator-site
 
 A generator for [Yeoman](http://yeoman.io).
-With options for working with Compass / Susy, Bourbon / Neat, or with no framework.
+
+With options for working with _Compass_ / _Susy_, _Bourbon_ / _Neat_, or with no framework.
 
 
 ## Getting Started
