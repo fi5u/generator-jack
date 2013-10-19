@@ -8,7 +8,12 @@ var SiteGenerator = module.exports = function SiteGenerator(args, options, confi
     yeoman.generators.Base.apply(this, arguments);
 
     this.on('end', function () {
-        this.installDependencies({ skipInstall: options['skip-install'] });
+        this.installDependencies({
+            skipInstall: options['skip-install'],
+            callback: function () {
+                /*this.copy('assets/bower_components/susy/sass/_susy.scss', 'app/assets/scss/lib/_susy.scss');*/
+            }.bind(this)
+        });
     });
 
     this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
@@ -22,13 +27,30 @@ SiteGenerator.prototype.askFor = function askFor() {
     // have Yeoman greet the user.
     console.log(this.yeoman);
 
-    var prompts = [{
-        name: 'siteName',
-        message: 'What would you like to call your site?'
-    }];
+    var prompts = [
+        {
+            name: 'siteName',
+            message: 'What would you like to call your site?'
+        }, {
+            type: 'list',
+            name: 'cssFramework',
+            message: 'Which CSS framework / grid system would you like to use?',
+            choices: [{
+                name: 'Compass/Susy',
+                value: 'compassSusy'
+            }, {
+                name: 'Bourbon/Neat',
+                value: 'bourbonNeat'
+            }, {
+                name: 'No framework',
+                value: 'noFramework'
+            }]
+        }
+    ];
 
     this.prompt(prompts, function (props) {
         this.siteName = props.siteName;
+        this.cssFramework = props.cssFramework;
 
         cb();
     }.bind(this));
@@ -36,6 +58,7 @@ SiteGenerator.prototype.askFor = function askFor() {
 
 SiteGenerator.prototype.app = function app() {
     this.mkdir('app/assets/img');
+    this.mkdir('app/assets/scss/lib');
     this.mkdir('app/assets/scss/fonts');
     this.mkdir('app/assets/js/lib');
     this.mkdir('app/assets/php');
@@ -49,6 +72,8 @@ SiteGenerator.prototype.app = function app() {
 
     this.copy('assets/scss/style.scss', 'app/assets/scss/style.scss');
     this.copy('assets/scss/lteie8.scss', 'app/assets/scss/lteie8.scss');
+
+    this.copy('assets/scss/lib/_normalize.scss', 'app/assets/scss/lib/_normalize.scss');
 
     this.copy('assets/scss/global/_fonts.scss', 'app/assets/scss/global/_fonts.scss');
     this.copy('assets/scss/global/_variables.scss', 'app/assets/scss/global/_variables.scss');
@@ -68,10 +93,7 @@ SiteGenerator.prototype.app = function app() {
     this.copy('assets/scss/object/_header_nav.scss', 'app/assets/scss/object/_header_nav.scss');
     this.copy('assets/scss/object/_page_footer.scss', 'app/assets/scss/object/_page_footer.scss');
 
-    this.copy('assets/js/variables.js', 'app/assets/js/variables.js');
-    this.copy('assets/js/functions.js', 'app/assets/js/functions.js');
     this.copy('assets/js/script.js', 'app/assets/js/script.js');
-    this.copy('assets/js/events.js', 'app/assets/js/events.js');
 };
 
 SiteGenerator.prototype.runtime = function runtime() {

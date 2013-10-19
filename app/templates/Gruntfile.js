@@ -95,6 +95,7 @@ module.exports = function (grunt) {
             }
         },
 
+        <% if (cssFramework === 'compassSusy') { %>
         compass: {
             dev: {
                 options: {
@@ -112,6 +113,28 @@ module.exports = function (grunt) {
                 }
             }
         },
+        <% } %>
+
+        <% if (cssFramework !== 'compassSusy') { %>
+        sass: {
+            dev: {
+                expand: true,
+                cwd: '<%%= yeoman.app %>/assets/scss',
+                src: ['*.scss'],
+                dest: '<%%= yeoman.dev %>/assets/css',
+                ext: '.css'
+            },
+
+            dist: {
+                expand: true,
+                cwd: '<%%= yeoman.app %>/assets/scss',
+                src: ['*.scss'],
+                dest: '<%%= yeoman.dist %>/assets/css',
+                ext: '.css'
+            }
+        },
+        <% } %>
+
 
 /*        uglify: {
             dist: {
@@ -246,14 +269,33 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('server', [
-        'dev', 'connect:livereload', 'watch'
+        'dev',
+        'connect:livereload',
+        'watch'
     ]);
 
     grunt.registerTask('dev', [
-        'clean', 'copy:dev', 'compass:dev', 'replace', 'processhtml:dev'
+        'clean',
+        'copy:dev', <% if (cssFramework === 'compassSusy') { %>
+        'compass:dev',<% } %><% if (cssFramework !== 'compassSusy') { %>
+        'sass:dev',<% } %>
+        'replace',
+        'processhtml:dev'
     ]);
 
     grunt.registerTask('build', [
-        'clean', 'copy:dist', 'compass:dist', 'replace:dist', 'modernizr', 'processhtml:dist', 'imagemin:dist', 'useminPrepare', 'concat', 'uglify', 'rev', 'usemin'
+        'clean',
+        'copy:dist',<% if (cssFramework === 'compassSusy') { %>
+        'compass:dist',<% } %><% if (cssFramework !== 'compassSusy') { %>
+        'sass:dist',<% } %>
+        'replace:dist',
+        'modernizr',
+        'processhtml:dist',
+        'imagemin:dist',
+        'useminPrepare',
+        'concat',
+        'uglify',
+        'rev',
+        'usemin'
     ]);
 };

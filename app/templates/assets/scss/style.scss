@@ -1,5 +1,6 @@
 /*Lib*/
-@import "../bower_components/normalize.scss/_normalize.scss";
+@import "lib/_normalize";
+<% if (cssFramework === 'compassSusy') { %>@import "../bower_components/susy/sass/_susy";<% } %>
 
 
 /*Global*/
