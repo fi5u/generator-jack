@@ -224,6 +224,15 @@ module.exports = function (grunt) {
             }
         },
 
+        spriter: {
+            options: {
+                targetPath: 'i/',
+                filter: ['../i/icons/', '../i/buttons/']
+            },
+            src: '<%%= yeoman.dist %>/css/style.css',
+            dest: '<%%= yeoman.dist %>/css/style.css'
+        },
+
         imagemin: {
             dist: {
                 files: [{
@@ -273,6 +282,7 @@ module.exports = function (grunt) {
         'replace:dist',
         'modernizr',
         'processhtml:dist',
+        'spriter:dist',
         'imagemin:dist',
         'useminPrepare',
         'concat',
