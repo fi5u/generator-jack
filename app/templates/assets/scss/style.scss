@@ -1,9 +1,10 @@
-/*Lib*/
+/* Lib */
 @import "lib/_normalize";
 <% if (cssFramework === 'compassSusy') { %>@import "../bower_components/susy/sass/_susy";<% } %>
 
 
-/*Global*/
+/* Global */
+@import "global/_sprite-sheet";
 @import "global/_fonts";
 @import "global/_variables";
 @import "global/_functions";
@@ -12,7 +13,7 @@
 @import "global/_framework_nav";
 
 
-/*Local*/
+/* Local */
 @import "local/_typography";
 @import "local/_helpers";
 @import "local/_images";
@@ -21,7 +22,7 @@
 @import "local/_local";
 
 
-/*Object*/
+/* Object */
 @import "object/_page_header";
 @import "object/_header_nav";
 @import "object/_page_footer";

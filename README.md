@@ -14,6 +14,9 @@ Once installed:
 * `grunt build` to build a production version of the site
 * `grunt server` work with a _LiveReloading_ dev version of the site, saves update browser automatically
 
+### Spriting
+Handles automatic hiDPI spriting. Drop double-size _png_ assets into `app/assets/img/sprite-assets`. Import into scss file with `@include sprite($img1)` - hiDPI media query automatically generated.
+
 
 ## License
 

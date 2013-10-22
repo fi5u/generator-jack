@@ -21,6 +21,7 @@ module.exports = function (grunt) {
             },
             css: {
                 files: ['<%%= yeoman.app %>/assets/scss/*.scss'],
+                /* TO DO: this should be conditional depending on the framework chosen */
                 tasks: ['compass:dev']
             },
             html: {
@@ -28,6 +29,10 @@ module.exports = function (grunt) {
                 //files: ['<%%= yeoman.app %>/*.html', '<%%= yeoman.app %>/*/*.html'],
                 files: ['<%%= yeoman.app %>/**/*.html'],
                 tasks: ['copy:html', 'replace', 'processhtml:dev']
+            },
+            sprites: {
+                files: ['<%%= yeoman.app %>/assets/img/sprite-assets/*.png'],
+                tasks: ['spriteHD', 'copy:dev']
             }
         },
 
@@ -77,7 +82,7 @@ module.exports = function (grunt) {
 
             dist: {
                 files: [
-                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/scss/**', '!**/js/*.js', '!**/bower_components/**'], dest: '<%%= yeoman.dist %>'},
+                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/img/**', '!**/scss/**', '!**/js/*.js', '!**/bower_components/**'], dest: '<%%= yeoman.dist %>'},
                     {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dist %>/assets/css/fonts'},
                     {expand: true, cwd: '<%%= yeoman.app %>/assets/bower_components/jquery', src: ['jquery.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'},
                     {expand: true, cwd: '<%%= yeoman.app %>/assets/bower_components/jquery-legacy', src: ['jquery.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib', rename: function (dest) {
@@ -224,13 +229,17 @@ module.exports = function (grunt) {
             }
         },
 
-        spriter: {
+        spriteHD: {
             options: {
-                targetPath: 'i/',
-                filter: ['../i/icons/', '../i/buttons/']
+                destImg: '<%%= yeoman.app %>/assets/img',
+                destCSS: '<%%= yeoman.app %>/assets/scss/global',
+                imgUrl: '../img'
             },
-            src: '<%%= yeoman.dist %>/css/style.css',
-            dest: '<%%= yeoman.dist %>/css/style.css'
+
+            all: {
+                src: '<%%= yeoman.app %>/assets/img/sprite-assets/*',
+                spriteName: 'sheet'
+            }
         },
 
         imagemin: {
@@ -238,7 +247,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%%= yeoman.app %>/assets/img/',
-                    src: ['**/*.{png,jpg,jpeg,gif}'],
+                    src: ['**/*.{png,jpg,jpeg,gif}', '!sprite-assets/*.png'],
                     dest: '<%%= yeoman.dist %>/assets/img/'
                 }]
             }
@@ -248,14 +257,16 @@ module.exports = function (grunt) {
             options: {
                 dest: '<%%= yeoman.dist %>'
             },
-            html: '<%%= yeoman.app %>/index.html'
+            html: '<%%= yeoman.app %>/index.html',
+            css: '<%%= yeoman.app %>/assets/scss/**/*.scss'
         },
 
         usemin: {
             options: {
                 dirs: ['<%%= yeoman.dist %>']
             },
-            html: ['<%%= yeoman.dist %>/*.html']
+            html: ['<%%= yeoman.dist %>/*.html'],
+            css: '<%%= yeoman.dist %>/assets/css/*.css'
         }
     });
 
@@ -267,7 +278,8 @@ module.exports = function (grunt) {
 
     grunt.registerTask('dev', [
         'clean',
-        'copy:dev', <% if (cssFramework === 'compassSusy') { %>
+        'spriteHD',
+        'copy:dev',<% if (cssFramework === 'compassSusy') { %>
         'compass:dev',<% } %><% if (cssFramework !== 'compassSusy') { %>
         'sass:dev',<% } %>
         'replace',
@@ -276,13 +288,13 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'clean',
+        'spriteHD',
         'copy:dist',<% if (cssFramework === 'compassSusy') { %>
         'compass:dist',<% } %><% if (cssFramework !== 'compassSusy') { %>
         'sass:dist',<% } %>
         'replace:dist',
         'modernizr',
         'processhtml:dist',
-        'spriter:dist',
         'imagemin:dist',
         'useminPrepare',
         'concat',
