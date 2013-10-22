@@ -99,6 +99,7 @@ SiteGenerator.prototype.app = function app() {
 SiteGenerator.prototype.runtime = function runtime() {
     this.copy('bowerrc', '.bowerrc');
     this.copy('gitignore', '.gitignore');
+    this.copy('.htaccess', 'app/.htaccess');
 };
 
 SiteGenerator.prototype.projectfiles = function projectfiles() {
