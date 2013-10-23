@@ -142,26 +142,42 @@ module.exports = function (grunt) {
         <% } %>
 
         replace: {
-            dist: {
-                options: {
-                    patterns: [{
-                        match: '/@jquery-cdn/g',
-                        replacement: function () {
-                            var jQConf = grunt.file.readJSON('app/assets/bower_components/jquery/bower.json');
-                            return '//ajax.googleapis.com/ajax/libs/jquery/' + jQConf.version + '/jquery.min.js';
-                        },
-                        expression: true
-                    }, {
-                        match: '/@jquery-legacy-cdn/g',
-                        replacement: function () {
-                            var jQLegConf = grunt.file.readJSON('app/assets/bower_components/jquery-legacy/bower.json');
-                            return '//ajax.googleapis.com/ajax/libs/jquery/' + jQLegConf.version + '/jquery.min.js';
-                        },
-                        expression: true
-                    }]
-                },
+            options: {
+                patterns: [{
+                    match: '/@jquery-cdn/g',
+                    replacement: function () {
+                        var jQConf = grunt.file.readJSON('app/assets/bower_components/jquery/bower.json');
+                        return '//ajax.googleapis.com/ajax/libs/jquery/' + jQConf.version + '/jquery.min.js';
+                    },
+                    expression: true
+                }, {
+                    match: '/@jquery-legacy-cdn/g',
+                    replacement: function () {
+                        var jQLegConf = grunt.file.readJSON('app/assets/bower_components/jquery-legacy/bower.json');
+                        return '//ajax.googleapis.com/ajax/libs/jquery/' + jQLegConf.version + '/jquery.min.js';
+                    },
+                    expression: true
+                }, {
+                    match: '/@grunticon/g',
+                    replacement: function () {
+                        var grunticonInsert = grunt.file.read('app/assets/scss/icons/grunticon.loader.txt');
+                        if (grunticonInsert.charAt(0) === '<') {
+                            return grunticonInsert;
+                        } else return '';
+                    },
+                    expression: true
+                }]
+            },
+
+            dev: {
                 files: [
-                    {src:  ['app/index.html'], dest: 'app/index.html'}
+                    {src:  ['dev/index.html'], dest: 'dev/index.html'}
+                ]
+            },
+
+            dist: {
+                files: [
+                    {src:  ['dist/index.html'], dest: 'dist/index.html'}
                 ]
             }
         },
@@ -183,7 +199,7 @@ module.exports = function (grunt) {
                     }
                 },
                 files: {
-                    '<%%= yeoman.dev %>/index.html': ['<%%= yeoman.app %>/index.html']
+                    '<%%= yeoman.dev %>/index.html': ['<%%= yeoman.dev %>/index.html']
                 }
             },
             dist: {
@@ -226,6 +242,15 @@ module.exports = function (grunt) {
                         '<%%= yeoman.dist %>/assets/img/{,*/}*.{png,jpg,jpeg,gif,webp}',
                         '<%%= yeoman.dist %>/assets/css/fonts/*'
                     ]
+                }
+            }
+        },
+
+        grunticon: {
+            dev: {
+                options: {
+                    src: '<%%= yeoman.app %>/assets/img/icons',
+                    dest: '<%%= yeoman.app %>/assets/scss/icons'
                 }
             }
         },
@@ -279,11 +304,12 @@ module.exports = function (grunt) {
 
     grunt.registerTask('dev', [
         'clean',
+        'grunticon',
         'spriteHD',
         'copy:dev',<% if (cssFramework === 'compassSusy') { %>
         'compass:dev',<% } %><% if (cssFramework !== 'compassSusy') { %>
         'sass:dev',<% } %>
-        'replace',
+        'replace:dev',
         'processhtml:dev'
     ]);
 
@@ -293,7 +319,6 @@ module.exports = function (grunt) {
         'copy:dist',<% if (cssFramework === 'compassSusy') { %>
         'compass:dist',<% } %><% if (cssFramework !== 'compassSusy') { %>
         'sass:dist',<% } %>
-        'replace:dist',
         'modernizr',
         'processhtml:dist',
         'imagemin:dist',
@@ -301,6 +326,7 @@ module.exports = function (grunt) {
         'concat',
         'uglify',
         'rev',
-        'usemin'
+        'usemin',
+        'replace:dist'
     ]);
 };

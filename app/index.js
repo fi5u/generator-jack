@@ -59,6 +59,7 @@ SiteGenerator.prototype.askFor = function askFor() {
 SiteGenerator.prototype.app = function app() {
     this.mkdir('app/assets/scss/lib');
     this.mkdir('app/assets/scss/fonts');
+    this.mkdir('app/assets/img/icons');
     this.mkdir('app/assets/js/lib');
     this.mkdir('app/assets/php');
 
