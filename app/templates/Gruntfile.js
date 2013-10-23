@@ -15,6 +15,38 @@ module.exports = function (grunt) {
     grunt.initConfig({
         yeoman: yeomanConfig,
 
+         clean: {
+            dev: {
+                files: [{
+                    dot: true,
+                    src: [
+                        '.tmp',
+                        '<%%= yeoman.dev %>/*',
+                        '!<%%= yeoman.dev %>/.git*'
+                    ]
+                }]
+            },
+
+            dist: {
+                files: [{
+                    dot: true,
+                    src: [
+                        '.tmp',
+                        '<%%= yeoman.dist %>/*',
+                        '!<%%= yeoman.dist %>/.git*'
+                    ]
+                }]
+            }
+        },
+
+        useminPrepare: {
+            options: {
+                dest: '<%%= yeoman.dist %>'
+            },
+            html: '<%%= yeoman.app %>/index.html',
+            css: '<%%= yeoman.app %>/assets/scss/**/*.scss'
+        },
+
         watch: {
             options: {
                 livereload: true
@@ -25,9 +57,7 @@ module.exports = function (grunt) {
                 tasks: ['compass:dev']
             },
             html: {
-                //files: ['<%%= yeoman.app %>/{,*/}*.html'],
-                //files: ['<%%= yeoman.app %>/*.html', '<%%= yeoman.app %>/*/*.html'],
-                files: ['<%%= yeoman.app %>/**/*.html'],
+                files: ['<%%= yeoman.app %>{,*/}*.html'],
                 tasks: ['copy:html', 'replace', 'processhtml:dev']
             },
             sprites: {
@@ -59,19 +89,6 @@ module.exports = function (grunt) {
             }
         },
 
-        clean: {
-            dist: {
-                files: [{
-                    dot: true,
-                    src: [
-                        '.tmp',
-                        '<%%= yeoman.dist %>/*',
-                        '!<%%= yeoman.dist %>/.git*'
-                    ]
-                }]
-            }
-        },
-
         copy: {
             dev: {
                 files: [
@@ -82,7 +99,7 @@ module.exports = function (grunt) {
 
             dist: {
                 files: [
-                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/img/sprite-assets', '!**/scss/**', '!**/js/*.js', '!**/bower_components/**'], dest: '<%%= yeoman.dist %>'},
+                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/img/sprite-assets/**', '!**/scss/**', '!**/js/*.js', '!**/bower_components/**'], dest: '<%%= yeoman.dist %>'},
                     {expand: true, cwd: '<%%= yeoman.app %>', src: ['.htaccess'], dest: '<%%= yeoman.dist %>'},
                     {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dist %>/assets/css/fonts'},
                     {expand: true, cwd: '<%%= yeoman.app %>/assets/bower_components/jquery', src: ['jquery.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'},
@@ -202,26 +219,15 @@ module.exports = function (grunt) {
                     }
                 },
                 files: {
-                    '<%%= yeoman.dist %>/index.html': ['<%%= yeoman.app %>/index.html']
+                    '<%%= yeoman.dist %>/index.html': ['<%%= yeoman.dist %>/index.html']
                 }
             }
         },
 
-        // htmlmin: {
-        //     dist: {
-        //         options: {
-        //             collapseWhitespace: true
-        //         },
-        //         files: {
-        //             '<%%= yeoman.dist %>/**/*.html': '<%%= yeoman.dist %>/**/*.html'
-        //         }
-        //     }
-        // },
-
         modernizr: {
-            'devFile' : '<%%= yeoman.app %>/assets/bower_components/modernizr/modernizr.js',
-            'outputFile' : '<%%= yeoman.dist %>/assets/js/lib/modernizr-custom.min.js',
-            'files' : ['<%%= yeoman.dist %>/**/*.js', '<%%= yeoman.dist %>/**/*.css', '<%%= yeoman.dist %>/**/*.scss']
+            devFile: '<%%= yeoman.app %>/assets/bower_components/modernizr/modernizr.js',
+            outputFile: '<%%= yeoman.dist %>/assets/js/lib/modernizr-custom.min.js',
+            files: ['<%%= yeoman.dist %>/**/*.js', '<%%= yeoman.dist %>/**/*.css', '<%%= yeoman.dist %>/**/*.scss']
         },
 
         svgmin: {
@@ -280,18 +286,10 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%%= yeoman.app %>/assets/img/',
-                    src: ['**/*.{png,jpg,jpeg,gif}', '!sprite-assets/*.png'],
-                    dest: '<%%= yeoman.dist %>/assets/img/'
+                    src: ['**/*.{png,jpg,jpeg,gif,svg}', '!sprite-assets/*.png'],
+                    dest: '<%%= yeoman.app %>/assets/img/'
                 }]
             }
-        },
-
-        useminPrepare: {
-            options: {
-                dest: '<%%= yeoman.dist %>'
-            },
-            html: '<%%= yeoman.app %>/index.html',
-            css: '<%%= yeoman.app %>/assets/scss/**/*.scss'
         },
 
         usemin: {
@@ -310,31 +308,31 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('dev', [
-        'clean',
-        'spriteHD',
-        'copy:dev',<% if (cssFramework === 'compassSusy') { %>
+        'clean:dev',
+        'copy:dev',
+        'spriteHD',<% if (cssFramework === 'compassSusy') { %>
         'compass:dev',<% } %><% if (cssFramework !== 'compassSusy') { %>
         'sass:dev',<% } %>
-        'replace:dev',
-        'processhtml:dev'
+        'processhtml:dev',
+        'replace:dev'
     ]);
 
     grunt.registerTask('build', [
-        'clean',
-        'spriteHD',
-        'copy:dist',<% if (cssFramework === 'compassSusy') { %>
+        'clean:dist',
+        'useminPrepare',
+        'svgmin',
+        'imagemin:dist',
+        'svg2png',<% if (cssFramework === 'compassSusy') { %>
         'compass:dist',<% } %><% if (cssFramework !== 'compassSusy') { %>
         'sass:dist',<% } %>
-        'modernizr',
-        'svgmin',
-        'svg2png',
-        'processhtml:dist',
-        'imagemin:dist',
-        'useminPrepare',
         'concat',
         'uglify',
+        'modernizr',
+        'spriteHD',
+        'copy:dist',
+        'processhtml:dist',
+        'replace:dist',
         'rev',
         'usemin',
-        'replace:dist'
     ]);
 };
