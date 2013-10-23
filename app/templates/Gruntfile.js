@@ -33,6 +33,10 @@ module.exports = function (grunt) {
             sprites: {
                 files: ['<%%= yeoman.app %>/assets/img/sprite-assets/*.png'],
                 tasks: ['spriteHD', 'copy:dev']
+            },
+            icons: {
+                files: ['<%%= yeoman.app %>/assets/img/icons/*'],
+                tasks: ['dev']
             }
         },
 
@@ -157,15 +161,6 @@ module.exports = function (grunt) {
                         return '//ajax.googleapis.com/ajax/libs/jquery/' + jQLegConf.version + '/jquery.min.js';
                     },
                     expression: true
-                }, {
-                    match: '/@grunticon/g',
-                    replacement: function () {
-                        var grunticonInsert = grunt.file.read('app/assets/scss/icons/grunticon.loader.txt');
-                        if (grunticonInsert.charAt(0) === '<') {
-                            return grunticonInsert;
-                        } else return '';
-                    },
-                    expression: true
                 }]
             },
 
@@ -246,15 +241,6 @@ module.exports = function (grunt) {
             }
         },
 
-        grunticon: {
-            dev: {
-                options: {
-                    src: '<%%= yeoman.app %>/assets/img/icons',
-                    dest: '<%%= yeoman.app %>/assets/scss/icons'
-                }
-            }
-        },
-
         spriteHD: {
             options: {
                 destImg: '<%%= yeoman.app %>/assets/img',
@@ -304,7 +290,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask('dev', [
         'clean',
-        'grunticon',
         'spriteHD',
         'copy:dev',<% if (cssFramework === 'compassSusy') { %>
         'compass:dev',<% } %><% if (cssFramework !== 'compassSusy') { %>
