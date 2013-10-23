@@ -17,6 +17,9 @@ Once installed:
 ### Spriting
 Handles automatic hiDPI spriting. Drop double-size _png_ assets into `app/assets/img/sprite-assets`. Import into scss file with `@include sprite($img1)` - hiDPI media query automatically generated.
 
+### SVG to PNG
+To automatically convert SVGs to PNGs, just place the SVG assets in the `img` directory (or sub-directory), they will be generated during the `grunt build` process. SVG files will be minified.
+
 
 ## License
 

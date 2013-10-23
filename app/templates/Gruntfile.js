@@ -33,10 +33,6 @@ module.exports = function (grunt) {
             sprites: {
                 files: ['<%%= yeoman.app %>/assets/img/sprite-assets/*.png'],
                 tasks: ['spriteHD', 'copy:dev']
-            },
-            icons: {
-                files: ['<%%= yeoman.app %>/assets/img/icons/*'],
-                tasks: ['dev']
             }
         },
 
@@ -86,7 +82,7 @@ module.exports = function (grunt) {
 
             dist: {
                 files: [
-                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/img/**', '!**/scss/**', '!**/js/*.js', '!**/bower_components/**'], dest: '<%%= yeoman.dist %>'},
+                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/img/sprite-assets', '!**/scss/**', '!**/js/*.js', '!**/bower_components/**'], dest: '<%%= yeoman.dist %>'},
                     {expand: true, cwd: '<%%= yeoman.app %>', src: ['.htaccess'], dest: '<%%= yeoman.dist %>'},
                     {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dist %>/assets/css/fonts'},
                     {expand: true, cwd: '<%%= yeoman.app %>/assets/bower_components/jquery', src: ['jquery.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'},
@@ -228,13 +224,38 @@ module.exports = function (grunt) {
             'files' : ['<%%= yeoman.dist %>/**/*.js', '<%%= yeoman.dist %>/**/*.css', '<%%= yeoman.dist %>/**/*.scss']
         },
 
+        svgmin: {
+            options: {
+                plugins: [{
+                    removeViewBox: false
+                }]
+            },
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '<%%= yeoman.app %>/assets/img',
+                    src: ['{,*/}*.svg'],
+                    dest: '<%%= yeoman.app %>/assets/img/',
+                    ext: '.svg'
+                }]
+            }
+        },
+
+        svg2png: {
+            dist: {
+                files: [
+                    { src: ['<%%= yeoman.app %>/assets/img/{,*/}*.svg'] }
+                ]
+            }
+        },
+
         rev: {
             dist: {
                 files: {
                     src: [
                         '<%%= yeoman.dist %>/assets/js/{,*/}*.js',
                         '<%%= yeoman.dist %>/assets/css/{,*/}*.css',
-                        '<%%= yeoman.dist %>/assets/img/{,*/}*.{png,jpg,jpeg,gif,webp}',
+                        '<%%= yeoman.dist %>/assets/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
                         '<%%= yeoman.dist %>/assets/css/fonts/*'
                     ]
                 }
@@ -305,6 +326,8 @@ module.exports = function (grunt) {
         'compass:dist',<% } %><% if (cssFramework !== 'compassSusy') { %>
         'sass:dist',<% } %>
         'modernizr',
+        'svgmin',
+        'svg2png',
         'processhtml:dist',
         'imagemin:dist',
         'useminPrepare',
