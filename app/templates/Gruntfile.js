@@ -100,8 +100,11 @@ module.exports = function (grunt) {
         copy: {
             dev: {
                 files: [
-                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/scss/**', '!.htaccess'], dest: '<%%= yeoman.dev %>'},
-                    {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dev %>/assets/css/fonts'}
+                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/scss/**', '!.htaccess', '!**/languages/**'], dest: '<%%= yeoman.dev %>'},
+                    {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dev %>/assets/css/fonts'}<% if (wordpress === true) { %>,
+                    {expand: true, cwd: '<%%= yeoman.app %>/languages', src: ['_s.pot'], dest: '<%%= yeoman.dev %>/languages', rename: function (dest) {
+                        return dest + '/<%= slugSiteName %>.pot';
+                    }}<% } %>
                 ]
             },
 
@@ -115,7 +118,10 @@ module.exports = function (grunt) {
                         return dest + '/jquery-legacy.min.js';
                     }},
                     // Only copy over the minified migrate plugin
-                    {expand: true, cwd: 'bower_components/jquery-migrate', src: ['jquery-migrate.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'}
+                    {expand: true, cwd: 'bower_components/jquery-migrate', src: ['jquery-migrate.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'}<% if (wordpress === true) { %>,
+                    {expand: true, cwd: '<%%= yeoman.app %>/languages', src: ['_s.pot'], dest: '<%%= yeoman.dist %>/languages', rename: function (dest) {
+                        return dest + '/<%= slugSiteName %>.pot';
+                    }}<% } %>
                 ]
             },
 
@@ -175,6 +181,49 @@ module.exports = function (grunt) {
         <% } %>
 
         replace: {
+            <% if (wordpress === true) { %>
+            options: {
+                patterns: [{
+                    match: '/\'_s\'/g',
+                    replacement: function () {
+                        return "'<%= slugSiteName %>'";
+                    },
+                    expression: true
+                }, {
+                    match: '/_s_/g',
+                    replacement: function () {
+                        return "<%= slugSiteName %>_";
+                    },
+                    expression: true
+                }, {
+                    match: '/ _s/g',
+                    replacement: function () {
+                        var toCapital = "<%= slugSiteName %>";
+                        var capitalized = toCapital.charAt(0).toUpperCase() + toCapital.slice(1);
+                        return ' ' + capitalized;
+                    },
+                    expression: true
+                }, {
+                    match: '/_s-/g',
+                    replacement: function () {
+                        return "<%= slugSiteName %>-";
+                    },
+                    expression: true
+                }]
+            },
+
+            dev: {
+                files: [
+                    {expand: true, src: ['<%%= yeoman.dev %>/**']}
+                ]
+            },
+
+            dist: {
+                files: [
+                    {expand: true, src: ['<%%= yeoman.dist %>/**']}
+                ]
+            }
+            <% } else { %>
             options: {
                 patterns: [{
                     match: '/@jquery-cdn/g',
@@ -195,15 +244,16 @@ module.exports = function (grunt) {
 
             dev: {
                 files: [
-                    {src:  ['dev/index.html'], dest: 'dev/index.html'}
+                    {src: ['dev/index.html'], dest: 'dev/index.html'}
                 ]
             },
 
             dist: {
                 files: [
-                    {src:  ['dist/index.html'], dest: 'dist/index.html'}
+                    {src: ['dist/index.html'], dest: 'dist/index.html'}
                 ]
             }
+            <% } %>
         },
 
         processhtml: {
