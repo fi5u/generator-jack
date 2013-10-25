@@ -12,10 +12,18 @@ module.exports = function (grunt) {
         dist: 'dist'
     };
 
+    <% if (wordpress === true) { %>
+    var yeomanConfig = {
+        app: 'app/<%= slugSiteName %>',
+        dev: 'dev/<%= slugSiteName %>',
+        dist: 'dist/<%= slugSiteName %>'
+    };
+    <% } %>
+
     grunt.initConfig({
         yeoman: yeomanConfig,
 
-         clean: {
+        clean: {
             dev: {
                 files: [{
                     dot: true,
@@ -99,15 +107,15 @@ module.exports = function (grunt) {
 
             dist: {
                 files: [
-                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/img/sprite-assets/**', '!**/scss/**', '!**/js/*.js', '!**/bower_components/**'], dest: '<%%= yeoman.dist %>'},
+                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/img/sprite-assets/**', '!**/scss/**', '!**/js/*.js'], dest: '<%%= yeoman.dist %>'},
                     {expand: true, cwd: '<%%= yeoman.app %>', src: ['.htaccess'], dest: '<%%= yeoman.dist %>'},
                     {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dist %>/assets/css/fonts'},
-                    {expand: true, cwd: '<%%= yeoman.app %>/assets/bower_components/jquery', src: ['jquery.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'},
-                    {expand: true, cwd: '<%%= yeoman.app %>/assets/bower_components/jquery-legacy', src: ['jquery.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib', rename: function (dest) {
+                    {expand: true, cwd: 'bower_components/jquery', src: ['jquery.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'},
+                    {expand: true, cwd: 'bower_components/jquery-legacy', src: ['jquery.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib', rename: function (dest) {
                         return dest + '/jquery-legacy.min.js';
                     }},
                     // Only copy over the minified migrate plugin
-                    {expand: true, cwd: '<%%= yeoman.app %>/assets/bower_components/jquery-migrate', src: ['jquery-migrate.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'}
+                    {expand: true, cwd: 'bower_components/jquery-migrate', src: ['jquery-migrate.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'}
                 ]
             },
 
@@ -123,7 +131,11 @@ module.exports = function (grunt) {
             dev: {
                 options: {
                     sassDir: '<%%= yeoman.app %>/assets/scss',
+                    <% if (wordpress === true) { %>
+                    cssDir: '<%%= yeoman.dev %>',
+                    <% } else { %>
                     cssDir: '<%%= yeoman.dev %>/assets/css',
+                    <% } %>
                     environment: 'development'
                 }
             },
@@ -131,7 +143,11 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     sassDir: '<%%= yeoman.app %>/assets/scss',
+                    <% if (wordpress === true) { %>
+                    cssDir: '<%%= yeoman.dist %>',
+                    <% } else { %>
                     cssDir: '<%%= yeoman.dist %>/assets/css',
+                    <% } %>
                     environment: 'production'
                 }
             }
@@ -163,14 +179,14 @@ module.exports = function (grunt) {
                 patterns: [{
                     match: '/@jquery-cdn/g',
                     replacement: function () {
-                        var jQConf = grunt.file.readJSON('app/assets/bower_components/jquery/bower.json');
+                        var jQConf = grunt.file.readJSON('bower_components/jquery/bower.json');
                         return '//ajax.googleapis.com/ajax/libs/jquery/' + jQConf.version + '/jquery.min.js';
                     },
                     expression: true
                 }, {
                     match: '/@jquery-legacy-cdn/g',
                     replacement: function () {
-                        var jQLegConf = grunt.file.readJSON('app/assets/bower_components/jquery-legacy/bower.json');
+                        var jQLegConf = grunt.file.readJSON('bower_components/jquery-legacy/bower.json');
                         return '//ajax.googleapis.com/ajax/libs/jquery/' + jQLegConf.version + '/jquery.min.js';
                     },
                     expression: true
@@ -201,9 +217,9 @@ module.exports = function (grunt) {
             dev: {
                 options: {
                     data: {
-                        jqMinLocal: 'assets/bower_components/jquery/jquery.min.js',
-                        jqLegMinLocal: 'assets/bower_components/jquery-legacy/jquery.min.js',
-                        jqMigrate: 'assets/bower_components/jquery-migrate/jquery-migrate.js'
+                        jqMinLocal: 'bower_components/jquery/jquery.min.js',
+                        jqLegMinLocal: 'bower_components/jquery-legacy/jquery.min.js',
+                        jqMigrate: 'bower_components/jquery-migrate/jquery-migrate.js'
                     }
                 },
                 files: {
@@ -225,7 +241,7 @@ module.exports = function (grunt) {
         },
 
         modernizr: {
-            devFile: '<%%= yeoman.app %>/assets/bower_components/modernizr/modernizr.js',
+            devFile: 'bower_components/modernizr/modernizr.js',
             outputFile: '<%%= yeoman.dist %>/assets/js/lib/modernizr-custom.min.js',
             files: ['<%%= yeoman.dist %>/**/*.js', '<%%= yeoman.dist %>/**/*.css', '<%%= yeoman.dist %>/**/*.scss']
         },
@@ -322,13 +338,13 @@ module.exports = function (grunt) {
         'useminPrepare',
         'svgmin',
         'imagemin:dist',
-        'svg2png',<% if (cssFramework === 'compassSusy') { %>
+        'svg2png',
+        'spriteHD',<% if (cssFramework === 'compassSusy') { %>
         'compass:dist',<% } %><% if (cssFramework !== 'compassSusy') { %>
         'sass:dist',<% } %>
         'concat',
         'uglify',
         'modernizr',
-        'spriteHD',
         'copy:dist',
         'processhtml:dist',
         'replace:dist',

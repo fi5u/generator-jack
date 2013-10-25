@@ -1,6 +1,26 @@
+<% if (wordpress === true) { %>
+/*
+Theme Name: _s
+Theme URI:
+Author:
+Author URI:
+Description:
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: _s
+Domain Path: /languages/
+Tags:
+<% } %>
+
 /* Lib */
 @import "lib/_normalize";
-<% if (cssFramework === 'compassSusy') { %>@import "../bower_components/susy/sass/_susy";<% } %>
+<% if (cssFramework === 'compassSusy' && wordpress === true) { %>
+@import "../../../../bower_components/susy/sass/_susy.scss";
+<% } %>
+<% if (cssFramework === 'compassSusy' && wordpress === false) { %>
+@import "../../../bower_components/susy/sass/_susy.scss";
+<% } %>
 
 
 /* Global */

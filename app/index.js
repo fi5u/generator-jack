@@ -11,7 +11,7 @@ var SiteGenerator = module.exports = function SiteGenerator(args, options, confi
         this.installDependencies({
             skipInstall: options['skip-install'],
             callback: function () {
-                /*this.copy('assets/bower_components/susy/sass/_susy.scss', 'app/assets/scss/lib/_susy.scss');*/
+                /*this.copy('assets/bower_components/wordpress/index.php', 'app/index.php');*/
             }.bind(this)
         });
     });
@@ -32,6 +32,11 @@ SiteGenerator.prototype.askFor = function askFor() {
             name: 'siteName',
             message: 'What would you like to call your site?'
         }, {
+            type: 'confirm',
+            name: 'wordpress',
+            message: 'Is this site going to be running on WordPress?',
+            default: false
+        }, {
             type: 'list',
             name: 'cssFramework',
             message: 'Which CSS framework / grid system would you like to use?',
@@ -51,55 +56,73 @@ SiteGenerator.prototype.askFor = function askFor() {
     this.prompt(prompts, function (props) {
         this.siteName = props.siteName;
         this.cssFramework = props.cssFramework;
+        this.wordpress = props.wordpress;
 
         cb();
     }.bind(this));
 };
 
+function convertToSlug(text) {
+    return text
+        .toLowerCase()
+        .replace(/ä+/g, 'a')
+        .replace(/ö+/g, 'o')
+        .replace(/[^\w ]+/g, '')
+        .replace(/ +/g, '-')
+        ;
+}
+
 SiteGenerator.prototype.app = function app() {
-    this.mkdir('app/assets/scss/lib');
-    this.mkdir('app/assets/scss/fonts');
-    this.mkdir('app/assets/js/lib');
-    this.mkdir('app/assets/php');
+    var appUrl = 'app';
+    if (this.wordpress) {
+        this.slugSiteName = convertToSlug(this.siteName);
+        appUrl = 'app/' + this.slugSiteName;
+        this.directory('_s', 'app/' + this.slugSiteName);
+    }
+
+    this.mkdir(appUrl + '/assets/scss/lib');
+    this.mkdir(appUrl + '/assets/scss/fonts');
+    this.mkdir(appUrl + '/assets/js/lib');
+    this.mkdir(appUrl + '/assets/php');
 
     this.template('Gruntfile.js', 'Gruntfile.js');
-    this.template('index.html', 'app/index.html');
+    this.template('index.html', appUrl + '/index.html');
 
     this.template('_bower.json', 'bower.json');
     this.template('_config.json', 'config.json');
     this.template('_package.json', 'package.json');
+    this.copy('.htaccess', appUrl + '/.htaccess');
 
-    this.copy('assets/img/sprite-assets/trans.png', 'app/assets/img/sprite-assets/trans.png');
-    this.copy('assets/scss/style.scss', 'app/assets/scss/style.scss');
-    this.copy('assets/scss/lteie8.scss', 'app/assets/scss/lteie8.scss');
+    this.copy('assets/img/sprite-assets/trans.png', appUrl + '/assets/img/sprite-assets/trans.png');
+    this.copy('assets/scss/style.scss', appUrl + '/assets/scss/style.scss');
+    this.copy('assets/scss/lteie8.scss', appUrl + '/assets/scss/lteie8.scss');
 
-    this.copy('assets/scss/lib/_normalize.scss', 'app/assets/scss/lib/_normalize.scss');
+    this.copy('assets/scss/lib/_normalize.scss', appUrl + '/assets/scss/lib/_normalize.scss');
 
-    this.copy('assets/scss/global/_fonts.scss', 'app/assets/scss/global/_fonts.scss');
-    this.copy('assets/scss/global/_variables.scss', 'app/assets/scss/global/_variables.scss');
-    this.copy('assets/scss/global/_functions.scss', 'app/assets/scss/global/_functions.scss');
-    this.copy('assets/scss/global/_mixins.scss', 'app/assets/scss/global/_mixins.scss');
-    this.copy('assets/scss/global/_framework_media.scss', 'app/assets/scss/global/_framework_media.scss');
-    this.copy('assets/scss/global/_framework_nav.scss', 'app/assets/scss/global/_framework_nav.scss');
+    this.copy('assets/scss/global/_fonts.scss', appUrl + '/assets/scss/global/_fonts.scss');
+    this.copy('assets/scss/global/_variables.scss', appUrl + '/assets/scss/global/_variables.scss');
+    this.copy('assets/scss/global/_functions.scss', appUrl + '/assets/scss/global/_functions.scss');
+    this.copy('assets/scss/global/_mixins.scss', appUrl + '/assets/scss/global/_mixins.scss');
+    this.copy('assets/scss/global/_framework_media.scss', appUrl + '/assets/scss/global/_framework_media.scss');
+    this.copy('assets/scss/global/_framework_nav.scss', appUrl + '/assets/scss/global/_framework_nav.scss');
 
-    this.copy('assets/scss/local/_typography.scss', 'app/assets/scss/local/_typography.scss');
-    this.copy('assets/scss/local/_helpers.scss', 'app/assets/scss/local/_helpers.scss');
-    this.copy('assets/scss/local/_images.scss', 'app/assets/scss/local/_images.scss');
-    this.copy('assets/scss/local/_forms.scss', 'app/assets/scss/local/_forms.scss');
-    this.copy('assets/scss/local/_lists.scss', 'app/assets/scss/local/_lists.scss');
-    this.copy('assets/scss/local/_local.scss', 'app/assets/scss/local/_local.scss');
+    this.copy('assets/scss/local/_typography.scss', appUrl + '/assets/scss/local/_typography.scss');
+    this.copy('assets/scss/local/_helpers.scss', appUrl + '/assets/scss/local/_helpers.scss');
+    this.copy('assets/scss/local/_images.scss', appUrl + '/assets/scss/local/_images.scss');
+    this.copy('assets/scss/local/_forms.scss', appUrl + '/assets/scss/local/_forms.scss');
+    this.copy('assets/scss/local/_lists.scss', appUrl + '/assets/scss/local/_lists.scss');
+    this.copy('assets/scss/local/_local.scss', appUrl + '/assets/scss/local/_local.scss');
 
-    this.copy('assets/scss/object/_page_header.scss', 'app/assets/scss/object/_page_header.scss');
-    this.copy('assets/scss/object/_header_nav.scss', 'app/assets/scss/object/_header_nav.scss');
-    this.copy('assets/scss/object/_page_footer.scss', 'app/assets/scss/object/_page_footer.scss');
+    this.copy('assets/scss/object/_page_header.scss', appUrl + '/assets/scss/object/_page_header.scss');
+    this.copy('assets/scss/object/_header_nav.scss', appUrl + '/assets/scss/object/_header_nav.scss');
+    this.copy('assets/scss/object/_page_footer.scss', appUrl + '/assets/scss/object/_page_footer.scss');
 
-    this.copy('assets/js/script.js', 'app/assets/js/script.js');
+    this.copy('assets/js/script.js', appUrl + '/assets/js/script.js');
 };
 
 SiteGenerator.prototype.runtime = function runtime() {
     this.copy('bowerrc', '.bowerrc');
     this.copy('gitignore', '.gitignore');
-    this.copy('.htaccess', 'app/.htaccess');
 };
 
 SiteGenerator.prototype.projectfiles = function projectfiles() {

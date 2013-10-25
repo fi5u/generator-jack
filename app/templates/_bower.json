@@ -7,7 +7,8 @@
         ,"jquery-migrate": "latest"
         ,"selectivizr": "latest"
         ,"respond": "latest"
-        ,"modernizr": "latest"<% if (cssFramework == 'compassSusy') { %>
+        ,"modernizr": "latest"<% if (wordpress == true) { %>
+        ,"wordpress": "latest"<% } %><% if (cssFramework == 'compassSusy') { %>
         ,"susy": "latest"<% } %><% if (cssFramework == 'bourbonNeat') { %>
         ,"bourbon": "latest"
         ,"neat": "latest"<% } %>
