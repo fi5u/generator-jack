@@ -214,13 +214,13 @@ module.exports = function (grunt) {
 
             dev: {
                 files: [
-                    {expand: true, src: ['<%%= yeoman.dev %>/**']}
+                    {expand: true, src: ['<%%= yeoman.dev %>/**', '<%%= yeoman.dev %>/languages/<%= slugSiteName %>.pot']}
                 ]
             },
 
             dist: {
                 files: [
-                    {expand: true, src: ['<%%= yeoman.dist %>/**']}
+                    {expand: true, src: ['<%%= yeoman.dist %>/**', '<%%= yeoman.dist %>/languages/<%= slugSiteName %>.pot']}
                 ]
             }
             <% } else { %>
