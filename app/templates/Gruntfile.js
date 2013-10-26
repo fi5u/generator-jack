@@ -184,6 +184,12 @@ module.exports = function (grunt) {
             <% if (wordpress === true) { %>
             options: {
                 patterns: [{
+                    match: '/Text Domain: _s/g',
+                    replacement: function () {
+                        return 'Text Domain: <%= slugSiteName %>';
+                    },
+                    expression: true
+                }, {
                     match: '/\'_s\'/g',
                     replacement: function () {
                         return "'<%= slugSiteName %>'";
@@ -198,8 +204,8 @@ module.exports = function (grunt) {
                 }, {
                     match: '/ _s/g',
                     replacement: function () {
-                        var toCapital = "<%= slugSiteName %>";
-                        var capitalized = toCapital.charAt(0).toUpperCase() + toCapital.slice(1);
+                        var lowerCase = "<%= slugSiteName %>";
+                        var capitalized = lowerCase.charAt(0).toUpperCase() + lowerCase.slice(1);
                         return ' ' + capitalized;
                     },
                     expression: true

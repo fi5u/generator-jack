@@ -19,20 +19,20 @@
 </head>
 
 <body <?php body_class(); ?>>
-<div id="page" class="hfeed site">
+<div id="page" class="page">
 	<?php do_action( 'before' ); ?>
-	<header id="masthead" class="site-header" role="banner">
-		<div class="site-branding">
-			<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-			<h2 class="site-description"><?php bloginfo( 'description' ); ?></h2>
+	<header id="masthead" class="header  page-header" role="banner">
+		<div class="page-header__branding">
+			<h1 class="page-header__title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+			<p class="page-header__description"><?php bloginfo( 'description' ); ?></p>
 		</div>
 
-		<nav id="site-navigation" class="main-navigation" role="navigation">
-			<h1 class="menu-toggle"><?php _e( 'Menu', '_s' ); ?></h1>
-			<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', '_s' ); ?></a>
+		<nav id="site-navigation" class="page-header__nav" role="navigation">
+			<h1 class="page-header__nav__toggle"><?php _e( 'Menu', '_s' ); ?></h1>
+			<a class="screen-reader-text" href="#content"><?php _e( 'Skip to content', '_s' ); ?></a>
 
 			<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
-		</nav><!-- #site-navigation -->
-	</header><!-- #masthead -->
+		</nav>
+	</header>
 
-	<div id="content" class="site-content">
+	<div id="content" class="page-content">
