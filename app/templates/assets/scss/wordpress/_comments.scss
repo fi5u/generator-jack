@@ -1,0 +1,63 @@
+.comments {
+
+}
+
+    .comments__title {
+
+    }
+
+    %comments__nav {
+
+    }
+
+        %comments__nav__dir {
+
+        }
+
+        .comments__nav__dir--prev {
+            @extend %comments__nav__dir;
+        }
+
+        .comments__nav__dir--next {
+            @extend %comments__nav__dir;
+        }
+
+    .comments__nav--above {
+        @extend %comments__nav;
+    }
+
+        %comments__nav--above__dir {
+
+        }
+
+        .comments__nav--above__dir--prev {
+            @extend %comments__nav--above__dir;
+        }
+
+        .comments__nav--above__dir--next {
+            @extend %comments__nav--above__dir;
+        }
+
+    .comments__nav--below {
+        @extend %comments__nav;
+    }
+
+        %comments__nav--below__dir {
+
+        }
+
+        .comments__nav--below__dir--prev {
+            @extend %comments__nav--below__dir;
+        }
+
+        .comments__nav--below__dir--next {
+            @extend %comments__nav--below__dir;
+        }
+
+    .comments__list {
+
+    }
+
+    .comments__no-comments {
+
+    }

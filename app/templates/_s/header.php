@@ -23,11 +23,11 @@
 	<?php do_action( 'before' ); ?>
 	<header id="masthead" class="header  page-header" role="banner">
 		<div class="page-header__branding">
-			<h1 class="page-header__title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-			<p class="page-header__description"><?php bloginfo( 'description' ); ?></p>
+			<h1 class="page-header__branding__title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+			<p class="page-header__branding__description"><?php bloginfo( 'description' ); ?></p>
 		</div>
 
-		<nav id="site-navigation" class="page-header__nav" role="navigation">
+		<nav id="site-navigation" class="header__nav  page-header__nav" role="navigation">
 			<h1 class="page-header__nav__toggle"><?php _e( 'Menu', '_s' ); ?></h1>
 			<a class="screen-reader-text" href="#content"><?php _e( 'Skip to content', '_s' ); ?></a>
 
@@ -35,4 +35,4 @@
 		</nav>
 	</header>
 
-	<div id="content" class="page-content">
+	<div id="content" class="content  page-content">

@@ -113,9 +113,11 @@ SiteGenerator.prototype.app = function app() {
     this.copy('assets/scss/local/_lists.scss', appUrl + '/assets/scss/local/_lists.scss');
     this.copy('assets/scss/local/_local.scss', appUrl + '/assets/scss/local/_local.scss');
 
-    this.copy('assets/scss/object/_page_header.scss', appUrl + '/assets/scss/object/_page_header.scss');
-    this.copy('assets/scss/object/_header_nav.scss', appUrl + '/assets/scss/object/_header_nav.scss');
-    this.copy('assets/scss/object/_page_footer.scss', appUrl + '/assets/scss/object/_page_footer.scss');
+    if (this.wordpress) {
+        this.directory('assets/scss/wordpress', appUrl + '/assets/scss/object');
+    } else {
+        this.directory('assets/scss/object', appUrl + '/assets/scss/object');
+    }
 
     this.copy('assets/js/script.js', appUrl + '/assets/js/script.js');
 };

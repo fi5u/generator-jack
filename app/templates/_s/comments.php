@@ -32,8 +32,8 @@ if ( post_password_required() )
 		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // are there comments to navigate through ?>
 		<nav id="comments-nav-above" class="comments__nav--above" role="navigation">
 			<h1 class="screen-reader-text"><?php _e( 'Comment navigation', '_s' ); ?></h1>
-			<div class="comments__nav__dir--prev"><?php previous_comments_link( __( '&larr; Older Comments', '_s' ) ); ?></div>
-			<div class="comments__nav__dir--next"><?php next_comments_link( __( 'Newer Comments &rarr;', '_s' ) ); ?></div>
+			<div class="comments__nav__dir--prev  comments__nav--above__dir--prev"><?php previous_comments_link( __( '&larr; Older Comments', '_s' ) ); ?></div>
+			<div class="comments__nav__dir--next  comments__nav--above__dir--next"><?php next_comments_link( __( 'Newer Comments &rarr;', '_s' ) ); ?></div>
 		</nav>
 		<?php endif; ?>
 
@@ -52,8 +52,8 @@ if ( post_password_required() )
 		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // are there comments to navigate through ?>
 		<nav id="comment-nav-below" class="comments__nav--below" role="navigation">
 			<h1 class="screen-reader-text"><?php _e( 'Comment navigation', '_s' ); ?></h1>
-			<div class="comments__nav__dir--prev"><?php previous_comments_link( __( '&larr; Older Comments', '_s' ) ); ?></div>
-			<div class="comments__nav__dir--next"><?php next_comments_link( __( 'Newer Comments &rarr;', '_s' ) ); ?></div>
+			<div class="comments__nav__dir--prev  comments__nav--below__dir--prev"><?php previous_comments_link( __( '&larr; Older Comments', '_s' ) ); ?></div>
+			<div class="comments__nav__dir--next  comments__nav--below__dir--next"><?php next_comments_link( __( 'Newer Comments &rarr;', '_s' ) ); ?></div>
 		</nav>
 		<?php endif; ?>
 

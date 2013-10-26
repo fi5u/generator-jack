@@ -4,26 +4,26 @@
  */
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class('article--single'); ?>>
-	<header class="article--single__header">
-		<h1 class="article--single__header__title"><?php the_title(); ?></h1>
+<article id="post-<?php the_ID(); ?>" <?php post_class($classes = array('article', 'article--single')); ?>>
+	<header class="header  article__header  article--single__header">
+		<h1 class="header__title  article__header__title  article--single__header__title"><?php the_title(); ?></h1>
 
-		<div class="article--single__meta">
+		<div class="header__meta  article__header__meta  article--single__header__meta">
 			<?php _s_posted_on(); ?>
 		</div>
 	</header>
 
-	<div class="article--single__content">
+	<div class="content  article__content  article--single__content">
 		<?php the_content(); ?>
 		<?php
 			wp_link_pages( array(
-				'before' => '<div class="page-links">' . __( 'Pages:', '_s' ),
+				'before' => '<div class="content__links  article__content__links  article--single__content__links">' . __( 'Pages:', '_s' ),
 				'after'  => '</div>',
 			) );
 		?>
 	</div>
 
-	<footer class="article--single__footer">
+	<footer class="footer  article__footer article--single__footer">
 		<?php
 			/* translators: used between list items, there is a space after the comma */
 			$category_list = get_the_category_list( __( ', ', '_s' ) );
@@ -57,6 +57,6 @@
 			);
 		?>
 
-		<?php edit_post_link( __( 'Edit', '_s' ), '<span class="edit-link">', '</span>' ); ?>
+		<?php edit_post_link( __( 'Edit', '_s' ), '<span class="footer__edit-link  article__footer__edit-link  article--single__footer__edit-link">', '</span>' ); ?>
 	</footer>
 </article>

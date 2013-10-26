@@ -11,14 +11,13 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: _s
 Domain Path: /languages/
 Tags:
+*/
 <% } %>
 
 /* Lib */
-@import "lib/_normalize";
-<% if (cssFramework === 'compassSusy' && wordpress === true) { %>
+@import "lib/_normalize";<% if (cssFramework === 'compassSusy' && wordpress === true) { %>
 @import "../../../../bower_components/susy/sass/_susy.scss";
-<% } %>
-<% if (cssFramework === 'compassSusy' && wordpress === false) { %>
+<% } %><% if (cssFramework === 'compassSusy' && wordpress === false) { %>
 @import "../../../bower_components/susy/sass/_susy.scss";
 <% } %>
 
@@ -42,7 +41,29 @@ Tags:
 @import "local/_local";
 
 
-/* Object */
+/* Object */<% if (wordpress === true) { %>
+@import "object/_wp_spec";
+
+@import "object/header";
+@import "object/content";
+@import "object/footer";
+
+@import "object/_article";
+@import "object/_article--page";
+@import "object/_article--single";
+@import "object/_article--image";
+@import "object/_archive";
+@import "object/_comments";
+@import "object/_error404";
+@import "object/_image";
+@import "object/_no-results";
+@import "object/_page-header";
+@import "object/_page-footer";
+@import "object/_search";
+@import "object/_search-form";
+@import "object/_widgets";
+<% } else { %>
 @import "object/_page_header";
 @import "object/_header_nav";
 @import "object/_page_footer";
+<% } %>

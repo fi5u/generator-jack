@@ -11,8 +11,8 @@ get_header(); ?>
 
 	<?php if ( have_posts() ) : ?>
 
-		<header class="search__header">
-			<h1 class="search__title"><?php printf( __( 'Search Results for: %s', '_s' ), '<span>' . get_search_query() . '</span>' ); ?></h1>
+		<header class="header  search__header">
+			<h1 class="header__title  search__header__title"><?php printf( __( 'Search Results for: %s', '_s' ), '<span>' . get_search_query() . '</span>' ); ?></h1>
 		</header>
 
 		<?php while ( have_posts() ) : the_post(); ?>

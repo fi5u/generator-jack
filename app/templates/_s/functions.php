@@ -6,6 +6,33 @@
  */
 
 /**
+ * Get attachment id from url
+ */
+function _s_get_image_id($image_url) {
+    global $wpdb;
+    $prefix = $wpdb->prefix;
+    $attachment = $wpdb->get_col($wpdb->prepare("SELECT ID FROM " . $prefix . "posts" . " WHERE guid='%s';", $image_url ));
+        return $attachment[0];
+}
+
+
+/**
+ * Get image attributes
+ */
+function _s_get_attachment( $attachment_id ) {
+
+    $attachment = get_post( $attachment_id );
+    return array(
+        'alt' => get_post_meta( $attachment->ID, '_wp_attachment_image_alt', true ),
+        'caption' => $attachment->post_excerpt,
+        'description' => $attachment->post_content,
+        'href' => get_permalink( $attachment->ID ),
+        'src' => $attachment->guid,
+        'title' => $attachment->post_title
+    );
+}
+
+/**
  * Set the content width based on the theme's design and stylesheet.
  */
 if ( ! isset( $content_width ) )
@@ -71,9 +98,9 @@ function _s_widgets_init() {
 	register_sidebar( array(
 		'name'          => __( 'Sidebar', '_s' ),
 		'id'            => 'sidebar-1',
-		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'before_widget' => '<aside id="%1$s" class="widgets__widget  widgets__widget--%2$s">',
 		'after_widget'  => '</aside>',
-		'before_title'  => '<h1 class="widget-title">',
+		'before_title'  => '<h1 class="widgets__widget__title">',
 		'after_title'   => '</h1>',
 	) );
 }

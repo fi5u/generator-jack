@@ -10,7 +10,7 @@
 
 	</div><!-- #content -->
 
-	<footer class="page-footer" role="contentinfo">
+	<footer class="footer  page-footer" role="contentinfo">
 
 	</footer>
 </div><!-- #page -->

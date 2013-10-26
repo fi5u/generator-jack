@@ -1,0 +1,67 @@
+.article--image {
+
+}
+
+    .article--image__header {
+
+    }
+
+        .article--image__header__title {
+
+        }
+
+        .article--image__header__meta {
+
+        }
+
+            .article--image__header__meta__date {
+
+            }
+
+            .article--image__header__meta__edit-link {
+
+            }
+
+        .article--image__header__nav {
+
+        }
+
+            %article--image__header__nav__dir {
+
+            }
+
+            .article--image__header__nav__dir--prev {
+                @extend %article--image__header__nav__dir;
+            }
+
+            .article--image__header__nav__dir--next {
+                @extend %article--image__header__nav__dir;
+            }
+
+    .article--image__content {
+
+    }
+
+        .article--image__content__attachment {
+
+        }
+
+            .article--image__content__attachment__img {
+
+            }
+
+            .article--image__content__attachment__caption {
+
+            }
+
+        .article--image__content__links {
+
+        }
+
+    .article--image__footer {
+
+    }
+
+        .article--image__footer__edit-link {
+
+        }

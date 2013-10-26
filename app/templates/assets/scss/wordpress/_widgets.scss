@@ -1,0 +1,31 @@
+.widgets {
+
+}
+
+    .widgets__widget {
+
+    }
+
+        .widgets__widget__title {
+
+        }
+
+    .widgets__widget--search {
+        @extend .widgets__widget;
+    }
+
+    .widgets__widget--archives {
+        @extend .widgets__widget;
+    }
+
+        .widgets__widget--archives__title {
+
+        }
+
+    .widgets__widget--meta {
+        @extend .widgets__widget;
+    }
+
+        .widgets__widget--meta__title {
+
+        }

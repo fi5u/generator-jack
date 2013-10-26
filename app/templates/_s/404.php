@@ -11,11 +11,11 @@ get_header(); ?>
 	<main class="main" role="main">
 
 		<section class="error-404">
-			<header class="error-404__header">
-				<h1 class="error-404__title"><?php _e( 'Oops! That page can&rsquo;t be found.', '_s' ); ?></h1>
+			<header class="header  error-404__header">
+				<h1 class="header__title  error-404__header__title"><?php _e( 'Oops! That page can&rsquo;t be found.', '_s' ); ?></h1>
 			</header>
 
-			<div class="error-404__content">
+			<div class="content  error-404__content">
 				<p><?php _e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', '_s' ); ?></p>
 
 				<?php get_search_form(); ?>
@@ -23,8 +23,8 @@ get_header(); ?>
 				<?php the_widget( 'WP_Widget_Recent_Posts' ); ?>
 
 				<?php if ( _s_categorized_blog() ) : // Only show the widget if site has multiple categories. ?>
-				<div class="widget widget_categories">
-					<h2 class="widgettitle"><?php _e( 'Most Used Categories', '_s' ); ?></h2>
+				<div class="widgets__widget  widgets__widget--categories">
+					<h1 class="widgets__widget__title  widgets__widget--categories__title"><?php _e( 'Most Used Categories', '_s' ); ?></h1>
 					<ul>
 					<?php
 						wp_list_categories( array(
