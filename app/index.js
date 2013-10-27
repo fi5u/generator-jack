@@ -3,10 +3,8 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 
-
 var SiteGenerator = module.exports = function SiteGenerator(args, options, config) {
     yeoman.generators.Base.apply(this, arguments);
-
     this.on('end', function () {
         this.installDependencies({
             skipInstall: options['skip-install'],

@@ -7,14 +7,16 @@ module.exports = function (grunt) {
 
     // configurable paths
     var yeomanConfig = {
-        app: 'app',
+        appBase: 'app',
+        app: this.appBase,
         dev: 'dev',
         dist: 'dist'
     };
 
     <% if (wordpress === true) { %>
     var yeomanConfig = {
-        app: 'app/<%= slugSiteName %>',
+        appBase: 'app',
+        app: this.appBase + '/wp-content/themes/<%= slugSiteName %>',
         dev: 'dev/<%= slugSiteName %>',
         dist: 'dist/<%= slugSiteName %>'
     };
@@ -44,7 +46,20 @@ module.exports = function (grunt) {
                         '!<%%= yeoman.dist %>/.git*'
                     ]
                 }]
+            }<% if (wordpress === true) { %>,
+
+            wpinit: {
+                files: [{
+                    dot: true,
+                    src: [
+                        '.tmp',
+                        '<%%= yeoman.appBase %>',
+                        '!<%%= yeoman.dist %>/.git*',
+                        '!<%%= yeoman.appBase %>/'
+                    ]
+                }]
             }
+            <% } %>
         },
 
         useminPrepare: {
@@ -129,7 +144,14 @@ module.exports = function (grunt) {
                 files: [
                     {expand: true, cwd: '<%%= yeoman.app %>', src: ['{,*/}*.html'], dest: '<%%= yeoman.dev %>'}
                 ]
+            }<% if (wordpress === true) { %>,
+
+            wpinit: {
+                files: [
+                    {expand: true, cwd: 'bower_components/wordpress', src: ['**'], dest: '<%%= yeoman.appBase %>'}
+                ]
             }
+            <% } %>
         },
 
         <% if (cssFramework === 'compassSusy') { %>
@@ -372,6 +394,11 @@ module.exports = function (grunt) {
             css: '<%%= yeoman.dist %>/assets/css/*.css'
         }
     });
+
+    grunt.registerTask('wpinit', [
+        'clean:wpinit',
+        'copy:wpinit'
+    ]);
 
     grunt.registerTask('server', [
         'dev',
