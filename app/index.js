@@ -72,10 +72,13 @@ function convertToSlug(text) {
 
 SiteGenerator.prototype.app = function app() {
     var appUrl = 'app';
+
     if (this.wordpress) {
         this.slugSiteName = convertToSlug(this.siteName);
-        appUrl = 'app/' + this.slugSiteName;
-        this.directory('_s', 'app/' + this.slugSiteName);
+
+        /*this.directory('wordpress', appUrl);*/
+        this.directory('_s', '');
+        appUrl = '_s';
     }
 
     this.mkdir(appUrl + '/assets/scss/lib');
@@ -111,13 +114,13 @@ SiteGenerator.prototype.app = function app() {
     this.copy('assets/scss/local/_lists.scss', appUrl + '/assets/scss/local/_lists.scss');
     this.copy('assets/scss/local/_local.scss', appUrl + '/assets/scss/local/_local.scss');
 
+    this.copy('assets/js/script.js', appUrl + '/assets/js/script.js');
+
     if (this.wordpress) {
         this.directory('assets/scss/wordpress', appUrl + '/assets/scss/object');
     } else {
         this.directory('assets/scss/object', appUrl + '/assets/scss/object');
     }
-
-    this.copy('assets/js/script.js', appUrl + '/assets/js/script.js');
 };
 
 SiteGenerator.prototype.runtime = function runtime() {
