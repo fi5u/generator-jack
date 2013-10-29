@@ -29,12 +29,13 @@ SiteGenerator.prototype.askFor = function askFor() {
         {
             name: 'siteName',
             message: 'What would you like to call your site?'
-        }, {
+        }, /*{
             type: 'confirm',
             name: 'wordpress',
             message: 'Is this site going to be running on WordPress?',
             default: false
-        }, {
+        }, */
+        {
             type: 'list',
             name: 'cssFramework',
             message: 'Which CSS framework / grid system would you like to use?',

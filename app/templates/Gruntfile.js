@@ -84,9 +84,9 @@ module.exports = function (grunt) {
                 files: ['<%%= yeoman.app %>/assets/img/sprite-assets/*.png'],
                 tasks: ['spriteHD', 'copy:dev']
             },
-            livereload: {
-                files: ['<%%= yeoman.app %>/**'],
-                tasks: ['livereload']
+            php: {
+                files: ['<%%= yeoman.app %>{,*/}*.php'],
+                tasks: ['dev']
             }
         },
 
@@ -108,8 +108,9 @@ module.exports = function (grunt) {
         },
 
         php: {
-            server: {
+            watch: {
                 options: {
+                    hostname: 'localhost',
                     keepalive: true,
                     open: true
                 }
@@ -117,8 +118,9 @@ module.exports = function (grunt) {
         },
 
         open: {
-            server: {
-                path: 'http://localhost:<%%= connect.options.port %>'
+            all: {
+                <% if (wordpress === true) { %>path: 'http://localhost:<%%= php.server.options.port %>'<% } else { %>
+                path: 'http://localhost:<%%= connect.options.port %>'<% } %>
             }
         },
 
