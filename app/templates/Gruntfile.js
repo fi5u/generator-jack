@@ -416,7 +416,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('server', [
         'dev'
-        ,<% if (wordpress === false) { %>'connect:livereload'<% } else { %>'php'<% } %>
+        ,'connect:livereload'
         ,'watch'
     ]);
 
