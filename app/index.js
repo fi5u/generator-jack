@@ -20,6 +20,15 @@ var SiteGenerator = module.exports = function SiteGenerator(args, options, confi
                             console.log('WordPress copied successfully');
                         }
                     });
+
+                    fs.copy(__dirname + '/templates/_s', projectDir + '/app/wp-content/themes/_s', function (err) {
+                        if (err) {
+                            return console.error(err);
+                        } else {
+                            console.log('Template WordPress theme copied successfully');
+                        }
+                    });
+
                 }
 
             }.bind(this)
@@ -88,9 +97,6 @@ SiteGenerator.prototype.app = function app() {
 
     if (this.wordpress) {
         this.slugSiteName = convertToSlug(this.siteName);
-
-        /*this.directory('wordpress', appUrl);*/
-        this.directory('_s', '');
         appUrl = '_s';
     }
 
