@@ -9,7 +9,17 @@ var SiteGenerator = module.exports = function SiteGenerator(args, options, confi
         this.installDependencies({
             skipInstall: options['skip-install'],
             callback: function () {
-                /*this.copy('assets/bower_components/wordpress/index.php', 'app/index.php');*/
+                var fs = require('fs-extra');
+                var projectDir = process.cwd();
+
+                fs.copy(projectDir + '/bower_components/wordpress', projectDir + '/app', function (err) {
+                    if (err) {
+                        return console.error(err);
+                    } else {
+                        console.log('WordPress copied successfully');
+                    }
+                });
+
             }.bind(this)
         });
     });

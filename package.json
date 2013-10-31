@@ -5,23 +5,24 @@
   "keywords": [
     "yeoman-generator"
   ],
-  "homepage": "https://github.com/tommybfisher/generator-site",
-  "bugs": "https://github.com/tommybfisher/generator-site/issues",
+  "homepage": "https://github.com/fi5u/generator-site",
+  "bugs": "https://github.com/fi5u/generator-site/issues",
   "author": {
     "name": "",
     "email": "tommybfisher@gmail.com",
-    "url": "https://github.com/tommybfisher"
+    "url": "https://github.com/fi5u"
   },
   "main": "app/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/tommybfisher/generator-site.git"
+    "url": "git://github.com/fi5u/generator-site.git"
   },
   "scripts": {
     "test": "mocha"
   },
   "dependencies": {
-    "yeoman-generator": "~0.13.0"
+    "yeoman-generator": "~0.13.0",
+    "fs-extra": "~0.8.1"
   },
   "devDependencies": {
     "mocha": "~1.12.0"

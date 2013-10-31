@@ -2,7 +2,8 @@
     "name": "<%= _.slugify(siteName) %>",
     "version": "0.0.0",
     "dependencies": {
-        "jquery-legacy": "jquery#1.10.x"
+        "wordpress": "latest"
+        ,"jquery-legacy": "jquery#1.10.x"
         ,"jquery": "jquery#latest"
         ,"jquery-migrate": "latest"
         ,"selectivizr": "latest"
@@ -11,6 +12,6 @@
         ,"susy": "latest"<% } %><% if (cssFramework == 'bourbonNeat') { %>
         ,"bourbon": "latest"
         ,"neat": "latest"<% } %><% if (wordpress == true) { %>
-        ,"wordpress": "latest"<% } %>
+        <% } %>
     }
 }

@@ -119,8 +119,7 @@ module.exports = function (grunt) {
 
         open: {
             all: {
-                <% if (wordpress === true) { %>path: 'http://localhost:<%%= php.server.options.port %>'<% } else { %>
-                path: 'http://localhost:<%%= connect.options.port %>'<% } %>
+                path: 'http://localhost:<%%= connect.options.port %>'
             }
         },
 
@@ -406,8 +405,32 @@ module.exports = function (grunt) {
             },
             html: ['<%%= yeoman.dist %>/*.html'],
             css: '<%%= yeoman.dist %>/assets/css/*.css'
+        },
+
+        autoshot: {
+            default_options: {
+                options: {
+                    path: 'dev',
+                    remote: {
+                        files: [
+                            { src: "http://www.google.com", dest: "google.png" }
+                        ]
+                    },
+                    viewport: [
+                        '1920x1080',
+                        '1024x768',
+                        '640x960'
+                    ]
+                },
+            },
         }
     });
+
+    grunt.registerTask('screenshot', [
+        'dev'
+        /*,'connect:livereload'*/
+        ,'autoshot'
+    ]);
 
     grunt.registerTask('wpinit', [
         'copy:wpinit',
