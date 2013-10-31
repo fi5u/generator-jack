@@ -9,16 +9,18 @@ var SiteGenerator = module.exports = function SiteGenerator(args, options, confi
         this.installDependencies({
             skipInstall: options['skip-install'],
             callback: function () {
-                var fs = require('fs-extra');
-                var projectDir = process.cwd();
+                if (this.wordpress) {
+                    var fs = require('fs-extra');
+                    var projectDir = process.cwd();
 
-                fs.copy(projectDir + '/bower_components/wordpress', projectDir + '/app', function (err) {
-                    if (err) {
-                        return console.error(err);
-                    } else {
-                        console.log('WordPress copied successfully');
-                    }
-                });
+                    fs.copy(projectDir + '/bower_components/wordpress', projectDir + '/app', function (err) {
+                        if (err) {
+                            return console.error(err);
+                        } else {
+                            console.log('WordPress copied successfully');
+                        }
+                    });
+                }
 
             }.bind(this)
         });
@@ -39,12 +41,12 @@ SiteGenerator.prototype.askFor = function askFor() {
         {
             name: 'siteName',
             message: 'What would you like to call your site?'
-        }, /*{
+        }, {
             type: 'confirm',
             name: 'wordpress',
             message: 'Is this site going to be running on WordPress?',
             default: false
-        }, */
+        },
         {
             type: 'list',
             name: 'cssFramework',
