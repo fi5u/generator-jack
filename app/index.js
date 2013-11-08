@@ -38,8 +38,9 @@ var SiteGenerator = module.exports = function SiteGenerator(args, options, confi
                                 if (err) {
                                     return console.error(err);
                                 } else {
-                                    var wpThemeDir = projectDir + '/app/wp-content/themes/' + siteName;
-                                    var wpAssetsDir = wpThemeDir + '/assets';
+                                    var mv = require('mv'),
+                                        wpThemeDir = projectDir + '/app/wp-content/themes/' + siteName,
+                                        wpAssetsDir = wpThemeDir + '/assets';
 
                                     console.log('Template WordPress theme copied successfully\nBeginning text replacement on theme files');
 
@@ -48,6 +49,13 @@ var SiteGenerator = module.exports = function SiteGenerator(args, options, confi
                                     performReplacement('_s_', slugSite + '_', wpThemeDir);
                                     performReplacement(' _s', ' ' + siteName.charAt(0).toUpperCase() + siteName.slice(1), wpThemeDir);
                                     performReplacement('_s-', slugSite + '-', wpThemeDir);
+
+                                    console.log('Setting the name for the language file');
+                                    mv(wpThemeDir + '/languages/_s.pot', wpThemeDir + '/languages/' + slugSite + '.pot', function(err) {
+                                        if (err) {
+                                            console.log('Could not set the name for the language file: ' + err);
+                                        }
+                                    });
                                 }
                             });
                         }
