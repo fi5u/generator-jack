@@ -12,9 +12,9 @@ module.exports = function (grunt) {
         distBase: 'dist',
         <% if (wordpress === true) { %>
         themeUrl: '/wp-content/themes',
-        app: 'app/wp-content/themes/<%= slugSiteName %>',
-        dev: 'dev/wp-content/themes/<%= slugSiteName %>',
-        dist: 'dist/wp-content/themes/<%= slugSiteName %>'
+        app: 'app/wp-content/themes/<%= siteName %>',
+        dev: 'dev/wp-content/themes/<%= siteName %>',
+        dist: 'dist/wp-content/themes/<%= siteName %>'
         <% } else { %>
         app: 'app',
         dev: 'dev',
@@ -46,17 +46,7 @@ module.exports = function (grunt) {
                         '!<%%= yeoman.distBase %>/.git*'
                     ]
                 }]
-            }<% if (wordpress === true) { %>,
-
-            wpinit: {
-                files: [{
-                    dot: true,
-                    src: [
-                        '_s'
-                    ]
-                }]
             }
-            <% } %>
         },
 
         useminPrepare: {

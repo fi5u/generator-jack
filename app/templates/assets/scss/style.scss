@@ -1,5 +1,4 @@
-<% if (wordpress === true) { %>
-/*
+<% if (wordpress === true) { %>/*
 Theme Name: _s
 Theme URI:
 Author:
@@ -12,57 +11,67 @@ Text Domain: _s
 Domain Path: /languages/
 Tags:
 */
-<% } %>
 
-/* Lib */
-@import "lib/_normalize";<% if (cssFramework === 'compassSusy' && wordpress === true) { %>
+
+<% } %>/* Lib */<% if (wordpress === true) { %>
+@import "assets/scss/lib/_normalize";<% if (cssFramework === 'compassSusy') { %>
 @import "../../../../../../bower_components/susy/sass/_susy.scss";
-<% } %><% if (cssFramework === 'compassSusy' && wordpress === false) { %>
-@import "../../../bower_components/susy/sass/_susy.scss";
-<% } %>
+<% } %><% } else { %>
+@import "lib/_normalize";<% if (cssFramework === 'compassSusy') { %>
+@import "../../../bower_components/susy/sass/_susy.scss";<% } %><% } %>
 
 
-/* Global */
+/* Global */<% if (wordpress === true) { %>
+@import "assets/scss/global/_sprite-sheet";
+@import "assets/scss/global/_fonts";
+@import "assets/scss/global/_variables";
+@import "assets/scss/global/_functions";
+@import "assets/scss/global/_mixins";
+@import "assets/scss/global/_framework_media";
+@import "assets/scss/global/_framework_nav";<% } else { %>
 @import "global/_sprite-sheet";
 @import "global/_fonts";
 @import "global/_variables";
 @import "global/_functions";
 @import "global/_mixins";
 @import "global/_framework_media";
-@import "global/_framework_nav";
+@import "global/_framework_nav";<% } %>
 
 
-/* Local */
+/* Local */<% if (wordpress === true) { %>
+@import "assets/scss/local/_typography";
+@import "assets/scss/local/_helpers";
+@import "assets/scss/local/_images";
+@import "assets/scss/local/_forms";
+@import "assets/scss/local/_lists";
+@import "assets/scss/local/_local";<% } else { %>
 @import "local/_typography";
 @import "local/_helpers";
 @import "local/_images";
 @import "local/_forms";
 @import "local/_lists";
-@import "local/_local";
+@import "local/_local";<% } %>
 
 
 /* Object */<% if (wordpress === true) { %>
-@import "object/_wp_spec";
-
-@import "object/header";
-@import "object/content";
-@import "object/footer";
-
-@import "object/_article";
-@import "object/_article--page";
-@import "object/_article--single";
-@import "object/_article--image";
-@import "object/_archive";
-@import "object/_comments";
-@import "object/_error404";
-@import "object/_image";
-@import "object/_no-results";
-@import "object/_page-header";
-@import "object/_page-footer";
-@import "object/_search";
-@import "object/_search-form";
-@import "object/_widgets";
-<% } else { %>
+@import "assets/scss/object/_wp_spec";
+@import "assets/scss/object/_header";
+@import "assets/scss/object/_content";
+@import "assets/scss/object/_footer";
+@import "assets/scss/object/_article";
+@import "assets/scss/object/_article--page";
+@import "assets/scss/object/_article--single";
+@import "assets/scss/object/_article--image";
+@import "assets/scss/object/_archive";
+@import "assets/scss/object/_comments";
+@import "assets/scss/object/_error404";
+@import "assets/scss/object/_image";
+@import "assets/scss/object/_no-results";
+@import "assets/scss/object/_page-header";
+@import "assets/scss/object/_page-footer";
+@import "assets/scss/object/_search";
+@import "assets/scss/object/_search-form";
+@import "assets/scss/object/_widgets";<% } else { %>
 @import "object/_page_header";
 @import "object/_header_nav";
 @import "object/_page_footer";

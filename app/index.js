@@ -10,22 +10,46 @@ var SiteGenerator = module.exports = function SiteGenerator(args, options, confi
             skipInstall: options['skip-install'],
             callback: function () {
                 if (this.wordpress) {
-                    var fs = require('fs-extra');
-                    var projectDir = process.cwd();
+                    var fs = require('fs-extra'),
+                        replace = require('replace'),
+                        slugSite = this.slugSiteName,
+                        siteName = this.siteName,
+                        projectDir = process.cwd();
 
                     fs.copy(projectDir + '/bower_components/wordpress', projectDir + '/app', function (err) {
                         if (err) {
                             return console.error(err);
                         } else {
                             console.log('WordPress copied successfully');
-                        }
-                    });
 
-                    fs.copy(__dirname + '/templates/_s', projectDir + '/app/wp-content/themes/_s', function (err) {
-                        if (err) {
-                            return console.error(err);
-                        } else {
-                            console.log('Template WordPress theme copied successfully');
+                            fs.copy(__dirname + '/templates/_s', projectDir + '/app/wp-content/themes/' + siteName, function (err) {
+                                function performReplacement(regex, replacement, paths, include) {
+                                    console.log('Replacing ' + regex + ' for ' + replacement);
+                                    replace({
+                                        regex: regex,
+                                        replacement: replacement,
+                                        paths: [paths],
+                                        include: include,
+                                        recursive: true,
+                                        count: true
+                                    });
+                                }
+
+                                if (err) {
+                                    return console.error(err);
+                                } else {
+                                    var wpThemeDir = projectDir + '/app/wp-content/themes/' + siteName;
+                                    var wpAssetsDir = wpThemeDir + '/assets';
+
+                                    console.log('Template WordPress theme copied successfully\nBeginning text replacement on theme files');
+
+                                    performReplacement('Text Domain: _s', 'Text Domain: ' + slugSite, wpThemeDir, '*.scss');
+                                    performReplacement("'_s'", "'" + slugSite + "'", wpThemeDir);
+                                    performReplacement('_s_', slugSite + '_', wpThemeDir);
+                                    performReplacement(' _s', ' ' + siteName.charAt(0).toUpperCase() + siteName.slice(1), wpThemeDir);
+                                    performReplacement('_s-', slugSite + '-', wpThemeDir);
+                                }
+                            });
                         }
                     });
 
@@ -97,7 +121,7 @@ SiteGenerator.prototype.app = function app() {
 
     if (this.wordpress) {
         this.slugSiteName = convertToSlug(this.siteName);
-        appUrl = '_s';
+        appUrl = 'app/wp-content/themes/' + this.siteName;
     }
 
     this.mkdir(appUrl + '/assets/scss/lib');
@@ -114,7 +138,11 @@ SiteGenerator.prototype.app = function app() {
     this.copy('.htaccess', appUrl + '/.htaccess');
 
     this.copy('assets/img/sprite-assets/trans.png', appUrl + '/assets/img/sprite-assets/trans.png');
-    this.copy('assets/scss/style.scss', appUrl + '/assets/scss/style.scss');
+    if (this.wordpress) {
+        this.copy('assets/scss/style.scss', appUrl + '/style.scss');
+    } else {
+        this.copy('assets/scss/style.scss', appUrl + '/assets/scss/style.scss');
+    }
     this.copy('assets/scss/lteie8.scss', appUrl + '/assets/scss/lteie8.scss');
 
     this.copy('assets/scss/lib/_normalize.scss', appUrl + '/assets/scss/lib/_normalize.scss');
