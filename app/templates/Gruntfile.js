@@ -34,9 +34,14 @@ module.exports = function (grunt) {
                             { src: "http://www.google.com", dest: "google.png" }
                         ]
                     },
+                    local: {
+                        path: 'dev',
+                        port: 9000,
+                        files: [
+                            { src: "index.php", dest: "screenshot.jpg" }
+                        ]
+                    },
                     viewport: [
-                        '1920x1080',
-                        '1024x768',
                         '640x960'
                     ]
                 },
