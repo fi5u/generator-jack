@@ -87,8 +87,42 @@ SiteGenerator.prototype.askFor = function askFor() {
             name: 'wordpress',
             message: 'Is this site going to be running on WordPress?',
             default: false
-        },
-        {
+        }, {
+            name: 'dbName',
+            message: 'What is the database name?',
+            default: 'wordpress',
+            when: function (props) {
+                return props.wordpress;
+            }
+        }, {
+            name: 'dbUsername',
+            message: 'What is the username for the database?',
+            default: 'root',
+            when: function (props) {
+                return props.wordpress;
+            }
+        }, {
+            name: 'dbPassword',
+            message: 'What is the password for the database',
+            default: 'root',
+            when: function (props) {
+              return props.wordpress;
+            }
+        }, {
+            name: 'dbHost',
+            message: 'What is the host for the database',
+            default: 'localhost',
+            when: function (props) {
+              return props.wordpress;
+            }
+        }, {
+            name: 'dbTablePrefix',
+            message: 'What is the table prefix',
+            default: 'wp_',
+            when: function (props) {
+              return props.wordpress;
+            }
+        }, {
             type: 'list',
             name: 'cssFramework',
             message: 'Which CSS framework / grid system would you like to use?',
@@ -109,6 +143,11 @@ SiteGenerator.prototype.askFor = function askFor() {
         this.siteName = props.siteName;
         this.cssFramework = props.cssFramework;
         this.wordpress = props.wordpress;
+        this.dbName = props.dbName;
+        this.dbUsername = props.dbUsername;
+        this.dbPassword = props.dbPassword;
+        this.dbHost = props.dbHost;
+        this.dbTablePrefix = props.dbTablePrefix;
 
         cb();
     }.bind(this));
@@ -173,6 +212,8 @@ SiteGenerator.prototype.app = function app() {
 
     if (this.wordpress) {
         this.directory('assets/scss/wordpress', appUrl + '/assets/scss/object');
+        this.template('wp-config.php', 'app/wp-config.php');
+
     } else {
         this.directory('assets/scss/object', appUrl + '/assets/scss/object');
     }
