@@ -25,6 +25,24 @@ module.exports = function (grunt) {
     grunt.initConfig({
         yeoman: yeomanConfig,
 
+        autoshot: {
+            default_options: {
+                options: {
+                    path: 'dev',
+                    remote: {
+                        files: [
+                            { src: "http://www.google.com", dest: "google.png" }
+                        ]
+                    },
+                    viewport: [
+                        '1920x1080',
+                        '1024x768',
+                        '640x960'
+                    ]
+                },
+            },
+        },
+
         clean: {
             dev: {
                 files: [{
@@ -49,37 +67,6 @@ module.exports = function (grunt) {
             }
         },
 
-        useminPrepare: {
-            options: {
-                dest: '<%%= yeoman.dist %>'
-            },
-            html: '<%%= yeoman.app %>/index.html',
-            css: '<%%= yeoman.app %>/assets/scss/**/*.scss'
-        },
-
-        watch: {
-            options: {
-                livereload: true
-            },
-            css: {
-                files: ['<%%= yeoman.app %>/assets/scss/*.scss'],
-                /* TO DO: this should be conditional depending on the framework chosen */
-                tasks: ['compass:dev']
-            },
-            html: {
-                files: ['<%%= yeoman.app %>{,*/}*.html'],
-                tasks: ['copy:html', 'replace', 'processhtml:dev']
-            },
-            sprites: {
-                files: ['<%%= yeoman.app %>/assets/img/sprite-assets/*.png'],
-                tasks: ['spriteHD', 'copy:dev']
-            },
-            php: {
-                files: ['<%%= yeoman.app %>{,*/}*.php'],
-                tasks: ['dev']
-            }
-        },
-
         connect: {
             options: {
                 port: 9000,
@@ -97,21 +84,31 @@ module.exports = function (grunt) {
             }
         },
 
-        php: {
-            watch: {
+        <% if (cssFramework === 'compassSusy') { %>compass: {
+            dev: {
                 options: {
-                    hostname: 'localhost',
-                    keepalive: true,
-                    open: true
+                    sassDir: '<%%= yeoman.app %>/assets/scss',
+                    <% if (wordpress === true) { %>
+                    cssDir: '<%%= yeoman.dev %>',
+                    <% } else { %>
+                    cssDir: '<%%= yeoman.dev %>/assets/css',
+                    <% } %>
+                    environment: 'development'
+                }
+            },
+
+            dist: {
+                options: {
+                    sassDir: '<%%= yeoman.app %>/assets/scss',
+                    <% if (wordpress === true) { %>
+                    cssDir: '<%%= yeoman.dist %>',
+                    <% } else { %>
+                    cssDir: '<%%= yeoman.dist %>/assets/css',
+                    <% } %>
+                    environment: 'production'
                 }
             }
-        },
-
-        open: {
-            all: {
-                path: 'http://localhost:<%%= connect.options.port %>'
-            }
-        },
+        },<% } %>
 
         copy: {
             dev: {
@@ -145,65 +142,75 @@ module.exports = function (grunt) {
                 files: [
                     {expand: true, cwd: '<%%= yeoman.app %>', src: ['{,*/}*.html'], dest: '<%%= yeoman.dev %>'}
                 ]
-            }<% if (wordpress === true) { %>,
-
-            wpinit: {
-                files: [
-                    {expand: true, cwd: 'bower_components/wordpress', src: ['**'], dest: '<%%= yeoman.appBase %>'},
-                    {expand: true, cwd: '_s', src: ['**'], dest: '<%%= yeoman.app %>'}
-                ]
             }
-
-            <% } %>
         },
 
-        <% if (cssFramework === 'compassSusy') { %>
-        compass: {
-            dev: {
-                options: {
-                    sassDir: '<%%= yeoman.app %>/assets/scss',
-                    <% if (wordpress === true) { %>
-                    cssDir: '<%%= yeoman.dev %>',
-                    <% } else { %>
-                    cssDir: '<%%= yeoman.dev %>/assets/css',
-                    <% } %>
-                    environment: 'development'
-                }
-            },
-
+        imagemin: {
             dist: {
+                files: [{
+                    expand: true,
+                    cwd: '<%%= yeoman.app %>/assets/img/',
+                    src: ['**/*.{png,jpg,jpeg,gif,svg}', '!sprite-assets/*.png'],
+                    dest: '<%%= yeoman.app %>/assets/img/'
+                }]
+            }
+        },
+
+        modernizr: {
+            devFile: 'bower_components/modernizr/modernizr.js',
+            outputFile: '<%%= yeoman.dist %>/assets/js/lib/modernizr-custom.min.js',
+            files: ['<%%= yeoman.dist %>/**/*.js', '<%%= yeoman.dist %>/**/*.css', '<%%= yeoman.dist %>/**/*.scss']
+        },
+
+        open: {
+            all: {
+                path: 'http://localhost:<%%= connect.options.port %>'
+            }
+        },
+
+        php: {
+            watch: {
                 options: {
-                    sassDir: '<%%= yeoman.app %>/assets/scss',
-                    <% if (wordpress === true) { %>
-                    cssDir: '<%%= yeoman.dist %>',
-                    <% } else { %>
-                    cssDir: '<%%= yeoman.dist %>/assets/css',
-                    <% } %>
-                    environment: 'production'
+                    hostname: 'localhost',
+                    keepalive: true,
+                    open: true
                 }
             }
         },
-        <% } %>
 
-        <% if (cssFramework !== 'compassSusy') { %>
-        sass: {
-            dev: {
-                expand: true,
-                cwd: '<%%= yeoman.app %>/assets/scss',
-                src: ['*.scss'],
-                dest: '<%%= yeoman.dev %>/assets/css',
-                ext: '.css'
+        processhtml: {
+            options: {
+                process: true,
+                templateSettings: {
+                    opener: '{!',
+                    closer: '!}'
+                }
             },
-
+            dev: {
+                options: {
+                    data: {
+                        jqMinLocal: 'bower_components/jquery/jquery.min.js',
+                        jqLegMinLocal: 'bower_components/jquery-legacy/jquery.min.js',
+                        jqMigrate: 'bower_components/jquery-migrate/jquery-migrate.js'
+                    }
+                },
+                files: {
+                    '<%%= yeoman.dev %>/index.html': ['<%%= yeoman.dev %>/index.html']
+                }
+            },
             dist: {
-                expand: true,
-                cwd: '<%%= yeoman.app %>/assets/scss',
-                src: ['*.scss'],
-                dest: '<%%= yeoman.dist %>/assets/css',
-                ext: '.css'
+                options: {
+                    data: {
+                        jqMinLocal: 'assets/js/lib/jquery.min.js',
+                        jqLegMinLocal: 'assets/js/lib/jquery-legacy.min.js',
+                        jqMigrate: 'assets/js/lib/jquery-migrate.min.js'
+                    }
+                },
+                files: {
+                    '<%%= yeoman.dist %>/index.html': ['<%%= yeoman.dist %>/index.html']
+                }
             }
         },
-        <% } %>
 
         replace: {
             <% if (wordpress === true) { %>
@@ -287,44 +294,48 @@ module.exports = function (grunt) {
             <% } %>
         },
 
-        processhtml: {
-            options: {
-                process: true,
-                templateSettings: {
-                    opener: '{!',
-                    closer: '!}'
-                }
-            },
-            dev: {
-                options: {
-                    data: {
-                        jqMinLocal: 'bower_components/jquery/jquery.min.js',
-                        jqLegMinLocal: 'bower_components/jquery-legacy/jquery.min.js',
-                        jqMigrate: 'bower_components/jquery-migrate/jquery-migrate.js'
-                    }
-                },
-                files: {
-                    '<%%= yeoman.dev %>/index.html': ['<%%= yeoman.dev %>/index.html']
-                }
-            },
+        rev: {
             dist: {
-                options: {
-                    data: {
-                        jqMinLocal: 'assets/js/lib/jquery.min.js',
-                        jqLegMinLocal: 'assets/js/lib/jquery-legacy.min.js',
-                        jqMigrate: 'assets/js/lib/jquery-migrate.min.js'
-                    }
-                },
                 files: {
-                    '<%%= yeoman.dist %>/index.html': ['<%%= yeoman.dist %>/index.html']
+                    src: [
+                        '<%%= yeoman.dist %>/assets/js/{,*/}*.js',
+                        '<%%= yeoman.dist %>/assets/css/{,*/}*.css',
+                        '<%%= yeoman.dist %>/assets/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+                        '<%%= yeoman.dist %>/assets/css/fonts/*'
+                    ]
                 }
             }
         },
 
-        modernizr: {
-            devFile: 'bower_components/modernizr/modernizr.js',
-            outputFile: '<%%= yeoman.dist %>/assets/js/lib/modernizr-custom.min.js',
-            files: ['<%%= yeoman.dist %>/**/*.js', '<%%= yeoman.dist %>/**/*.css', '<%%= yeoman.dist %>/**/*.scss']
+        <% if (cssFramework !== 'compassSusy') { %>sass: {
+            dev: {
+                expand: true,
+                cwd: '<%%= yeoman.app %>/assets/scss',
+                src: ['*.scss'],
+                dest: '<%%= yeoman.dev %>/assets/css',
+                ext: '.css'
+            },
+
+            dist: {
+                expand: true,
+                cwd: '<%%= yeoman.app %>/assets/scss',
+                src: ['*.scss'],
+                dest: '<%%= yeoman.dist %>/assets/css',
+                ext: '.css'
+            }
+        },<% } %>
+
+        spriteHD: {
+            options: {
+                destImg: '<%%= yeoman.app %>/assets/img',
+                destCSS: '<%%= yeoman.app %>/assets/scss/global',
+                imgUrl: '../img'
+            },
+
+            all: {
+                src: '<%%= yeoman.app %>/assets/img/sprite-assets/*',
+                spriteName: 'sheet'
+            }
         },
 
         svgmin: {
@@ -352,43 +363,6 @@ module.exports = function (grunt) {
             }
         },
 
-        rev: {
-            dist: {
-                files: {
-                    src: [
-                        '<%%= yeoman.dist %>/assets/js/{,*/}*.js',
-                        '<%%= yeoman.dist %>/assets/css/{,*/}*.css',
-                        '<%%= yeoman.dist %>/assets/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-                        '<%%= yeoman.dist %>/assets/css/fonts/*'
-                    ]
-                }
-            }
-        },
-
-        spriteHD: {
-            options: {
-                destImg: '<%%= yeoman.app %>/assets/img',
-                destCSS: '<%%= yeoman.app %>/assets/scss/global',
-                imgUrl: '../img'
-            },
-
-            all: {
-                src: '<%%= yeoman.app %>/assets/img/sprite-assets/*',
-                spriteName: 'sheet'
-            }
-        },
-
-        imagemin: {
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: '<%%= yeoman.app %>/assets/img/',
-                    src: ['**/*.{png,jpg,jpeg,gif,svg}', '!sprite-assets/*.png'],
-                    dest: '<%%= yeoman.app %>/assets/img/'
-                }]
-            }
-        },
-
         usemin: {
             options: {
                 dirs: ['<%%= yeoman.dist %>']
@@ -397,47 +371,58 @@ module.exports = function (grunt) {
             css: '<%%= yeoman.dist %>/assets/css/*.css'
         },
 
-        autoshot: {
-            default_options: {
-                options: {
-                    path: 'dev',
-                    remote: {
-                        files: [
-                            { src: "http://www.google.com", dest: "google.png" }
-                        ]
-                    },
-                    viewport: [
-                        '1920x1080',
-                        '1024x768',
-                        '640x960'
-                    ]
-                },
+        useminPrepare: {
+            options: {
+                dest: '<%%= yeoman.dist %>'
             },
+            html: '<%%= yeoman.app %>/index.html',
+            css: '<%%= yeoman.app %>/assets/scss/**/*.scss'
+        },
+
+        watch: {
+            options: {
+                livereload: true
+            },
+            css: {
+                files: ['<%%= yeoman.app %>/assets/scss/*.scss'],
+                <% if (cssFramework === 'compassSusy') { %>
+                tasks: ['compass:dev']
+                <% } else { %>
+                tasks: ['sass:dev']
+                <% } %>
+            },
+            html: {
+                files: ['<%%= yeoman.app %>{,*/}*.html'],
+                tasks: ['copy:html', 'replace', 'processhtml:dev']
+            },
+            sprites: {
+                files: ['<%%= yeoman.app %>/assets/img/sprite-assets/*.png'],
+                tasks: ['spriteHD', 'copy:dev']
+            },
+            php: {
+                files: ['<%%= yeoman.app %>{,*/}*.php'],
+                tasks: ['dev']
+            }
         }
     });
 
     grunt.registerTask('screenshot', [
-        'dev'
-        /*,'connect:livereload'*/
-        ,'autoshot'
-    ]);
-
-    grunt.registerTask('wpinit', [
-        'copy:wpinit',
-        'clean:wpinit'
+        'dev',
+        /*'connect:livereload',*/
+        'autoshot'
     ]);
 
     grunt.registerTask('server', [
-        'dev'
-        ,'connect:livereload'
-        ,'watch'
+        'dev',
+        'connect:livereload',
+        'watch'
     ]);
 
     grunt.registerTask('dev', [
         'clean:dev',
         'copy:dev',
         'spriteHD',<% if (cssFramework === 'compassSusy') { %>
-        'compass:dev',<% } %><% if (cssFramework !== 'compassSusy') { %>
+        'compass:dev',<% } else { %>
         'sass:dev',<% } %>
         'processhtml:dev',
         'replace:dev'
@@ -450,7 +435,7 @@ module.exports = function (grunt) {
         'imagemin:dist',
         'svg2png',
         'spriteHD',<% if (cssFramework === 'compassSusy') { %>
-        'compass:dist',<% } %><% if (cssFramework !== 'compassSusy') { %>
+        'compass:dist',<% } else { %>
         'sass:dist',<% } %>
         'concat',
         'uglify',
@@ -459,6 +444,6 @@ module.exports = function (grunt) {
         'processhtml:dist',
         'replace:dist',
         'rev',
-        'usemin',
+        'usemin'
     ]);
 };
