@@ -88,11 +88,7 @@ module.exports = function (grunt) {
             dev: {
                 options: {
                     sassDir: '<%%= yeoman.app %>/assets/scss',
-                    <% if (wordpress === true) { %>
-                    cssDir: '<%%= yeoman.dev %>',
-                    <% } else { %>
                     cssDir: '<%%= yeoman.dev %>/assets/css',
-                    <% } %>
                     environment: 'development'
                 }
             },
@@ -100,11 +96,7 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     sassDir: '<%%= yeoman.app %>/assets/scss',
-                    <% if (wordpress === true) { %>
-                    cssDir: '<%%= yeoman.dist %>',
-                    <% } else { %>
                     cssDir: '<%%= yeoman.dist %>/assets/css',
-                    <% } %>
                     environment: 'production'
                 }
             }

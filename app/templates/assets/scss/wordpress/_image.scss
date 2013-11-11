@@ -31,11 +31,11 @@
             }
 
             .article--image__header__nav__dir--prev {
-                @extend %article--image__header__nav__dir;
+                @extend %article--image__header__nav__dir !optional;
             }
 
             .article--image__header__nav__dir--next {
-                @extend %article--image__header__nav__dir;
+                @extend %article--image__header__nav__dir !optional;
             }
 
     .article--image__content {

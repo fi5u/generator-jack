@@ -11,11 +11,11 @@
         }
 
     .widgets__widget--search {
-        @extend .widgets__widget;
+        @extend .widgets__widget !optional;
     }
 
     .widgets__widget--archives {
-        @extend .widgets__widget;
+        @extend .widgets__widget !optional;
     }
 
         .widgets__widget--archives__title {
@@ -23,7 +23,7 @@
         }
 
     .widgets__widget--meta {
-        @extend .widgets__widget;
+        @extend .widgets__widget !optional;
     }
 
         .widgets__widget--meta__title {

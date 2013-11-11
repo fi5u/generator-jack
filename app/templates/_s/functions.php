@@ -5,6 +5,24 @@
  * @package _s
  */
 
+
+
+/**
+ * wpi_stylesheet_dir_uri
+ * overwrite theme stylesheet directory uri
+ * filter stylesheet_directory_uri
+ * @see get_stylesheet_directory_uri()
+ */
+function _s_stylesheet_dir_uri($stylesheet_dir_uri, $theme_name) {
+
+    $subdir = '/assets/css';
+    return $stylesheet_dir_uri.$subdir;
+
+}
+add_filter('stylesheet_directory_uri','_s_stylesheet_dir_uri',10,2);
+
+
+
 /**
  * Get attachment id from url
  */
