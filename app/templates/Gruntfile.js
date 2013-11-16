@@ -12,9 +12,9 @@ module.exports = function (grunt) {
         distBase: 'dist',
         <% if (wordpress === true) { %>
         themeUrl: '/wp-content/themes',
-        app: 'app/wp-content/themes/<%= siteName %>',
-        dev: 'dev/wp-content/themes/<%= siteName %>',
-        dist: 'dist/wp-content/themes/<%= siteName %>'
+        app: 'app/wp-content/themes/<%= siteCamel %>',
+        dev: 'dev/wp-content/themes/<%= siteCamel %>',
+        dist: 'dist/wp-content/themes/<%= siteCamel %>'
         <% } else { %>
         app: 'app',
         dev: 'dev',
@@ -166,12 +166,13 @@ module.exports = function (grunt) {
         },
 
         php: {
+            options: {
+                hostname: 'gendev',
+                keepalive: true,
+                open: true
+            },
+
             watch: {
-                options: {
-                    hostname: 'localhost',
-                    keepalive: true,
-                    open: true
-                }
             }
         },
 
@@ -411,7 +412,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('server', [
         'dev',
-        'connect:livereload',
+        'php',
         'watch'
     ]);
 

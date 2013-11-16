@@ -1,7 +1,30 @@
 'use strict';
-var util = require('util');
-var path = require('path');
-var yeoman = require('yeoman-generator');
+var util = require('util'),
+    path = require('path'),
+    yeoman = require('yeoman-generator');
+
+function convertToSlug(text) {
+    return text
+        .toLowerCase()
+        .replace(/ä+/g, 'a')
+        .replace(/ö+/g, 'o')
+        .replace(/[^\w ]+/g, '')
+        .replace(/ +/g, '_')
+        ;
+}
+
+function convertToCamel(text) {
+    var arr = text.split(' '),
+        length = arr.length,
+        element = null,
+        capitalized = [];
+    for (var i = 0; i < length; i++) {
+        element = arr[i];
+        element.charAt(0).toUpperCase() + element.slice(1);
+        capitalized.push(element);
+    }
+    return capitalized.join('');
+}
 
 var SiteGenerator = module.exports = function SiteGenerator(args, options, config) {
     yeoman.generators.Base.apply(this, arguments);
@@ -14,6 +37,7 @@ var SiteGenerator = module.exports = function SiteGenerator(args, options, confi
                         replace = require('replace'),
                         slugSite = this.slugSiteName,
                         siteName = this.siteName,
+                        siteCamel = convertToCamel(siteName),
                         projectDir = process.cwd();
 
                     fs.copy(projectDir + '/bower_components/wordpress', projectDir + '/app', function (err) {
@@ -22,7 +46,7 @@ var SiteGenerator = module.exports = function SiteGenerator(args, options, confi
                         } else {
                             console.log('WordPress copied successfully');
 
-                            fs.copy(__dirname + '/templates/_s', projectDir + '/app/wp-content/themes/' + siteName, function (err) {
+                            fs.copy(__dirname + '/templates/_s', projectDir + '/app/wp-content/themes/' + siteCamel, function (err) {
                                 function performReplacement(regex, replacement, paths, include) {
                                     console.log('Replacing ' + regex + ' for ' + replacement);
                                     replace({
@@ -39,7 +63,7 @@ var SiteGenerator = module.exports = function SiteGenerator(args, options, confi
                                     return console.error(err);
                                 } else {
                                     var mv = require('mv'),
-                                        wpThemeDir = projectDir + '/app/wp-content/themes/' + siteName,
+                                        wpThemeDir = projectDir + '/app/wp-content/themes/' + siteCamel,
                                         wpAssetsDir = wpThemeDir + '/assets';
 
                                     console.log('Template WordPress theme copied successfully\nBeginning text replacement on theme files');
@@ -47,7 +71,7 @@ var SiteGenerator = module.exports = function SiteGenerator(args, options, confi
                                     performReplacement('Text Domain: _s', 'Text Domain: ' + slugSite, wpThemeDir, '*.scss');
                                     performReplacement("'_s'", "'" + slugSite + "'", wpThemeDir);
                                     performReplacement('_s_', slugSite + '_', wpThemeDir);
-                                    performReplacement(' _s', ' ' + siteName.charAt(0).toUpperCase() + siteName.slice(1), wpThemeDir);
+                                    performReplacement(' _s', ' ' + siteCamel.charAt(0).toUpperCase() + siteCamel.slice(1), wpThemeDir);
                                     performReplacement('_s-', slugSite + '-', wpThemeDir);
 
                                     console.log('Setting the name for the language file');
@@ -153,22 +177,13 @@ SiteGenerator.prototype.askFor = function askFor() {
     }.bind(this));
 };
 
-function convertToSlug(text) {
-    return text
-        .toLowerCase()
-        .replace(/ä+/g, 'a')
-        .replace(/ö+/g, 'o')
-        .replace(/[^\w ]+/g, '')
-        .replace(/ +/g, '-')
-        ;
-}
-
 SiteGenerator.prototype.app = function app() {
     var appUrl = 'app';
 
     if (this.wordpress) {
+        this.siteCamel = convertToCamel(this.siteName);
         this.slugSiteName = convertToSlug(this.siteName);
-        appUrl = 'app/wp-content/themes/' + this.siteName;
+        appUrl = 'app/wp-content/themes/' + this.siteCamel;
     }
 
     this.mkdir(appUrl + '/assets/scss/lib');
