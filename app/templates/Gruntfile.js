@@ -74,14 +74,14 @@ module.exports = function (grunt) {
 
         connect: {
             options: {
-                port: 9000,
+                port: 9001,
                 livereload: 35729,
-                hostname: '0.0.0.0',
+                hostname: 'localhost',
                 base: '<%%= yeoman.devBase %>'
             },
             livereload: {
                 options: {
-                    open: 'http://localhost:<%%= connect.options.port %>',
+                    open: true,
                     base: [
                         '<%%= yeoman.devBase %>'
                     ]
@@ -164,9 +164,10 @@ module.exports = function (grunt) {
                 path: 'http://localhost:<%%= connect.options.port %>'
             }
         },
-
+        <% if (wordpress === true) { %>
         php: {
             options: {
+                port: 80,
                 hostname: 'gendev',
                 keepalive: true,
                 open: true
@@ -175,7 +176,7 @@ module.exports = function (grunt) {
             watch: {
             }
         },
-
+        <% } %>
         processhtml: {
             options: {
                 process: true,
@@ -379,7 +380,8 @@ module.exports = function (grunt) {
 
         watch: {
             options: {
-                livereload: true
+                livereload: true,
+                port: 9001
             },
             css: {
                 files: ['<%%= yeoman.app %>/assets/scss/*.scss'],
@@ -411,9 +413,9 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('server', [
-        'dev',
-        'php',
-        'watch'
+        'dev',<% if (wordpress === false) { %>
+        'connect:livereload',
+        <% } %>'watch'
     ]);
 
     grunt.registerTask('dev', [
