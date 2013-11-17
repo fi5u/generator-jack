@@ -1,6 +1,6 @@
-# generator-site
+# Jack
 
-A generator for [Yeoman](http://yeoman.io).
+A multifunctional [Yeoman](http://yeoman.io) generator.
 
 Option to setup _WordPress_ installation with a barebones theme, or without a CMS.
 With options for working with _Compass_ / _Susy_, _Bourbon_ / _Neat_, or with no framework.
@@ -9,7 +9,7 @@ With options for working with _Compass_ / _Susy_, _Bourbon_ / _Neat_, or with no
 ## Getting Started
 
 Once installed:
-* `yo site` to begin generating
+* `yo jack` to begin generating
 * Work on the files within `app` directory
 * `grunt dev` to build an easily debuggable dev version
 * `grunt build` to build a production version of the site
