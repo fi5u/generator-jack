@@ -1,12 +1,13 @@
 {
-  "name": "generator-site",
+  "name": "generator-jack",
   "version": "0.0.0",
-  "description": "A generator for Yeoman",
+  "description": "A multifunction generator for Yeoman",
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "jack"
   ],
-  "homepage": "https://github.com/fi5u/generator-site",
-  "bugs": "https://github.com/fi5u/generator-site/issues",
+  "homepage": "https://github.com/fi5u/generator-jack",
+  "bugs": "https://github.com/fi5u/generator-jack/issues",
   "author": {
     "name": "",
     "email": "tommybfisher@gmail.com",
@@ -15,7 +16,7 @@
   "main": "app/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/fi5u/generator-site.git"
+    "url": "git://github.com/fi5u/generator-jack.git"
   },
   "scripts": {
     "test": "mocha"
