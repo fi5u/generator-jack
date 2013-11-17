@@ -25,29 +25,6 @@ module.exports = function (grunt) {
     grunt.initConfig({
         yeoman: yeomanConfig,
 
-        autoshot: {
-            default_options: {
-                options: {
-                    path: 'dev',
-                    remote: {
-                        files: [
-                            { src: "http://www.google.com", dest: "google.png" }
-                        ]
-                    },
-                    local: {
-                        path: 'dev',
-                        port: 9000,
-                        files: [
-                            { src: "index.php", dest: "screenshot.jpg" }
-                        ]
-                    },
-                    viewport: [
-                        '640x960'
-                    ]
-                },
-            },
-        },
-
         clean: {
             dev: {
                 files: [{
@@ -405,12 +382,6 @@ module.exports = function (grunt) {
             }
         }
     });
-
-    grunt.registerTask('screenshot', [
-        'dev',
-        /*'connect:livereload',*/
-        'autoshot'
-    ]);
 
     grunt.registerTask('server', [
         'dev',<% if (wordpress === false) { %>
