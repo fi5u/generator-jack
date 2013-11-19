@@ -361,7 +361,7 @@ module.exports = function (grunt) {
                 port: 9001
             },
             css: {
-                files: ['<%%= yeoman.app %>/assets/scss/*.scss'],
+                files: ['<%%= yeoman.app %>/assets/scss/{,*/}*.scss'],
                 <% if (cssFramework === 'compassSusy') { %>
                 tasks: ['compass:dev']
                 <% } else { %>
