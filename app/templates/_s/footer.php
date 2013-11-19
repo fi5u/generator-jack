@@ -13,7 +13,7 @@
 	<footer class="footer  page-footer" role="contentinfo">
 
 	</footer>
-</div><!-- #page -->
+</div><!-- .main-page -->
 
 <?php wp_footer(); ?>
 

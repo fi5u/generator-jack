@@ -19,7 +19,7 @@
 </head>
 
 <body <?php body_class(); ?>>
-<div id="page" class="page">
+<div class="main-page">
 	<?php do_action( 'before' ); ?>
 	<header id="masthead" class="header  page-header" role="banner">
 		<div class="page-header__branding">
