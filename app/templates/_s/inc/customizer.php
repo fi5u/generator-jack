@@ -11,6 +11,36 @@
  * @param WP_Customize_Manager $wp_customize Theme Customizer object.
  */
 function _s_customize_register( $wp_customize ) {
+    /* Uncomment to add new customizer options
+
+    /* Only needed if need textarea *//*
+    require_once(TEMPLATEPATH . '/inc/customizer_classes/wp_customizer_textarea.php');
+
+    $wp_customize->add_setting('textarea_option', array(
+                               'default' => 'default text',
+                               'transport' => 'postMessage',
+                               ));
+
+    $wp_customize->add_control(new _s_textarea_control($wp_customize, 'textarea_option', array(
+        'label' => 'Textarea option',
+        'section' => 'New Section',
+        'settings' => 'textarea_option'
+    )));
+
+    $wp_customize->add_section( 'New Section' , array(
+        'title'      => __( 'Site content', '_s' ),
+        'priority'   => 30,
+    ) );
+    */
+    /* For the template:
+
+        <?php if(get_theme_mod( 'textarea_option')) : ?>
+            <div class="textarea-option"><?php echo get_theme_mod( 'textarea_option' ); ?></div>
+        <?php endif; ?>
+
+    */
+    /* Remember to add the field to js/customizer.js */
+
 	$wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
 	$wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
 	$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';

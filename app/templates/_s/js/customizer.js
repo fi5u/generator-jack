@@ -5,6 +5,12 @@
  */
 
 ( function( $ ) {
+    wp.customize( 'textarea_option', function( value ) {
+        value.bind( function( to ) {
+            $( '.textarea-option' ).text( to );
+        } );
+    } );
+
 	// Site title and description.
 	wp.customize( 'blogname', function( value ) {
 		value.bind( function( to ) {
