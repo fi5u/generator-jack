@@ -369,7 +369,7 @@ module.exports = function (grunt) {
                 <% } %>
             },
             html: {
-                files: ['<%%= yeoman.app %>{,*/}*.html'],
+                files: ['<%%= yeoman.app %>/{,*/}*.html'],
                 tasks: ['copy:html', 'replace', 'processhtml:dev']
             },
             sprites: {
@@ -377,7 +377,7 @@ module.exports = function (grunt) {
                 tasks: ['spriteHD', 'copy:dev']
             },
             php: {
-                files: ['<%%= yeoman.app %>{,*/}*.php'],
+                files: ['<%%= yeoman.app %>/{,*/}*.php'],
                 tasks: ['dev']
             }
         }
@@ -391,7 +391,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('dev', [
         'clean:dev',
-        'copy:dev',
+        'copy:dev',ß
         'spriteHD',<% if (cssFramework === 'compassSusy') { %>
         'compass:dev',<% } else { %>
         'sass:dev',<% } %>
