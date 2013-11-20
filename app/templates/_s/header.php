@@ -2,7 +2,7 @@
 /**
  * The Header for our theme.
  *
- * Displays all of the <head> section and everything up till <div id="content">
+ * Displays all of the <head> section and everything up to <div id="content">
  *
  * @package _s
  */
@@ -31,7 +31,7 @@
 			<h1 class="page-header__nav__toggle"><?php _e( 'Menu', '_s' ); ?></h1>
 			<a class="screen-reader-text" href="#content"><?php _e( 'Skip to content', '_s' ); ?></a>
 
-			<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
+			<?php wp_nav_menu( array( 'theme_location' => 'primary', 'container' => false, 'menu_class' => 'header__nav__group  page-header__nav__group', 'walker' => new custom_walker_header_nav_menu ) ); ?>
 		</nav>
 	</header>
 
