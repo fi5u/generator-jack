@@ -79,4 +79,9 @@
         e.preventDefault();
     });
 
+    // Remove if all nav links leave/refresh page
+    $('.header__nav a').click(function() {
+        $('html').removeClass('nav-open');
+    });
+
 })(window, document, jQuery);
