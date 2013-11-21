@@ -167,6 +167,12 @@ function _s_widgets_init() {
 add_action( 'widgets_init', '_s_widgets_init' );
 
 /**
+ * Load template widgets
+ */
+// require get_template_directory() . '/inc/widgets/widget-hello-world.php';
+
+
+/**
  * Enqueue scripts and styles
  */
 function _s_scripts() {
