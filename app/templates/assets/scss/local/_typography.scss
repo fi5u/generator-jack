@@ -1,5 +1,13 @@
 body {
     font-family: $font-body;
+
+    ::selection {
+        background: $highlight-col;
+    }
+
+    ::-moz-selection {
+        background: $highlight-col;
+    }
 }
 
 p {
