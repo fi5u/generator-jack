@@ -14,7 +14,8 @@ $size-padding-l: 2;
 $size-padding-m: 1;
 $size-padding-s: 0.5;
 
-<% if (cssFramework != 'noFramework') { %>
+$offcanvas-nav-w: 70%;
+
 <% if (cssFramework === 'bourbonNeat') { %>/* grid */
 $grid-columns: 12;
 $column: 4.375em; // 70px @ 16px
@@ -27,7 +28,7 @@ $column-width: 4.375em; // 70px @ 16px
 $gutter-width: 1.875em; // 30px @ 16px
 $grid-padding: 10px;
 <% } %>
-<% } %>
+
 /* breakpoints */
 $break-xs: 20em; // 320px @ 16px
 $break-s: 30em; // 480px @ 16px

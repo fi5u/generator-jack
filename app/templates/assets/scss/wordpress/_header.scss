@@ -23,7 +23,10 @@
         top: 0;
         left: 100%;
 
-        width: 100%;
+        // plus 1% to cater for rounding issues
+        width: $offcanvas-nav-w + 1%;
+        height: 100%;
+
         background: $nav-col;
         <% if (cssFramework !== 'noFramework') { %>
         @include transition(all $nav-trans-dur);
@@ -40,7 +43,7 @@
     }
 
     .nav-open .header__nav {
-        left: 30%;
+        left: 100% - $offcanvas-nav-w;
     }
 
     .header__nav-trigger {
@@ -73,7 +76,7 @@
     }
 
     .nav-open .header__nav-trigger {
-        right: 70%;
+        right: $offcanvas-nav-w;
     }
 
 
