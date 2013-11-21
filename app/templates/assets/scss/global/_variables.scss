@@ -36,8 +36,9 @@ $break-l: 64em; // 1024px; @ 16px
 $nav-break: $break-m;
 
 /* colors */
-//$col1: ;
+$col1: tomato;
 //$col2: ;
+$nav-col: $col1;
 
 
 /* typography */
@@ -46,3 +47,8 @@ $font-body: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Hel
 
 $font-weight-heavy: 900;
 $font-weight-reg: 300;
+
+
+/* misc */
+$nav-trans-dur: 1s;
+$nav-trans-ease: cubic-bezier(x1, y1, x2, y2);

@@ -19,15 +19,80 @@
         }
 
     .header__nav {
+        position: fixed;
+        top: 0;
+        left: 100%;
 
+        width: 100%;
+        background: $nav-col;
+        <% if (cssFramework !== 'noFramework') { %>
+        @include transition(all $nav-trans-dur);
+        @include transition-timing-function($nav-trans-ease);
+
+        @include at-breakpoint($nav-break) {
+            position: static;
+        }
+        <% } else { %>
+        @media (min-width: $nav-break) {
+            position: static;
+        }
+        <% } %>
     }
 
-        .header__nav__group {
+    .nav-open .header__nav {
+        left: 30%;
+    }
 
+    .header__nav-trigger {
+        <% if (cssFramework !== 'noFramework') { %>
+        @include hide-text;
+        <% } %>
+
+        position: fixed;
+        top: 0;
+        right: 0;
+
+        width: 36px;
+        height: 36px;
+
+        border: none;
+        background: url(../img/icon-menu.svg) no-repeat center center;
+        background-color: $nav-col;
+        <% if (cssFramework !== 'noFramework') { %>
+        @include transition(all $nav-trans-dur);
+        @include transition-timing-function($nav-trans-ease);
+
+        @include at-breakpoint($nav-break) {
+            display: none;
+        }
+        <% } else { %>
+        @media (min-width: $nav-break) {
+            display: none;
+        }
+        <% } %>
+    }
+
+    .nav-open .header__nav-trigger {
+        right: 70%;
+    }
+
+
+        .header__nav__group {
+            padding-left: 0;
         }
 
             .header__nav__item {
-
+                display: block;
+                margin-right: 0;
+                <% if (cssFramework !== 'noFramework') { %>
+                @include at-breakpoint($nav-break) {
+                    display: inline-block;
+                }
+                <% } else { %>
+                @media (min-width: $nav-break) {
+                    display: inline-block;
+                }
+                <% } %>
             }
 
             .header__nav__subitem {

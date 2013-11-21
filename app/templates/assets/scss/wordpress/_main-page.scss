@@ -1,3 +1,16 @@
 .main-page {
+    <% if (cssFramework !== 'noFramework') { %>
+    @include container;
+    <% } %>
+    position: relative;
+    right: 0;
+    background: #fff;
+    <% if (cssFramework !== 'noFramework') { %>
+    @include transition(all $nav-trans-dur);
+    @include transition-timing-function($nav-trans-ease);
+    <% } %>
+}
 
+.nav-open .main-page {
+    right: 70%;
 }

@@ -1,8 +1,14 @@
 /* Lib */
 @import "lib/_normalize";
-<% if (wordpress === true) { %><% if (cssFramework === 'compassSusy') { %>@import "../../../../../../bower_components/susy/sass/_susy.scss";<% } %>
-<% } else { %><% if (cssFramework === 'compassSusy') { %>@import "../../../bower_components/susy/sass/_susy.scss";
-<% } %><% } %>
+<% if (cssFramework === 'compassSusy') { %>
+    @import "compass/css3";
+    @import "compass/typography/text/replacement";
+    <% if (wordpress === true) { %>
+        @import "../../../../../../bower_components/susy/sass/_susy.scss";<% } %>
+    <% } else { %>
+        @import "../../../bower_components/susy/sass/_susy.scss";
+    <% } %>
+<% } %>
 
 /* Global */
 @import "global/_sprite-sheet";

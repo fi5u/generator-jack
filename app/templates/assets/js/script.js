@@ -66,11 +66,17 @@
         waitForFinalEvent(function () {
             winW = $(window).width();
             winH = $(window).height();
+            $('html').removeClass('nav-open');
         }, 500, 'reset');
     });
 
     $(window).scroll(function () {
 
+    });
+
+    $('#nav-trigger').click(function(e) {
+        $("html").toggleClass("nav-open");
+        e.preventDefault();
     });
 
 })(window, document, jQuery);
