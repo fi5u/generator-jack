@@ -383,6 +383,10 @@ module.exports = function (grunt) {
             js: {
                 files: ['<%= yeoman.app %>/assets/js/{,*/}*.js'],
                 tasks: ['dev']
+            },
+            img: {
+                files: ['<%= yeoman.app %>/assets/img/**'],
+                tasks: ['dev']
             }
         }
     });
