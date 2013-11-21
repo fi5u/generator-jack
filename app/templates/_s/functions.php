@@ -170,7 +170,12 @@ add_action( 'widgets_init', '_s_widgets_init' );
  * Load template widgets
  */
 // require get_template_directory() . '/inc/widgets/widget-hello-world.php';
-
+// require get_template_directory() . '/inc/widgets/widget-latest-cats.php';
+// Register and load the widgets
+// function _s_load_widget() {
+//     register_widget( '_s_latest_cats_widget' );
+// }
+// add_action( 'widgets_init', '_s_load_widget' );
 
 /**
  * Enqueue scripts and styles
