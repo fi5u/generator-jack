@@ -178,12 +178,32 @@ SiteGenerator.prototype.askFor = function askFor() {
 };
 
 SiteGenerator.prototype.app = function app() {
+    function randomString() {
+        var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz@*{}[]()<>#,.;:+=-_%`~!?|";
+        var string_length = 64;
+        var randomstring = '';
+        for (var i=0; i<string_length; i++) {
+            var rnum = Math.floor(Math.random() * chars.length);
+            randomstring += chars.substring(rnum,rnum+1);
+        }
+        return randomstring;
+    }
+
     var appUrl = 'app';
 
     if (this.wordpress) {
         this.siteCamel = convertToCamel(this.siteName);
         this.slugSiteName = convertToSlug(this.siteName);
         appUrl = 'app/wp-content/themes/' + this.siteCamel;
+
+        this.rand1 = randomString();
+        this.rand2 = randomString();
+        this.rand3 = randomString();
+        this.rand4 = randomString();
+        this.rand5 = randomString();
+        this.rand6 = randomString();
+        this.rand7 = randomString();
+        this.rand8 = randomString();
     }
 
     this.mkdir(appUrl + '/assets/scss/lib');

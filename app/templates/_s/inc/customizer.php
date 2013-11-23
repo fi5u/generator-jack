@@ -13,7 +13,7 @@
 function _s_customize_register( $wp_customize ) {
     /* Uncomment to add new customizer options
 
-    /* Only needed if need textarea *//*
+    // Only needed if need textarea
     require_once(TEMPLATEPATH . '/inc/customizer_classes/wp_customizer_textarea.php');
 
     $wp_customize->add_setting('textarea_option', array(
@@ -31,15 +31,15 @@ function _s_customize_register( $wp_customize ) {
         'title'      => __( 'Site content', '_s' ),
         'priority'   => 30,
     ) );
-    */
-    /* For the template:
+
+    // For the template:
 
         <?php if(get_theme_mod( 'textarea_option')) : ?>
             <div class="textarea-option"><?php echo get_theme_mod( 'textarea_option' ); ?></div>
         <?php endif; ?>
 
+    // Remember to add the field to js/customizer.js
     */
-    /* Remember to add the field to js/customizer.js */
 
 	$wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
 	$wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
