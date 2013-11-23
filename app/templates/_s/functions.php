@@ -7,6 +7,97 @@
 
 
 /**
+ * Register custom post types
+ */
+/*function _s_create_post_types() {
+ *    register_post_type( 'things',
+ *        array(
+ *            'labels' => array(
+ *                'name' => __( 'Things' ),
+ *                'singular_name' => __( 'Thing' )
+ *            ),
+ *            'public' => true,
+ *            'has_archive' => true,
+ *            'add_new_item' => __( 'Add Thing' ),
+ *            'edit_item' => __('Edit Thing'),
+ *            'new_item' => __('New Thing')
+ *        )
+ *    );
+ *}
+ *add_action( 'init', '_s_create_post_types' );
+ */
+
+/**
+ * Add custom meta boxes
+ */
+/*function _s_meta_box_add() {
+ *    add_meta_box( 'thing-date', __( 'Thing date' ), '_s_meta_box_cb', 'things', 'side', 'default' );
+ *}
+ *add_action( 'add_meta_boxes', '_s_meta_box_add' );
+ *
+ *function _s_meta_box_cb( $post ) {
+ *    $values = get_post_custom( $post->ID );
+ *    $thing_date = isset( $values['thing-date'] ) ? esc_attr( $values['thing-date'][0] ) : '';
+ *    $thing_check = isset( $values['thing-check'] ) ? esc_attr( $values['thing-check'] ) : '';
+ *    wp_nonce_field( '_s_meta_box_nonce', 'meta_box_nonce' );
+ *    ?>
+ *    <p>
+ *        <label for="thing-date"><?php _e( 'Date', '_s' )?></label>
+ *    </p>
+ *    <p>
+ *        <script type="text/javascript">
+ *        jQuery(function() {
+ *            jQuery.datepicker.setDefaults( jQuery.datepicker.regional[ "fi" ] );
+ *            jQuery('#input-thing-date').datepicker({
+ *                dateFormat: 'dd.mm.yy'
+ *            });
+ *        });
+ *        </script>
+ *
+ *        <input type="date" name="thing-date" id="input-thing-date" value="<?php echo $thing_date; ?>">
+ *    </p>
+ *    <p>
+ *        <input type="checkbox" name="input-thing-check" id="input-thing-check" <?php checked( $thing_check, 'on' ); ?> />
+ *        <label for="input-thing-check">Do you want this option?</label>
+ *    </p>
+ *    <?php
+ *}
+ */
+
+/**
+ * Save custom meta boxes.
+ */
+/*function _s_meta_box_save( $post_id ) {
+ *    // Bail if we're doing an auto save
+ *    if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+ *
+ *    // if our nonce isn't there, or we can't verify it, bail
+ *    if( !isset( $_POST['meta_box_nonce'] ) || !wp_verify_nonce( $_POST['meta_box_nonce'], '_s_meta_box_nonce' ) ) return;
+ *
+ *    // if our current user can't edit this post, bail
+ *    if( !current_user_can( 'edit_post', $post_id ) ) return;
+ *
+ *    // now we can actually save the data
+ *    $allowed = array(
+ *        'a' => array( // on allow a tags
+ *            'href' => array() // and those anchors can only have href attribute
+ *        )
+ *    );
+ *
+ *    // Make sure your data is set before trying to save it
+ *    if( isset( $_POST['thing-date'] ) )
+ *        update_post_meta( $post_id, 'thing-date', wp_kses( $_POST['thing-date'], $allowed ) );
+ *
+ *    // Save check-boxes
+ *    $chk = isset( $_POST['input-thing-check'] ) ? 'on' : 'off';
+ *    update_post_meta( $post_id, 'input-thing-check', $chk );
+ *
+ *}
+ *add_action( 'save_post', '_s_meta_box_save' );
+ */
+
+
+/**
  * Custom walker nav menu
  */
 class custom_walker_header_nav_menu extends Walker_Nav_Menu {
