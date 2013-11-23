@@ -84,6 +84,16 @@ function _s_scripts() {
 add_action( 'wp_enqueue_scripts', '_s_scripts' );
 
 
+/**
+ * Enqueue admin scripts and styles
+ */
+function _s_load_custom_wp_admin_style() {
+    // Uncomment if using datepicker in admin
+    // wp_enqueue_script('jquery-ui-datepicker', array('jquery'));
+    // wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
+}
+add_action( 'admin_enqueue_scripts', '_s_load_custom_wp_admin_style' );
+
 
 /**
  * Register custom post types
@@ -124,6 +134,7 @@ add_action( 'wp_enqueue_scripts', '_s_scripts' );
  *        <label for="thing-date"><?php _e( 'Date', '_s' )?></label>
  *    </p>
  *    <p>
+ *        //uncomment datepicker in enqueue admin scripts
  *        <script type="text/javascript">
  *        jQuery(function() {
  *            jQuery.datepicker.setDefaults( jQuery.datepicker.regional[ "fi" ] );
