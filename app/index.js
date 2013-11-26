@@ -220,7 +220,7 @@ SiteGenerator.prototype.app = function app() {
     this.copy('.htaccess', appUrl + '/.htaccess');
 
     this.copy('assets/img/sprite-assets/trans.png', appUrl + '/assets/img/sprite-assets/trans.png');
-    this.copy('assets/scss/style.scss', appUrl + '/assets/scss/style.scss');
+    this.template('assets/scss/style.scss', appUrl + '/assets/scss/style.scss');
 
     if (this.wordpress) {
         this.copy('assets/scss/wp_style.css', appUrl + '/style.css');

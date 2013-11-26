@@ -399,7 +399,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('dev', [
         'clean:dev',
-        'copy:dev',ß
+        'copy:dev',
         'spriteHD',<% if (cssFramework === 'compassSusy') { %>
         'compass:dev',<% } else { %>
         'sass:dev',<% } %>
