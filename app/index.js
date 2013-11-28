@@ -210,6 +210,7 @@ SiteGenerator.prototype.app = function app() {
     this.mkdir(appUrl + '/assets/scss/fonts');
     this.mkdir(appUrl + '/assets/js/lib');
     this.mkdir(appUrl + '/assets/php');
+    this.directory('assets/img', appUrl + '/assets/img');
 
     this.template('Gruntfile.js', 'Gruntfile.js');
     this.template('index.html', appUrl + '/index.html');

@@ -2,10 +2,20 @@ body {
     font-family: $font-body;
 
     ::selection {
+        @if $col-scheme == dark {
+            color: #fff;
+        } @else {
+            color: #000;
+        }
         background: $highlight-col;
     }
 
     ::-moz-selection {
+        @if $col-scheme == dark {
+            color: #fff;
+        } @else {
+            color: #000;
+        }
         background: $highlight-col;
     }
 }

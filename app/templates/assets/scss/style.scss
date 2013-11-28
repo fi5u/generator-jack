@@ -49,7 +49,6 @@
 @import "object/_search";
 @import "object/_search-form";
 @import "object/_widgets";<% } else { %>
-@import "object/_page_header";
-@import "object/_header_nav";
-@import "object/_page_footer";
+@import "object/_header";
+@import "object/_footer";
 <% } %>

@@ -59,8 +59,15 @@
         height: 36px;
 
         border: none;
-        background: url(../img/icon-menu.svg) no-repeat center center;
+        @if $col-scheme == dark {
+            background-image: url(../img/icon-menu-white.svg);
+        } @else {
+            background-image: url(../img/icon-menu-black.svg);
+        }
+        background-repeat: no-repeat;
+        background-position: center center;
         background-color: $nav-col;
+
         <% if (cssFramework !== 'noFramework') { %>
         @include transition(all $nav-trans-dur);
         @include transition-timing-function($nav-trans-ease);
