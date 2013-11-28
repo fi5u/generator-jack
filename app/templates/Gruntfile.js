@@ -88,7 +88,8 @@ module.exports = function (grunt) {
             dev: {
                 files: [
                     {expand: true, cwd: '<%%= yeoman.appBase %>', src: ['**', '!**/scss/**', '!.htaccess', '!**/languages/**'], dest: '<%%= yeoman.devBase %>'},
-                    {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dev %>/assets/css/fonts'}<% if (wordpress === true) { %>,
+                    {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dev %>/assets/css/fonts'},
+                    {expand: true, cwd: 'bower_components', src: ['**'], dest: '<%%= yeoman.dev %>/assets/bower_components'},<% if (wordpress === true) { %>,
                     {expand: true, cwd: '<%%= yeoman.app %>/languages', src: ['_s.pot'], dest: '<%%= yeoman.dev %>/languages', rename: function (dest) {
                         return dest + '/<%= slugSiteName %>.pot';
                     }}<% } %>
@@ -165,9 +166,9 @@ module.exports = function (grunt) {
             dev: {
                 options: {
                     data: {
-                        jqMinLocal: 'bower_components/jquery/jquery.min.js',
-                        jqLegMinLocal: 'bower_components/jquery-legacy/jquery.min.js',
-                        jqMigrate: 'bower_components/jquery-migrate/jquery-migrate.js'
+                        jqMinLocal: 'assets/bower_components/jquery/jquery.min.js',
+                        jqLegMinLocal: 'assets/bower_components/jquery-legacy/jquery.min.js',
+                        jqMigrate: 'assets/bower_components/jquery-migrate/jquery-migrate.js'
                     }
                 },
                 files: {
