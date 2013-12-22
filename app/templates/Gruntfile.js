@@ -420,11 +420,11 @@ module.exports = function (grunt) {
         'sass:dist',<% } %>
         'concat',
         'uglify',
+        'rev',
         'modernizr',
         'copy:dist',
         'processhtml:dist',
         'replace:dist',
-        'rev',
         'usemin'
     ]);
 };
