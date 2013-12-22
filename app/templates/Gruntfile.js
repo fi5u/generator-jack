@@ -89,9 +89,10 @@ module.exports = function (grunt) {
                 files: [
                     {expand: true, cwd: '<%%= yeoman.appBase %>', src: ['**', '!**/scss/**', '!.htaccess', '!**/languages/**'], dest: '<%%= yeoman.devBase %>'},
                     {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dev %>/assets/css/fonts'},
+                    //{expand: true, cwd: '<%%= yeoman.appBase %>', src: ['backgroundsize.min.htc'], dest: '/'},
                     {expand: true, cwd: 'bower_components', src: ['**'], dest: '<%%= yeoman.dev %>/assets/bower_components'},<% if (wordpress === true) { %>,
-                    {expand: true, cwd: '<%%= yeoman.app %>/languages', src: ['_s.pot'], dest: '<%%= yeoman.dev %>/languages', rename: function (dest) {
-                        return dest + '/<%= slugSiteName %>.pot';
+                        {expand: true, cwd: '<%%= yeoman.app %>/languages', src: ['_s.pot'], dest: '<%%= yeoman.dev %>/languages', rename: function (dest) {
+                            return dest + '/<%= slugSiteName %>.pot';
                     }}<% } %>
                 ]
             },

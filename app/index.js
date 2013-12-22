@@ -219,6 +219,7 @@ SiteGenerator.prototype.app = function app() {
     this.template('_config.json', 'config.json');
     this.template('_package.json', 'package.json');
     this.copy('.htaccess', appUrl + '/.htaccess');
+    this.copy('backgroundsize.min.htc', 'app/backgroundsize.min.htc');
 
     this.copy('assets/img/sprite-assets/trans.png', appUrl + '/assets/img/sprite-assets/trans.png');
     this.template('assets/scss/style.scss', appUrl + '/assets/scss/style.scss');

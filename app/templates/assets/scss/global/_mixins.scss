@@ -38,3 +38,9 @@
     margin-bottom: $margin * $unit-default + px;
     margin-bottom: $margin + rem;
 }
+
+@mixin bgsize($type: cover) {
+    background-size: $type;
+    // Ensure 'backgroundsize.min.htc' is a sibling of the page displaying this selector
+    -ms-behavior: url(backgroundsize.min.htc);
+}
