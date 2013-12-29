@@ -40,13 +40,13 @@ var SiteGenerator = module.exports = function SiteGenerator(args, options, confi
                         siteCamel = convertToCamel(siteName),
                         projectDir = process.cwd();
 
-                    fs.copy(projectDir + '/bower_components/wordpress', projectDir + '/app', function (err) {
+                    fs.copy(projectDir + '/bower_components/wordpress', projectDir + '/dev', function (err) {
                         if (err) {
                             return console.error(err);
                         } else {
                             console.log('WordPress copied successfully');
 
-                            fs.copy(__dirname + '/templates/_s', projectDir + '/app/wp-content/themes/' + siteCamel, function (err) {
+                            fs.copy(__dirname + '/templates/_s', projectDir + '/app/' + siteCamel, function (err) {
                                 function performReplacement(regex, replacement, paths, include) {
                                     console.log('Replacing ' + regex + ' for ' + replacement);
                                     replace({
@@ -63,7 +63,7 @@ var SiteGenerator = module.exports = function SiteGenerator(args, options, confi
                                     return console.error(err);
                                 } else {
                                     var mv = require('mv'),
-                                        wpThemeDir = projectDir + '/app/wp-content/themes/' + siteCamel,
+                                        wpThemeDir = projectDir + '/app/' + siteCamel,
                                         wpAssetsDir = wpThemeDir + '/assets';
 
                                     console.log('Template WordPress theme copied successfully\nBeginning text replacement on theme files');
@@ -190,11 +190,12 @@ SiteGenerator.prototype.app = function app() {
     }
 
     var appUrl = 'app';
+    var devUrl = 'dev';
 
     if (this.wordpress) {
         this.siteCamel = convertToCamel(this.siteName);
         this.slugSiteName = convertToSlug(this.siteName);
-        appUrl = 'app/wp-content/themes/' + this.siteCamel;
+        appUrl = 'app/' + this.siteCamel;
 
         this.rand1 = randomString();
         this.rand2 = randomString();
@@ -219,13 +220,15 @@ SiteGenerator.prototype.app = function app() {
     this.template('_config.json', 'config.json');
     this.template('_package.json', 'package.json');
     this.copy('.htaccess', appUrl + '/.htaccess');
-    this.copy('backgroundsize.min.htc', 'app/backgroundsize.min.htc');
 
     this.copy('assets/img/sprite-assets/trans.png', appUrl + '/assets/img/sprite-assets/trans.png');
     this.template('assets/scss/style.scss', appUrl + '/assets/scss/style.scss');
 
     if (this.wordpress) {
         this.copy('assets/scss/wp_style.css', appUrl + '/style.css');
+        this.copy('backgroundsize.min.htc', devUrl + '/backgroundsize.min.htc');
+    } else {
+        this.copy('backgroundsize.min.htc', appUrl + '/backgroundsize.min.htc');
     }
     this.copy('assets/scss/lteie8.scss', appUrl + '/assets/scss/lteie8.scss');
 
@@ -249,7 +252,7 @@ SiteGenerator.prototype.app = function app() {
 
     if (this.wordpress) {
         this.directory('assets/scss/wordpress', appUrl + '/assets/scss/object');
-        this.template('wp-config.php', 'app/wp-config.php');
+        this.template('wp-config.php', 'dev/wp-config.php');
 
     } else {
         this.directory('assets/scss/object', appUrl + '/assets/scss/object');

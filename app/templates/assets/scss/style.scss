@@ -2,7 +2,7 @@
 @import "lib/_normalize";
 <% if (cssFramework === 'compassSusy') { %>@import "compass/css3";
 @import "compass/typography/text/replacement";
-<% if (wordpress === true) { %>@import "../../../../../../bower_components/susy/sass/_susy.scss";<% } else { %>
+<% if (wordpress === true) { %>@import "../../../../bower_components/susy/sass/_susy.scss";<% } else { %>
 @import "../../../bower_components/susy/sass/_susy.scss";<% } %><% } %>
 
 /* Global */

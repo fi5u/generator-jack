@@ -12,7 +12,7 @@ module.exports = function (grunt) {
         distBase: 'dist',
         <% if (wordpress === true) { %>
         themeUrl: '/wp-content/themes',
-        app: 'app/wp-content/themes/<%= siteCamel %>',
+        app: 'app/<%= siteCamel %>',
         dev: 'dev/wp-content/themes/<%= siteCamel %>',
         dist: 'dist/wp-content/themes/<%= siteCamel %>'
         <% } else { %>
@@ -31,8 +31,8 @@ module.exports = function (grunt) {
                     dot: true,
                     src: [
                         '.tmp',
-                        '<%%= yeoman.devBase %>/*',
-                        '!<%%= yeoman.devBase %>/.git*'
+                        '<%%= yeoman.dev %>/*',
+                        '!<%%= yeoman.dev %>/.git*'
                     ]
                 }]
             },
@@ -42,8 +42,8 @@ module.exports = function (grunt) {
                     dot: true,
                     src: [
                         '.tmp',
-                        '<%%= yeoman.distBase %>/*',
-                        '!<%%= yeoman.distBase %>/.git*'
+                        '<%%= yeoman.dist %>/*',
+                        '!<%%= yeoman.dist %>/.git*'
                     ]
                 }]
             }
@@ -87,9 +87,8 @@ module.exports = function (grunt) {
         copy: {
             dev: {
                 files: [
-                    {expand: true, cwd: '<%%= yeoman.appBase %>', src: ['**', '!**/scss/**', '!.htaccess', '!**/languages/**'], dest: '<%%= yeoman.devBase %>'},
+                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/scss/**', '!.htaccess', '!**/languages/**'], dest: '<%%= yeoman.dev %>'},
                     {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dev %>/assets/css/fonts'},
-                    //{expand: true, cwd: '<%%= yeoman.appBase %>', src: ['backgroundsize.min.htc'], dest: '/'},
                     {expand: true, cwd: 'bower_components', src: ['**'], dest: '<%%= yeoman.dev %>/assets/bower_components'},<% if (wordpress === true) { %>,
                         {expand: true, cwd: '<%%= yeoman.app %>/languages', src: ['_s.pot'], dest: '<%%= yeoman.dev %>/languages', rename: function (dest) {
                             return dest + '/<%= slugSiteName %>.pot';
@@ -99,7 +98,7 @@ module.exports = function (grunt) {
 
             dist: {
                 files: [
-                    {expand: true, cwd: '<%%= yeoman.appBase %>', src: ['**', '!**/img/sprite-assets/**', '!**/scss/**', '!**/js/*.js', '!**/languages/**'], dest: '<%%= yeoman.distBase %>'},
+                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/img/sprite-assets/**', '!**/scss/**', '!**/js/*.js', '!**/languages/**'], dest: '<%%= yeoman.dist %>'},
                     {expand: true, cwd: '<%%= yeoman.app %>', src: ['.htaccess'], dest: '<%%= yeoman.dist %>'},
                     {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dist %>/assets/css/fonts'},
                     {expand: true, cwd: 'bower_components/jquery', src: ['jquery.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'},
