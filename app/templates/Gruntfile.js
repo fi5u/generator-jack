@@ -411,15 +411,18 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'useminPrepare',
-        'svgmin',
-        'imagemin:dist',
-        'svg2png',
-        'spriteHD',<% if (cssFramework === 'compassSusy') { %>
+        <% if (cssFramework === 'compassSusy') { %>
         'compass:dist',<% } else { %>
         'sass:dist',<% } %>
+
         'concat',
         'uglify',
         'rev',
+
+        'svgmin',
+        'imagemin:dist',
+        'svg2png',
+        'spriteHD',
         'modernizr',
         'copy:dist',
         'processhtml:dist',
