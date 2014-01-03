@@ -89,8 +89,9 @@ module.exports = function (grunt) {
                 files: [
                     {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/scss/**', '!.htaccess', '!**/languages/**'], dest: '<%%= yeoman.dev %>'},
                     {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dev %>/assets/css/fonts'},
-                    {expand: true, cwd: 'bower_components', src: ['**'], dest: '<%%= yeoman.dev %>/assets/bower_components'},<% if (wordpress === true) { %>,
-                        {expand: true, cwd: '<%%= yeoman.app %>/languages', src: ['_s.pot'], dest: '<%%= yeoman.dev %>/languages', rename: function (dest) {
+                    {expand: true, cwd: 'bower_components', src: ['**'], dest: '<%%= yeoman.dev %>/assets/bower_components'},<% if (wordpress === true) { %>
+                    {expand: true, cwd: 'bower_components/modernizr', src: ['modernizr.js'], dest: '<%= yeoman.dev %>/assets/js/lib'},
+                    {expand: true, cwd: '<%%= yeoman.app %>/languages', src: ['_s.pot'], dest: '<%%= yeoman.dev %>/languages', rename: function (dest) {
                             return dest + '/<%= slugSiteName %>.pot';
                     }}<% } %>
                 ]
@@ -134,7 +135,7 @@ module.exports = function (grunt) {
 
         modernizr: {
             devFile: 'bower_components/modernizr/modernizr.js',
-            outputFile: '<%%= yeoman.dist %>/assets/js/lib/modernizr-custom.min.js',
+            outputFile: '<%%= yeoman.dist %>/assets/js/lib/modernizr.js',
             files: ['<%%= yeoman.dist %>/**/*.js', '<%%= yeoman.dist %>/**/*.css', '<%%= yeoman.dist %>/**/*.scss']
         },
 
