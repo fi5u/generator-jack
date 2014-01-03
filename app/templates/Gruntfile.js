@@ -42,7 +42,7 @@ module.exports = function (grunt) {
                     dot: true,
                     src: [
                         '.tmp',
-                        '<%%= yeoman.dist %>/*',
+                        '<%%= yeoman.distBase %>/*',
                         '!<%%= yeoman.dist %>/.git*'
                     ]
                 }]
@@ -97,16 +97,17 @@ module.exports = function (grunt) {
             },
 
             dist: {
-                files: [
-                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/img/sprite-assets/**', '!**/scss/**', '!**/js/*.js', '!**/languages/**'], dest: '<%%= yeoman.dist %>'},
-                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['.htaccess'], dest: '<%%= yeoman.dist %>'},
-                    {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dist %>/assets/css/fonts'},
+                files: [<% if (wordpress === true) { %>
+                    {expand: true, cwd: '<%%= yeoman.devBase %>', src: ['**', '!**/bower_components/**'], dest: '<%%= yeoman.distBase %>'},<% } else { %>
+                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/img/sprite-assets/**', '!**/scss/**', '!**/js/*.js', '!**/languages/**'], dest: '<%%= yeoman.dist %>'},<% } %>
+                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['.htaccess'], dest: '<%%= yeoman.distBase %>'},
+                    {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dist %>/assets/css/fonts'},<% if (wordpress === false) { %>
                     {expand: true, cwd: 'bower_components/jquery', src: ['jquery.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'},
                     {expand: true, cwd: 'bower_components/jquery-legacy', src: ['jquery.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib', rename: function (dest) {
                         return dest + '/jquery-legacy.min.js';
                     }},
                     // Only copy over the minified migrate plugin
-                    {expand: true, cwd: 'bower_components/jquery-migrate', src: ['jquery-migrate.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'}<% if (wordpress === true) { %>,
+                    {expand: true, cwd: 'bower_components/jquery-migrate', src: ['jquery-migrate.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'}<% } else { %>,
                     {expand: true, cwd: '<%%= yeoman.app %>/languages', src: ['_s.pot'], dest: '<%%= yeoman.dist %>/languages', rename: function (dest) {
                         return dest + '/<%= slugSiteName %>.pot';
                     }}<% } %>
@@ -409,23 +410,23 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('build', [
-        'clean:dist',
-        'useminPrepare',
-        <% if (cssFramework === 'compassSusy') { %>
+        <% if (wordpress === true) { %>'dev',<% } %>
+        'clean:dist',<% if (cssFramework === 'compassSusy') { %>
         'compass:dist',<% } else { %>
         'sass:dist',<% } %>
+        'useminPrepare',
 
+        <% if (wordpress === false) { %>
         'concat',
         'uglify',
-        'rev',
-
+        'rev',<% } %>
+        'copy:dist',
         'svgmin',
         'imagemin:dist',
         'svg2png',
         'spriteHD',
-        'modernizr',
-        'copy:dist',
-        'processhtml:dist',
+        'modernizr',<% if (wordpress === false) { %>
+        'processhtml:dist',<% } %>
         'replace:dist',
         'usemin'
     ]);
