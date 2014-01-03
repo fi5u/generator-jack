@@ -90,7 +90,7 @@ module.exports = function (grunt) {
                     {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/scss/**', '!.htaccess', '!**/languages/**'], dest: '<%%= yeoman.dev %>'},
                     {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dev %>/assets/css/fonts'},
                     {expand: true, cwd: 'bower_components', src: ['**'], dest: '<%%= yeoman.dev %>/assets/bower_components'},<% if (wordpress === true) { %>
-                    {expand: true, cwd: 'bower_components/modernizr', src: ['modernizr.js'], dest: '<%= yeoman.dev %>/assets/js/lib'},
+                    {expand: true, cwd: 'bower_components/modernizr', src: ['modernizr.js'], dest: '<%%= yeoman.dev %>/assets/js/lib'},
                     {expand: true, cwd: '<%%= yeoman.app %>/languages', src: ['_s.pot'], dest: '<%%= yeoman.dev %>/languages', rename: function (dest) {
                             return dest + '/<%= slugSiteName %>.pot';
                     }}<% } %>
