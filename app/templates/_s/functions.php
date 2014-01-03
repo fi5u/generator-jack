@@ -65,7 +65,7 @@ add_action( 'after_setup_theme', '_s_setup' );
  * Enqueue scripts and styles
  */
 function _s_scripts() {
-    wp_enqueue_style( '_s-style', get_template_directory_uri() . '/assets/css/style.css' );
+    wp_enqueue_style( '_s-style', get_template_directory_uri() . '/style.css' );
 
     wp_enqueue_script( '_s-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20120206', true );
 

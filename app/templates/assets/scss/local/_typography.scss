@@ -21,7 +21,7 @@ body {
 }
 
 p {
-    @include margin-bottom($size-padding-m);
+    @include margin-bottom();
     @include font-size($font-size-m);
 
     margin-top: 0;
@@ -45,7 +45,8 @@ h1,
 h2,
 h3,
 h4 {
-    @include margin-bottom($size-padding-m);
+    @include margin-bottom();
+    margin-top: 0;
     font-family: $font-heading;
     font-weight: $font-weight-heavy;
 }

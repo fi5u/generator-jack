@@ -70,7 +70,7 @@ module.exports = function (grunt) {
             dev: {
                 options: {
                     sassDir: '<%%= yeoman.app %>/assets/scss',
-                    cssDir: '<%%= yeoman.dev %>/assets/css',
+                    <% if (wordpress === true) { %>cssDir: '<%%= yeoman.dev %>',<% } else { %>cssDir: '<%%= yeoman.dev %>/assets/css',<% } %>
                     environment: 'development'
                 }
             },
@@ -78,7 +78,7 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     sassDir: '<%%= yeoman.app %>/assets/scss',
-                    cssDir: '<%%= yeoman.dist %>/assets/css',
+                    <% if (wordpress === true) { %>cssDir: '<%%= yeoman.dist %>',<% } else { %>cssDir: '<%%= yeoman.dist %>/assets/css',<% } %>
                     environment: 'production'
                 }
             }
@@ -277,6 +277,7 @@ module.exports = function (grunt) {
                 files: {
                     src: [
                         '<%%= yeoman.dist %>/assets/js/{,*/}*.js',
+                        '<%%= yeoman.dist %>/*.css',
                         '<%%= yeoman.dist %>/assets/css/{,*/}*.css',
                         '<%%= yeoman.dist %>/assets/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
                         '<%%= yeoman.dist %>/assets/css/fonts/*'
@@ -290,7 +291,7 @@ module.exports = function (grunt) {
                 expand: true,
                 cwd: '<%%= yeoman.app %>/assets/scss',
                 src: ['*.scss'],
-                dest: '<%%= yeoman.dev %>/assets/css',
+                <% if (wordpress === true) { %>dest: '<%%= yeoman.dev %>',<% } else { %>dest: '<%%= yeoman.dev %>/assets/css',<% } %>
                 ext: '.css'
             },
 
@@ -298,7 +299,7 @@ module.exports = function (grunt) {
                 expand: true,
                 cwd: '<%%= yeoman.app %>/assets/scss',
                 src: ['*.scss'],
-                dest: '<%%= yeoman.dist %>/assets/css',
+                <% if (wordpress === true) { %>dest: '<%%= yeoman.dist %>',<% } else { %>dest: '<%%= yeoman.dist %>/assets/css',<% } %>
                 ext: '.css'
             }
         },<% } %>
@@ -346,7 +347,8 @@ module.exports = function (grunt) {
                 dirs: ['<%%= yeoman.dist %>']
             },
             html: ['<%%= yeoman.dist %>/*.html'],
-            css: '<%%= yeoman.dist %>/assets/css/*.css'
+            <% if (wordpress === true) { %>css: '<%%= yeoman.dist %>/*.css'<% } else { %>css: '<%%= yeoman.dist %>/assets/css/*.css'<% } %>
+            //css: '<%%= yeoman.dist %>/assets/css/*.css'
         },
 
         useminPrepare: {
@@ -379,15 +381,15 @@ module.exports = function (grunt) {
                 tasks: ['spriteHD', 'copy:dev']
             },
             php: {
-                files: ['<%%= yeoman.app %>/{,*/}{,*/}*.php'],
+                files: ['<%%= yeoman.app %>/assets/php/{,*/}*.php'],
                 tasks: ['dev']
             },
             js: {
-                files: ['<%= yeoman.app %>/assets/js/{,*/}*.js'],
+                files: ['<%%= yeoman.app %>/assets/js/{,*/}*.js'],
                 tasks: ['dev']
             },
             img: {
-                files: ['<%= yeoman.app %>/assets/img/**'],
+                files: ['<%%= yeoman.app %>/assets/img/**'],
                 tasks: ['dev']
             }
         }

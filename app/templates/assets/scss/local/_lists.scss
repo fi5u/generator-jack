@@ -1,5 +1,6 @@
 ul {
     @include margin-bottom($size-padding-m);
+    margin-top: 0;
 }
 
 li {

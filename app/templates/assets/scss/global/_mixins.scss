@@ -24,8 +24,8 @@
     #{$prop}: $rem-list;
 }
 
-@mixin font-size($size: 1, $line: $size * 1.5) {
-    //usage @ include font-size(2, 3) or without vars = 1rem font-size and 1.5rem line-height
+@mixin font-size($size: 1, $line: $line-h-multiplier) {
+    //usage @ include font-size(2, 3) or without vars = 1rem font-size and $line-h-multiplier line-height
     //usage or just with one value for the line height to be automatically applied
 
     font-size     : ($size * $unit-default) + px;
@@ -34,7 +34,7 @@
     line-height   : $line + rem;
 }
 
-@mixin margin-bottom($margin: 1.6) {
+@mixin margin-bottom($margin: $line-h-multiplier) {
     margin-bottom: $margin * $unit-default + px;
     margin-bottom: $margin + rem;
 }

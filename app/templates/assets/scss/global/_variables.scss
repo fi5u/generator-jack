@@ -52,7 +52,15 @@ $font-body: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Hel
 $font-weight-heavy: 900;
 $font-weight-reg: 300;
 
+$line-h-multiplier: 1.5;
+
 
 /* anim */
 $nav-trans-dur: 1s;
 $nav-trans-ease: cubic-bezier(x1, y1, x2, y2);
+
+
+/* misc */<% if (cssFramework === 'compassSusy') { %>
+$legacy-support-for-ie: false;
+$legacy-support-for-ie6 : $legacy-support-for-ie;
+$legacy-support-for-ie7 : $legacy-support-for-ie;<% } %>
