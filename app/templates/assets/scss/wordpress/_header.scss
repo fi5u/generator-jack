@@ -60,9 +60,9 @@
 
         border: none;
         @if $col-scheme == dark {
-            background-image: url(../img/icon-menu-white.svg);
+            background-image: url(#{$img-dir}/icon-menu-white.png);
         } @else {
-            background-image: url(../img/icon-menu-black.svg);
+            background-image: url(#{$img-dir}/icon-menu-black.png);
         }
         background-repeat: no-repeat;
         background-position: center center;
@@ -80,6 +80,14 @@
             display: none;
         }
         <% } %>
+    }
+
+    .svg .header__nav-trigger {
+        @if $col-scheme == dark {
+            background-image: url(#{$img-dir}/icon-menu-white.svg);
+        } @else {
+            background-image: url(#{$img-dir}/icon-menu-black.svg);
+        }
     }
 
     .nav-open .header__nav-trigger {
