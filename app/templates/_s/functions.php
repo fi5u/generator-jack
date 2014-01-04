@@ -64,6 +64,7 @@ add_action( 'after_setup_theme', '_s_setup' );
 /**
  * Enqueue scripts and styles
  */
+if ( ! function_exists( '_s_scripts' ) ) :
 function _s_scripts() {
     wp_register_style( '_s-style', get_template_directory_uri() . '/style.css' );
     wp_register_style( '_s-lteie8-style', get_template_directory_uri() . '/assets/css/lteie8.css' );
@@ -95,23 +96,27 @@ function _s_scripts() {
     wp_enqueue_script( '_s-js-script' );
 }
 add_action( 'wp_enqueue_scripts', '_s_scripts' );
-
+endif; // _s_scripts
 
 /**
  * Enqueue admin scripts and styles
  */
-function _s_load_custom_wp_admin_style() {
+if ( ! function_exists( '_s_admin_scripts' ) ) :
+function _s_admin_scripts() {
     // Uncomment if using datepicker in admin
     // wp_enqueue_script('jquery-ui-datepicker', array('jquery'));
     // wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
 }
-add_action( 'admin_enqueue_scripts', '_s_load_custom_wp_admin_style' );
+add_action( 'admin_enqueue_scripts', '_s_admin_scripts' );
+endif;
 
 
 /**
  * Register custom post types
  */
-/*function _s_create_post_types() {
+
+/* if ( ! function_exists( '_s_create_post_types' ) ) :
+ * function _s_create_post_types() {
  *    register_post_type( 'things',
  *        array(
  *            'labels' => array(
@@ -125,18 +130,22 @@ add_action( 'admin_enqueue_scripts', '_s_load_custom_wp_admin_style' );
  *            'new_item' => __('New Thing')
  *        )
  *    );
- *}
- *add_action( 'init', '_s_create_post_types' );
+ * }
+ * add_action( 'init', '_s_create_post_types' );
+ * endif; // _s_create_post_types
  */
 
 /**
  * Add custom meta boxes
  */
-/*function _s_meta_box_add() {
+/*if ( ! function_exists( '_s_meta_box_add' ) ) :
+ *function _s_meta_box_add() {
  *    add_meta_box( 'thing-date', __( 'Thing date' ), '_s_meta_box_cb', 'things', 'side', 'default' );
  *}
  *add_action( 'add_meta_boxes', '_s_meta_box_add' );
+ endif; // _s_meta_box_add
  *
+ *if ( ! function_exists( '_s_meta_box_cb' ) ) :
  *function _s_meta_box_cb( $post ) {
  *    $values = get_post_custom( $post->ID );
  *    $thing_date = isset( $values['thing-date'] ) ? esc_attr( $values['thing-date'][0] ) : '';
@@ -165,12 +174,14 @@ add_action( 'admin_enqueue_scripts', '_s_load_custom_wp_admin_style' );
  *    </p>
  *    <?php
  *}
+ *endif; // _s_meta_box_cb
  */
 
 /**
  * Save custom meta boxes.
  */
-/*function _s_meta_box_save( $post_id ) {
+/*if ( ! function_exists( '_s_meta_box_save' ) ) :
+ *function _s_meta_box_save( $post_id ) {
  *    // Bail if we're doing an auto save
  *    if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
  *
@@ -197,6 +208,7 @@ add_action( 'admin_enqueue_scripts', '_s_load_custom_wp_admin_style' );
  *
  *}
  *add_action( 'save_post', '_s_meta_box_save' );
+ *endif; // _s_meta_box_save
  */
 
 
@@ -207,17 +219,20 @@ add_action( 'admin_enqueue_scripts', '_s_load_custom_wp_admin_style' );
 /**
  * Get attachment id from url
  */
+if ( ! function_exists( '_s_get_image_id' ) ) :
 function _s_get_image_id($image_url) {
     global $wpdb;
     $prefix = $wpdb->prefix;
     $attachment = $wpdb->get_col($wpdb->prepare("SELECT ID FROM " . $prefix . "posts" . " WHERE guid='%s';", $image_url ));
         return $attachment[0];
 }
+endif; // _s_get_image_id
 
 
 /**
  * Get image attributes
  */
+if ( ! function_exists( '_s_get_attachment' ) ) :
 function _s_get_attachment( $attachment_id ) {
 
     $attachment = get_post( $attachment_id );
@@ -230,6 +245,7 @@ function _s_get_attachment( $attachment_id ) {
         'title' => $attachment->post_title
     );
 }
+endif; // _s_get_attachment
 
 
 /*=============================================================
@@ -297,6 +313,7 @@ class custom_walker_header_nav_menu extends Walker_Nav_Menu {
 /**
  * Register widgetized area and update sidebar with default widgets
  */
+if ( ! function_exists( '_s_widgets_init' ) ) :
 function _s_widgets_init() {
 	register_sidebar( array(
 		'name'          => __( 'Sidebar', '_s' ),
@@ -308,6 +325,7 @@ function _s_widgets_init() {
 	) );
 }
 add_action( 'widgets_init', '_s_widgets_init' );
+endif; // _s_widgets_init
 
 
 /**
