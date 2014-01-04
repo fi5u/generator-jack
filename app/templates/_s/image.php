@@ -38,7 +38,7 @@ get_header(); ?>
 				</nav>
 			</header>
 
-			<div class="content  article__content  article--image__content">
+			<div class="article__content  article--image__content">
 				<div class="article--image__content__attachment">
 					<div class="article--image__content__attachment__img">
 						<?php _s_the_attached_image(); ?>
@@ -54,7 +54,7 @@ get_header(); ?>
 				<?php
 					the_content();
 					wp_link_pages( array(
-						'before' => '<div class="content__links  article__content__links  article--image__content__links">' . __( 'Pages:', '_s' ),
+						'before' => '<div class="article__content__links  article--image__content__links">' . __( 'Pages:', '_s' ),
 						'after'  => '</div>',
 					) );
 				?>

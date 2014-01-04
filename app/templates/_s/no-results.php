@@ -10,7 +10,7 @@
 
 <section class="no-results">
 	<header class="header  no-results__header">
-		<h1 class="header__title  no-results__header__title"><?php _e( 'Nothing Found', '_s' ); ?></h1>
+		<h2 class="header__title  no-results__header__title"><?php _e( 'Nothing Found', '_s' ); ?></h2>
 	</header>
 
 	<div class="content  no-results__content">

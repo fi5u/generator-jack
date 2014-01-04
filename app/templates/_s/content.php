@@ -4,7 +4,12 @@
  */
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class('article'); ?>>
+<?php $classes = array('article'); ?>
+<?php if ( is_search() ) : ?>
+<?php array_push($classes, 'article--search'); ?>
+<?php endif; ?>
+
+<article id="post-<?php the_ID(); ?>" <?php post_class($classes); ?>>
 	<header class="header  article__header">
 		<h1 class="header__title  article__header__title"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a></h1>
 
@@ -23,11 +28,11 @@
 
 	<?php else : ?>
 
-	<div class="content  article__content">
+	<div class="article__content">
 		<?php the_content( __( 'Continue reading &rarr;', '_s' ) ); ?>
 		<?php
 			wp_link_pages( array(
-				'before' => '<div class="content__links  article__content__links">' . __( 'Pages:', '_s' ),
+				'before' => '<div class="article__content__links">' . __( 'Pages:', '_s' ),
 				'after'  => '</div>',
 			) );
 		?>

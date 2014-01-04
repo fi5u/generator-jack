@@ -13,11 +13,11 @@
 		</div>
 	</header>
 
-	<div class="content  article__content  article--single__content">
+	<div class="article__content  article--single__content">
 		<?php the_content(); ?>
 		<?php
 			wp_link_pages( array(
-				'before' => '<div class="content__links  article__content__links  article--single__content__links">' . __( 'Pages:', '_s' ),
+				'before' => '<div class="article__content__links  article--single__content__links">' . __( 'Pages:', '_s' ),
 				'after'  => '</div>',
 			) );
 		?>
