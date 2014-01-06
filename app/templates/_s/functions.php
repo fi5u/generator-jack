@@ -98,6 +98,7 @@ function _s_scripts() {
 add_action( 'wp_enqueue_scripts', '_s_scripts' );
 endif; // _s_scripts
 
+
 /**
  * Enqueue admin scripts and styles
  */
@@ -110,6 +111,8 @@ function _s_admin_scripts() {
 add_action( 'admin_enqueue_scripts', '_s_admin_scripts' );
 endif;
 
+
+if ( ! isset( $content_width ) ) $content_width = 1170;
 
 /**
  * Register custom post types

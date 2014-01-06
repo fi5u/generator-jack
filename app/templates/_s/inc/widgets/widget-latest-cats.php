@@ -50,13 +50,13 @@ class _s_latest_cats_widget extends WP_Widget {
         ?>
 
         <p>
-            <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
+            <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', '_s', '_s' ); ?></label>
             <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
         </p>
 
         <p>
         <select name="<?php echo $this->get_field_name( 'category' ); ?>" id="<?php echo $this->get_field_id( 'category' ); ?>">
-            <option value=""><?php echo esc_attr(__('Select category')); ?></option>
+            <option value=""><?php echo esc_attr(__('Select category', '_s')); ?></option>
             <?php
             $args = array('orderby'=>'count', 'order'=>'desc');
             $categories = get_categories($args);
@@ -86,7 +86,7 @@ class _s_latest_cats_widget extends WP_Widget {
         ?>
 
         <p>
-            <label for="<?php echo $this->get_field_id( 'quantity' ); ?>"><?php _e( 'Number of posts:' ); ?></label>
+            <label for="<?php echo $this->get_field_id( 'quantity' ); ?>"><?php _e( 'Number of posts:', '_s' ); ?></label>
             <input id="<?php echo $this->get_field_id( 'quantity' ); ?>" name="<?php echo $this->get_field_name( 'quantity' ); ?>" type="number" value="<?php echo esc_attr( $quantity ); ?>" />
         </p>
 
