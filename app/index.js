@@ -226,6 +226,7 @@ SiteGenerator.prototype.app = function app() {
 
     if (this.wordpress) {
         this.copy('assets/scss/wp_style.css', appUrl + '/style.css');
+        this.copy('assets/scss/editor-style.scss', appUrl + '/assets/scss/editor-style.scss');
         this.copy('backgroundsize.min.htc', devUrl + '/backgroundsize.min.htc');
     } else {
         this.copy('backgroundsize.min.htc', appUrl + '/backgroundsize.min.htc');

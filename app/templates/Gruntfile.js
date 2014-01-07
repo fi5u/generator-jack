@@ -66,6 +66,48 @@ module.exports = function (grunt) {
             }
         },
 
+        <% if (cssFramework === 'compassSusy') { %>compassMultiple: {
+            dev: {
+                options: {
+                    multiple: [
+                        <% if (wordpress === true) { %> {
+                            sassDir: '<%%= yeoman.app %>/assets/scss',
+                            sassFiles: ['<%%= yeoman.app %>/assets/scss/style.scss'],
+                            cssDir: '<%%= yeoman.dev %>'
+                        }, {
+                            sassDir: '<%%= yeoman.app %>/assets/scss',
+                            sassFiles: ['<%%= yeoman.app %>/assets/scss/editor-style.scss', '<%%= yeoman.app %>/assets/scss/lteie8.scss'],
+                            cssDir: '<%%= yeoman.dev %>/assets/css'
+                        }<% } else { %> {
+                            sassDir: '<%%= yeoman.app %>/assets/scss',
+                            cssDir: '<%%= yeoman.dev %>/assets/css'
+                        }<% } %>
+                    ],
+                    environment: 'development'
+                }
+            },
+
+            dist: {
+                options: {
+                    multiple: [
+                        <% if (wordpress === true) { %> {
+                            sassDir: '<%%= yeoman.app %>/assets/scss',
+                            sassFiles: ['<%%= yeoman.app %>/assets/scss/style.scss'],
+                            cssDir: '<%%= yeoman.dist %>'
+                        }, {
+                            sassDir: '<%%= yeoman.app %>/assets/scss',
+                            sassFiles: ['<%%= yeoman.app %>/assets/scss/editor-style.scss', '<%%= yeoman.app %>/assets/scss/lteie8.scss'],
+                            cssDir: '<%%= yeoman.dist %>/assets/css'
+                        }<% } else { %> {
+                            sassDir: '<%%= yeoman.app %>/assets/scss',
+                            cssDir: '<%%= yeoman.dist %>/assets/css'
+                        } <% } %>
+                    ],
+                    environment: 'production'
+                }
+            }
+        },<% } %>
+
         <% if (cssFramework === 'compassSusy') { %>compass: {
             dev: {
                 options: {
@@ -406,14 +448,49 @@ module.exports = function (grunt) {
         'clean:dev',
         'copy:dev',
         'spriteHD',<% if (cssFramework === 'compassSusy') { %>
-        'compass:dev',<% } else { %>
+        //'compass:dev',
+        'compassMultiple:dev',<% } else { %>
         'sass:dev',<% } %>
         'processhtml:dev',
         'replace:dev'
     ]);
 
     grunt.registerTask('build', [
-        <% if (wordpress === true) { %>'dev',<% } %>
+        <% if (wordpress === true) { %>'dev',
+        'clean:dist',<% if (cssFramework === 'compassSusy') { %>
+        //'compass:dist',
+        'compassMultiple:dist',<% } else { %>
+        'sass:dist',<% } %>
+        'copy:dist',
+        'svgmin',
+        'imagemin:dist',
+        'svg2png',
+        'spriteHD',
+        'modernizr',
+        'replace:dist'
+
+        <% } else { %>
+
+        'clean:dist',<% if (cssFramework === 'compassSusy') { %>
+        //'compass:dist',
+        'compassMultiple:dist',<% } else { %>
+        'sass:dist',<% } %>
+        'useminPrepare',
+        'concat',
+        'uglify',
+        'rev',
+        'copy:dist',
+        'svgmin',
+        'imagemin:dist',
+        'svg2png',
+        'spriteHD',
+        'modernizr',
+        'processhtml:dist',
+        'replace:dist',
+        'usemin'
+        <% } %>
+
+/*        <% if (wordpress === true) { %>'dev',<% } %>
         'clean:dist',<% if (cssFramework === 'compassSusy') { %>
         'compass:dist',<% } else { %>
         'sass:dist',<% } %>
@@ -431,6 +508,6 @@ module.exports = function (grunt) {
         'modernizr',<% if (wordpress === false) { %>
         'processhtml:dist',<% } %>
         'replace:dist',
-        'usemin'
+        'usemin'*/
     ]);
 };

@@ -25,6 +25,9 @@ function _s_setup() {
      */
     load_theme_textdomain( '_s', get_template_directory() . '/languages' );
 
+    // This theme styles the visual editor to resemble the theme style.
+    add_editor_style( array( 'assets/css/editor-style.css' ) );
+
     /**
      * Add default posts and comments RSS feed links to head
      */
