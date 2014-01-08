@@ -130,9 +130,11 @@ module.exports = function (grunt) {
             dev: {
                 files: [
                     {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/scss/**', '!.htaccess', '!**/languages/**'], dest: '<%%= yeoman.dev %>'},
-                    {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dev %>/assets/css/fonts'},
-                    {expand: true, cwd: 'bower_components', src: ['**'], dest: '<%%= yeoman.dev %>/assets/bower_components'},<% if (wordpress === true) { %>
+                    {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dev %>/assets/css/fonts'},<% if (wordpress === false) { %>
+                    {expand: true, cwd: 'bower_components', src: ['**'], dest: '<%%= yeoman.dev %>/assets/bower_components'},<% } else { %>
                     {expand: true, cwd: 'bower_components/modernizr', src: ['modernizr.js'], dest: '<%%= yeoman.dev %>/assets/js/lib'},
+                    {expand: true, cwd: 'bower_components/respond/dest', src: ['respond.min.js'], dest: '<%%= yeoman.dev %>/assets/js/lib'},
+                    {expand: true, cwd: 'bower_components/selectivizr', src: ['selectivizr.js'], dest: '<%%= yeoman.dev %>/assets/js/lib'},
                     {expand: true, cwd: '<%%= yeoman.app %>/languages', src: ['_s.pot'], dest: '<%%= yeoman.dev %>/languages', rename: function (dest) {
                             return dest + '/<%= slugSiteName %>.pot';
                     }}<% } %>
@@ -151,6 +153,8 @@ module.exports = function (grunt) {
                     }},
                     // Only copy over the minified migrate plugin
                     {expand: true, cwd: 'bower_components/jquery-migrate', src: ['jquery-migrate.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'}<% } else { %>,
+                    {expand: true, cwd: 'bower_components/respond/dest', src: ['respond.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'},
+                    {expand: true, cwd: 'bower_components/selectivizr', src: ['selectivizr.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'},
                     {expand: true, cwd: '<%%= yeoman.app %>/languages', src: ['_s.pot'], dest: '<%%= yeoman.dist %>/languages', rename: function (dest) {
                         return dest + '/<%= slugSiteName %>.pot';
                     }}<% } %>

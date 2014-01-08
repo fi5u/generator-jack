@@ -73,6 +73,8 @@ function _s_scripts() {
     wp_register_style( '_s-lteie8-style', get_template_directory_uri() . '/assets/css/lteie8.css' );
 
     wp_register_script( '_s-modernizr', get_template_directory_uri() . '/assets/js/lib/modernizr.js', array(), '20140101', false );
+    wp_register_script( '_s-respond', get_template_directory_uri() . '/assets/js/lib/respond.min.js', array(), '20140101', false );
+    wp_register_script( '_s-selectivizr', get_template_directory_uri() . '/assets/js/lib/selectivizr.min.js', array('jquery'), '20140101', false );
     wp_register_script( '_s-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20140101', true );
     wp_register_script( '_s-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20140101', true );
     wp_register_script( '_s-keyboard-image-navigation', get_template_directory_uri() . '/js/keyboard-image-navigation.js', array( 'jquery' ), '20140101', true );
@@ -82,6 +84,8 @@ function _s_scripts() {
     if( preg_match('/(?i)msie [2-8]/',$_SERVER['HTTP_USER_AGENT']) ) {
         // if IE<=8
         wp_enqueue_style( '_s-lteie8-style' );
+        wp_enqueue_script( '_s-respond' );
+        wp_enqueue_script( '_s-selectivizr' );
     }
 
     wp_enqueue_script( '_s-modernizr' );
