@@ -250,6 +250,8 @@ SiteGenerator.prototype.app = function app() {
     this.copy('assets/scss/local/_local.scss', appUrl + '/assets/scss/local/_local.scss');
 
     this.copy('assets/js/script.js', appUrl + '/assets/js/script.js');
+    this.copy('assets/js/options.js', appUrl + '/assets/js/options.js');
+
 
     if (this.wordpress) {
         this.directory('assets/scss/wordpress', appUrl + '/assets/scss/object');
