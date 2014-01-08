@@ -27,7 +27,7 @@
 			<p class="page-header__branding__description"><?php bloginfo( 'description' ); ?></p>
 		</div>
 
-        <button class="header__nav-trigger" id="nav-trigger">Navigation</button>
+        <button class="page-header__nav-trigger" id="nav-trigger">Navigation</button>
 
 		<nav id="site-navigation" class="header__nav  page-header__nav" role="navigation">
 			<h1 class="page-header__nav__toggle"><?php _e( 'Menu', '_s' ); ?></h1>
