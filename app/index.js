@@ -35,52 +35,60 @@ var SiteGenerator = module.exports = function SiteGenerator(args, options, confi
                 if (this.wordpress) {
                     var fs = require('fs-extra'),
                         replace = require('replace'),
+                        simpleGit = require('simple-git')(),
                         slugSite = this.slugSiteName,
                         siteName = this.siteName,
                         siteCamel = convertToCamel(siteName),
                         projectDir = process.cwd();
 
-                    fs.copy(projectDir + '/bower_components/wordpress', projectDir + '/dev', function (err) {
+                    simpleGit.clone('https://github.com/WordPress/WordPress.git', projectDir + '/wp-temp', function (err) {
                         if (err) {
                             return console.error(err);
                         } else {
-                            console.log('WordPress copied successfully');
+                            fs.copy(projectDir + '/wp-temp', projectDir + '/dev', function(err){
+                                if (err) return console.error(err);
 
-                            fs.copy(__dirname + '/templates/_s', projectDir + '/app/' + siteCamel, function (err) {
-                                function performReplacement(regex, replacement, paths, include) {
-                                    console.log('Replacing ' + regex + ' for ' + replacement);
-                                    replace({
-                                        regex: regex,
-                                        replacement: replacement,
-                                        paths: [paths],
-                                        include: include,
-                                        recursive: true,
-                                        count: true
-                                    });
-                                }
+                                console.log('WordPress copied successfully');
+                                fs.remove(projectDir + '/wp-temp', function(err){
+                                    if (err) return console.error("Temporary WordPress directory - 'wp-temp' could not be removed, you can remove this manually:" + err);
+                                });
+                                fs.copy(__dirname + '/templates/_s', projectDir + '/app/' + siteCamel, function (err) {
+                                    function performReplacement(regex, replacement, paths, include) {
+                                        console.log('Replacing ' + regex + ' for ' + replacement);
+                                        replace({
+                                            regex: regex,
+                                            replacement: replacement,
+                                            paths: [paths],
+                                            include: include,
+                                            recursive: true,
+                                            count: true
+                                        });
+                                    }
 
-                                if (err) {
-                                    return console.error(err);
-                                } else {
-                                    var mv = require('mv'),
-                                        wpThemeDir = projectDir + '/app/' + siteCamel,
-                                        wpAssetsDir = wpThemeDir + '/assets';
+                                    if (err) {
+                                        return console.error(err);
+                                    } else {
+                                        var mv = require('mv'),
+                                            wpThemeDir = projectDir + '/app/' + siteCamel,
+                                            wpAssetsDir = wpThemeDir + '/assets';
 
-                                    console.log('Template WordPress theme copied successfully\nBeginning text replacement on theme files');
+                                        console.log('Template WordPress theme copied successfully\nBeginning text replacement on theme files');
 
-                                    performReplacement('Text Domain: _s', 'Text Domain: ' + slugSite, wpThemeDir, '*.scss');
-                                    performReplacement("'_s'", "'" + slugSite + "'", wpThemeDir);
-                                    performReplacement('_s_', slugSite + '_', wpThemeDir);
-                                    performReplacement(' _s', ' ' + siteCamel.charAt(0).toUpperCase() + siteCamel.slice(1), wpThemeDir);
-                                    performReplacement('_s-', slugSite + '-', wpThemeDir);
+                                        performReplacement('Text Domain: _s', 'Text Domain: ' + slugSite, wpThemeDir, '*.scss');
+                                        performReplacement("'_s'", "'" + slugSite + "'", wpThemeDir);
+                                        performReplacement('_s_', slugSite + '_', wpThemeDir);
+                                        performReplacement(' _s', ' ' + siteCamel.charAt(0).toUpperCase() + siteCamel.slice(1), wpThemeDir);
+                                        performReplacement('_s-', slugSite + '-', wpThemeDir);
 
-                                    console.log('Setting the name for the language file');
-                                    mv(wpThemeDir + '/languages/_s.pot', wpThemeDir + '/languages/' + slugSite + '.pot', function(err) {
-                                        if (err) {
-                                            console.log('Could not set the name for the language file: ' + err);
-                                        }
-                                    });
-                                }
+                                        console.log('Setting the name for the language file');
+                                        mv(wpThemeDir + '/languages/_s.pot', wpThemeDir + '/languages/' + slugSite + '.pot', function(err) {
+                                            if (err) {
+                                                console.log('Could not set the name for the language file: ' + err);
+                                            }
+                                        });
+                                    }
+                                });
+
                             });
                         }
                     });
