@@ -461,7 +461,9 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         <% if (wordpress === true) { %>'dev',
-        'clean:dist',<% if (cssFramework === 'compassSusy') { %>
+        'clean:dist',
+        'spriteHD',
+        <% if (cssFramework === 'compassSusy') { %>
         //'compass:dist',
         'compassMultiple:dist',<% } else { %>
         'sass:dist',<% } %>
@@ -469,13 +471,13 @@ module.exports = function (grunt) {
         'svgmin',
         'imagemin:dist',
         'svg2png',
-        'spriteHD',
         'modernizr',
         'replace:dist'
 
         <% } else { %>
 
-        'clean:dist',<% if (cssFramework === 'compassSusy') { %>
+        'clean:dist',
+        'spriteHD',<% if (cssFramework === 'compassSusy') { %>
         //'compass:dist',
         'compassMultiple:dist',<% } else { %>
         'sass:dist',<% } %>
@@ -487,7 +489,6 @@ module.exports = function (grunt) {
         'svgmin',
         'imagemin:dist',
         'svg2png',
-        'spriteHD',
         'modernizr',
         'processhtml:dist',
         'replace:dist',
