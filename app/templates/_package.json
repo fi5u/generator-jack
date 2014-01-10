@@ -23,7 +23,7 @@
         "grunt-modernizr": "0.4.1",
         "grunt-open": "~0.2.0",
         "grunt-php": "0.3.0",
-        "grunt-processhtml": "0.2.1",
+        "grunt-processhtml": "0.2.7",
         "grunt-replace": "0.5.1",
         "grunt-rev": "0.1.0",
         "grunt-svg2png": "0.2.1",

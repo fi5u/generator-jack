@@ -282,8 +282,17 @@ module.exports = function (grunt) {
             },
 
             dist: {
+                options: {
+                    patterns: [{
+                        match: '/\'WP_DEBUG\', true/g',
+                        replacement: function () {
+                            return "'WP_DEBUG', false";
+                        },
+                        expression: true
+                    }]
+                },
                 files: [
-                    {expand: true, src: ['<%%= yeoman.dist %>/**', '<%%= yeoman.dist %>/languages/<%= slugSiteName %>.pot']}
+                    {expand: true, src: ['<%%= yeoman.dist %>/**', '<%%= yeoman.dist %>/languages/<%= slugSiteName %>.pot', '<%%= yeoman.distBase %>/wp-config.php']}
                 ]
             }
             <% } else { %>
@@ -452,7 +461,6 @@ module.exports = function (grunt) {
         'clean:dev',
         'copy:dev',
         'spriteHD',<% if (cssFramework === 'compassSusy') { %>
-        //'compass:dev',
         'compassMultiple:dev',<% } else { %>
         'sass:dev',<% } %>
         'processhtml:dev',
@@ -464,7 +472,6 @@ module.exports = function (grunt) {
         'clean:dist',
         'spriteHD',
         <% if (cssFramework === 'compassSusy') { %>
-        //'compass:dist',
         'compassMultiple:dist',<% } else { %>
         'sass:dist',<% } %>
         'copy:dist',
@@ -478,7 +485,6 @@ module.exports = function (grunt) {
 
         'clean:dist',
         'spriteHD',<% if (cssFramework === 'compassSusy') { %>
-        //'compass:dist',
         'compassMultiple:dist',<% } else { %>
         'sass:dist',<% } %>
         'useminPrepare',
@@ -494,25 +500,5 @@ module.exports = function (grunt) {
         'replace:dist',
         'usemin'
         <% } %>
-
-/*        <% if (wordpress === true) { %>'dev',<% } %>
-        'clean:dist',<% if (cssFramework === 'compassSusy') { %>
-        'compass:dist',<% } else { %>
-        'sass:dist',<% } %>
-        'useminPrepare',
-
-        <% if (wordpress === false) { %>
-        'concat',
-        'uglify',
-        'rev',<% } %>
-        'copy:dist',
-        'svgmin',
-        'imagemin:dist',
-        'svg2png',
-        'spriteHD',
-        'modernizr',<% if (wordpress === false) { %>
-        'processhtml:dist',<% } %>
-        'replace:dist',
-        'usemin'*/
     ]);
 };
