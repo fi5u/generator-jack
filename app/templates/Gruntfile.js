@@ -437,7 +437,7 @@ module.exports = function (grunt) {
                 tasks: ['spriteHD', 'copy:dev']
             },
             php: {
-                files: ['<%%= yeoman.app %>/assets/php/{,*/}*.php'],
+                files: ['<%%= yeoman.app %>/**.php'],
                 tasks: ['dev']
             },
             js: {
