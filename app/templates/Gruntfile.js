@@ -49,6 +49,11 @@ module.exports = function (grunt) {
             }
         },
 
+        concurrent: {
+            replacementsDev: ['processhtml:dev', 'replace:dev'],
+            replacementsDist: ['processhtml:dist', 'replace:dist']
+        },
+
         connect: {
             options: {
                 port: 9001,
@@ -463,8 +468,7 @@ module.exports = function (grunt) {
         'spriteHD',<% if (cssFramework === 'compassSusy') { %>
         'compassMultiple:dev',<% } else { %>
         'sass:dev',<% } %>
-        'processhtml:dev',
-        'replace:dev'
+        'concurrent:replacementsDev'
     ]);
 
     grunt.registerTask('build', [
@@ -496,8 +500,7 @@ module.exports = function (grunt) {
         'imagemin:dist',
         'svg2png',
         'modernizr',
-        'processhtml:dist',
-        'replace:dist',
+        'concurrent:replacementsDev',
         'usemin'
         <% } %>
     ]);

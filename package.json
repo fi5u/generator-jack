@@ -1,6 +1,6 @@
 {
   "name": "generator-jack",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A multifunction generator for Yeoman",
   "keywords": [
     "yeoman-generator",
