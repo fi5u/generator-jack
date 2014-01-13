@@ -64,4 +64,5 @@ $nav-trans-ease: cubic-bezier(x1, y1, x2, y2);
 $legacy-support-for-ie: false;
 $legacy-support-for-ie6 : $legacy-support-for-ie;
 $legacy-support-for-ie7 : $legacy-support-for-ie;<% } %>
+$sub-menu-indent: 10px;
 <% if (wordpress === true) { %>$img-dir: "assets/img";<% } else { %>$img-dir: "../img";<% } %>

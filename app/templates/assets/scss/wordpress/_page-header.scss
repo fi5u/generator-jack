@@ -28,28 +28,68 @@
         height: 100%;
 
         background: $nav-col;
-        <% if (cssFramework !== 'noFramework') { %>
+
         @include transition(all $nav-trans-dur);
         @include transition-timing-function($nav-trans-ease);
 
         @include at-breakpoint($nav-break) {
             position: static;
         }
-        <% } else { %>
-        @media (min-width: $nav-break) {
-            position: static;
-        }
-        <% } %>
+
     }
 
     .nav-open .page-header__nav {
         left: 100% - $offcanvas-nav-w;
     }
 
+        .page-header__nav__item {
+            display: block;
+
+            &.menu-item-has-children {
+                position: relative;
+            }
+
+            @include at-breakpoint($nav-break) {
+                display: inline-block;
+            }
+        }
+
+            .page-header__nav__subgroup {
+                left: 100%;
+                top: 0;
+                margin: 0;
+                padding-left: $sub-menu-indent;
+                white-space: nowrap;
+
+                @include at-breakpoint($nav-break) {
+                    display: none;
+                    position: absolute;
+                }
+
+                &.page-header__nav__group--depth-1 {
+                    left: 0;
+                    top: 100%;
+
+                    @include at-breakpoint($nav-break) {
+                        padding-left: 0;
+                    }
+                }
+            }
+
+            .menu-item-has-children:hover > .page-header__nav__subgroup {
+                display: block;
+            }
+
+            .page-header__nav__subitem {
+                display: block;
+            }
+
+
+
     .page-header__nav-trigger {
-        <% if (cssFramework !== 'noFramework') { %>
+
         @include hide-text;
-        <% } %>
+
 
         position: fixed;
         top: 0;
@@ -68,18 +108,14 @@
         background-position: center center;
         background-color: $nav-col;
 
-        <% if (cssFramework !== 'noFramework') { %>
+
         @include transition(all $nav-trans-dur);
         @include transition-timing-function($nav-trans-ease);
 
         @include at-breakpoint($nav-break) {
             display: none;
         }
-        <% } else { %>
-        @media (min-width: $nav-break) {
-            display: none;
-        }
-        <% } %>
+
     }
 
     .svg .page-header__nav-trigger {

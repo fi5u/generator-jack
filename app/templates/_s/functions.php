@@ -273,10 +273,10 @@ class _s_walker_header_nav_menu extends Walker_Nav_Menu {
         $indent = ( $depth > 0  ? str_repeat( "\t", $depth ) : '' ); // code indent
         $display_depth = ( $depth + 1); // because it counts the first submenu as 0
         $classes = array(
-            'header__nav__group  page-header__nav__group  header__nav__subgroup  page-header__nav__subgroup',
-            ( $display_depth % 2  ? 'header__nav__group--odd  page-header__nav__group--odd' : 'header__nav__group--even  page-header__nav__group--even' ),
+            'page-header__nav__group  page-header__nav__subgroup',
+            ( $display_depth % 2  ? 'page-header__nav__group--odd' : 'page-header__nav__group--even' ),
             ( $display_depth >=2 ? 'page-header__nav__subsubgroup' : '' ),
-            'header__nav__group--depth-' . $display_depth
+            'page-header__nav__group--depth-' . $display_depth
             );
         $class_names = implode( ' ', $classes );
 
@@ -290,10 +290,10 @@ class _s_walker_header_nav_menu extends Walker_Nav_Menu {
 
         // depth dependent classes
         $depth_classes = array(
-            ( $depth == 0 ? 'header__nav__item' : 'header__nav__item  header__nav__subitem' ),
-            ( $depth >=2 ? 'header__nav__item  header__nav__subitem' : '' ),
-            ( $depth % 2 ? 'header__nav__item--odd' : 'header__nav__item--even' ),
-            'header__nav__item--depth-' . $depth
+            ( $depth == 0 ? 'page-header__nav__item' : 'page-header__nav__item  page-header__nav__subitem' ),
+            ( $depth >=2 ? 'page-header__nav__item  page-header__nav__subitem' : '' ),
+            ( $depth % 2 ? 'page-header__nav__item--odd' : 'page-header__nav__item--even' ),
+            'page-header__nav__item--depth-' . $depth
             );
         $depth_class_names = esc_attr( implode( ' ', $depth_classes ) );
         // passed classes
@@ -306,7 +306,7 @@ class _s_walker_header_nav_menu extends Walker_Nav_Menu {
         $attributes .= ! empty( $item->target )     ? ' target="' . esc_attr( $item->target     ) .'"' : '';
         $attributes .= ! empty( $item->xfn )        ? ' rel="'    . esc_attr( $item->xfn        ) .'"' : '';
         $attributes .= ! empty( $item->url )        ? ' href="'   . esc_attr( $item->url        ) .'"' : '';
-        $attributes .= ' class="' . ( $depth > 0 ? 'header__nav__item__link  header__nav__subitem__link' : 'header__nav__item__link' ) . '"';
+        $attributes .= ' class="' . ( $depth > 0 ? 'page-header__nav__item__link  page-header__nav__subitem__link' : 'page-header__nav__item__link' ) . '"';
         $item_output = sprintf( '%1$s<a%2$s>%3$s%4$s%5$s</a>%6$s',
             $args->before,
             $attributes,
@@ -319,6 +319,7 @@ class _s_walker_header_nav_menu extends Walker_Nav_Menu {
         $output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
     }
 }
+
 endif; // _s_walker_header_nav_menu
 
 
