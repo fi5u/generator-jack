@@ -10,7 +10,7 @@
     @else {
         @if unitless($val) {
             @if $val == 0 { @return $val }
-            @else { @return $val * $unit-default-px};
+            @else { @return $val * $unit-default};
         } @else { @return $val};
     }
 }
