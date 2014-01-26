@@ -1,0 +1,12 @@
+%boxshad {
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
+}
+
+%hidden {
+    position: absolute;
+    top: auto;
+    left: -1000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}

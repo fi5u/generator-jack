@@ -1,12 +1,3 @@
-@mixin hidden {
-    position: absolute;
-    top: auto;
-    left: -1000px;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-}
-
 @mixin px-rem($prop, $val...) {
     $n: length($val);
     $i: 1;
@@ -43,4 +34,16 @@
     background-size: $type;
     // Ensure 'backgroundsize.min.htc' is a sibling of the page displaying this selector
     -ms-behavior: url(backgroundsize.min.htc);
+}
+
+@mixin rotate($deg) {
+    -ms-transform:rotate($deg+deg);
+    -webkit-transform:rotate($deg+deg);
+    transform:rotate($deg+deg);
+}
+
+@mixin opacity($opacity) {
+    opacity: $opacity;
+    $opacity-ie: $opacity * 100;
+    filter: alpha(opacity=$opacity-ie); //IE8
 }
