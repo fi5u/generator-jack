@@ -1,3 +1,19 @@
 form {
     @include margin-bottom();
 }
+
+::-webkit-input-placeholder {
+   color: lighten($col1, 20%);
+}
+
+:-moz-placeholder {
+   color: lighten($col1, 20%);
+}
+
+::-moz-placeholder {
+   color: lighten($col1, 20%);
+}
+
+:-ms-input-placeholder {
+   color: lighten($col1, 20%);
+}
