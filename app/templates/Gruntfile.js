@@ -181,7 +181,7 @@ module.exports = function (grunt) {
                     user: '<%= dbUsername %>',
                     pass: '<%= dbPassword %>',
                     host: '<%= dbHost %>',
-                    backup_to: 'dev_db/<%= grunt.template.today("yyyy-mm-dd") %>_test_site.sql'
+                    backup_to: 'dev_db/<%%= grunt.template.today("yyyy-mm-dd") %>_test_site.sql'
                 }
             }
         },
