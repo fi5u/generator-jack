@@ -1,5 +1,5 @@
 ul {
-    @include margin-bottom($size-padding-m);
+    @include margin-bottom();
     margin-top: 0;
 }
 

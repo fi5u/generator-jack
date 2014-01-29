@@ -50,7 +50,7 @@ module.exports = function (grunt) {
         },
 
         concurrent: {
-            replacementsDev: ['processhtml:dev', 'replace:dev'],
+            replacementsDev: ['processhtml:dev', 'replace:dev'<% if (wordpress === true) { %>, 'pot'<% } %>],
             replacementsDist: ['processhtml:dist', 'replace:dist']
         },
 
@@ -207,6 +207,21 @@ module.exports = function (grunt) {
             watch: {
             }
         },
+
+        pot: {
+            options: {
+                text_domain: '<%= slugSiteName %>',
+                dest: '<%%= yeoman.dev %>/languages/',
+                keywords: ['__', '_e', '_n:1,2', '_x:1c,2', '_ex:1c,2'],
+                comment_tag: '/// TRANSLATORS:'
+            },
+
+            files:{
+                src:  [ '<%%= yeoman.dev %>/**/*.php' ],
+                expand: true
+            }
+        },
+
         <% } %>
         processhtml: {
             options: {

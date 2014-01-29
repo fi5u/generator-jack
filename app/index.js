@@ -243,20 +243,24 @@ SiteGenerator.prototype.app = function app() {
 
     this.copy('assets/scss/lib/_normalize.scss', appUrl + '/assets/scss/lib/_normalize.scss');
 
-    this.copy('assets/scss/global/_fonts.scss', appUrl + '/assets/scss/global/_fonts.scss');
+    this.directory('assets/scss/global', appUrl + '/assets/scss/global');
+/*    this.copy('assets/scss/global/_fonts.scss', appUrl + '/assets/scss/global/_fonts.scss');
     this.copy('assets/scss/global/_variables.scss', appUrl + '/assets/scss/global/_variables.scss');
     this.copy('assets/scss/global/_functions.scss', appUrl + '/assets/scss/global/_functions.scss');
     this.copy('assets/scss/global/_mixins.scss', appUrl + '/assets/scss/global/_mixins.scss');
     this.copy('assets/scss/global/_framework_media.scss', appUrl + '/assets/scss/global/_framework_media.scss');
     this.copy('assets/scss/global/_framework_nav.scss', appUrl + '/assets/scss/global/_framework_nav.scss');
+*/
+    this.directory('assets/scss/local', appUrl + '/assets/scss/local');
 
-    this.copy('assets/scss/local/_typography.scss', appUrl + '/assets/scss/local/_typography.scss');
+/*    this.copy('assets/scss/local/_typography.scss', appUrl + '/assets/scss/local/_typography.scss');
     this.copy('assets/scss/local/_helpers.scss', appUrl + '/assets/scss/local/_helpers.scss');
     this.copy('assets/scss/local/_images.scss', appUrl + '/assets/scss/local/_images.scss');
     this.copy('assets/scss/local/_forms.scss', appUrl + '/assets/scss/local/_forms.scss');
     this.copy('assets/scss/local/_lists.scss', appUrl + '/assets/scss/local/_lists.scss');
     this.copy('assets/scss/local/_local.scss', appUrl + '/assets/scss/local/_local.scss');
 
+*/
     this.copy('assets/js/script.js', appUrl + '/assets/js/script.js');
     this.copy('assets/js/options.js', appUrl + '/assets/js/options.js');
 
