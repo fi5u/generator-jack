@@ -50,7 +50,7 @@ module.exports = function (grunt) {
         },
 
         concurrent: {
-            replacementsDev: ['processhtml:dev', 'replace:dev'<% if (wordpress === true) { %>, 'pot'<% } %>],
+            replacementsDev: ['processhtml:dev', 'replace:dev'],
             replacementsDist: ['processhtml:dist', 'replace:dist']
         },
 

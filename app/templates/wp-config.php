@@ -69,7 +69,9 @@ $table_prefix  = '<%= dbTablePrefix %>';
  * de_DE.mo to wp-content/languages and set WPLANG to 'de_DE' to enable German
  * language support.
  */
-define('WPLANG', '');
+<% if (adminLanguage === 'engfinn') { %>
+//define('WPLANG', 'fi');
+<% } %>define('WPLANG', '');
 
 /**
  * For developers: WordPress debugging mode.

@@ -33,7 +33,8 @@ var SiteGenerator = module.exports = function SiteGenerator(args, options, confi
             skipInstall: options['skip-install'],
             callback: function () {
                 if (this.wordpress) {
-                    var fs = require('fs-extra'),
+                    var self = this,
+                        fs = require('fs-extra'),
                         replace = require('replace'),
                         simpleGit = require('simple-git')(),
                         slugSite = this.slugSiteName,
@@ -50,7 +51,7 @@ var SiteGenerator = module.exports = function SiteGenerator(args, options, confi
 
                                 console.log('WordPress copied successfully');
                                 fs.remove(projectDir + '/wp-temp', function(err){
-                                    if (err) return console.error("Temporary WordPress directory - 'wp-temp' could not be removed, you can remove this manually:" + err);
+                                    if (err) return console.error('Temporary WordPress directory - "wp-temp" could not be removed, you can remove this manually: ' + err);
                                 });
                                 fs.copy(__dirname + '/templates/_s', projectDir + '/app/' + siteCamel, function (err) {
                                     function performReplacement(regex, replacement, paths, include) {
@@ -68,6 +69,16 @@ var SiteGenerator = module.exports = function SiteGenerator(args, options, confi
                                     if (err) {
                                         return console.error(err);
                                     } else {
+                                        if (self.adminLanguage === 'engfinn') {
+                                            fs.copy(__dirname + '/templates/languages', projectDir + '/dev/wp-content/languages', function (err) {
+                                                if (err) {
+                                                    return console.error('Language files could not be transferred: ' + err);
+                                                } else {
+                                                    console.log('Language files successfully copied');
+                                                }
+                                            });
+                                        }
+
                                         var mv = require('mv'),
                                             wpThemeDir = projectDir + '/app/' + siteCamel,
                                             wpAssetsDir = wpThemeDir + '/assets';
@@ -119,6 +130,21 @@ SiteGenerator.prototype.askFor = function askFor() {
             name: 'wordpress',
             message: 'Is this site going to be running on WordPress?',
             default: false
+        }, {
+            type: 'list',
+            name: 'adminLanguage',
+            message: 'In what language is the site going to be?',
+            default: 'engfinn',
+            choices: [{
+                name: 'English (with Finnish files ready)',
+                value: 'engfinn'
+            }, {
+                name: 'English only',
+                value: 'english'
+            }],
+            when: function (props) {
+                return props.wordpress;
+            }
         }, {
             name: 'dbName',
             message: 'What is the database name?',
@@ -175,6 +201,7 @@ SiteGenerator.prototype.askFor = function askFor() {
         this.siteName = props.siteName;
         this.cssFramework = props.cssFramework;
         this.wordpress = props.wordpress;
+        this.adminLanguage = props.adminLanguage;
         this.dbName = props.dbName;
         this.dbUsername = props.dbUsername;
         this.dbPassword = props.dbPassword;
@@ -244,23 +271,9 @@ SiteGenerator.prototype.app = function app() {
     this.copy('assets/scss/lib/_normalize.scss', appUrl + '/assets/scss/lib/_normalize.scss');
 
     this.directory('assets/scss/global', appUrl + '/assets/scss/global');
-/*    this.copy('assets/scss/global/_fonts.scss', appUrl + '/assets/scss/global/_fonts.scss');
-    this.copy('assets/scss/global/_variables.scss', appUrl + '/assets/scss/global/_variables.scss');
-    this.copy('assets/scss/global/_functions.scss', appUrl + '/assets/scss/global/_functions.scss');
-    this.copy('assets/scss/global/_mixins.scss', appUrl + '/assets/scss/global/_mixins.scss');
-    this.copy('assets/scss/global/_framework_media.scss', appUrl + '/assets/scss/global/_framework_media.scss');
-    this.copy('assets/scss/global/_framework_nav.scss', appUrl + '/assets/scss/global/_framework_nav.scss');
-*/
+
     this.directory('assets/scss/local', appUrl + '/assets/scss/local');
 
-/*    this.copy('assets/scss/local/_typography.scss', appUrl + '/assets/scss/local/_typography.scss');
-    this.copy('assets/scss/local/_helpers.scss', appUrl + '/assets/scss/local/_helpers.scss');
-    this.copy('assets/scss/local/_images.scss', appUrl + '/assets/scss/local/_images.scss');
-    this.copy('assets/scss/local/_forms.scss', appUrl + '/assets/scss/local/_forms.scss');
-    this.copy('assets/scss/local/_lists.scss', appUrl + '/assets/scss/local/_lists.scss');
-    this.copy('assets/scss/local/_local.scss', appUrl + '/assets/scss/local/_local.scss');
-
-*/
     this.copy('assets/js/script.js', appUrl + '/assets/js/script.js');
     this.copy('assets/js/options.js', appUrl + '/assets/js/options.js');
 
