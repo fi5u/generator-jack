@@ -50,7 +50,7 @@ module.exports = function (grunt) {
         },
 
         concurrent: {
-            replacementsDev: ['processhtml:dev', 'replace:dev'],
+            replacementsDev: ['processhtml:dev', 'replace:dev', 'db_dump:dev'],
             replacementsDist: ['processhtml:dist', 'replace:dist']
         },
 
@@ -172,7 +172,20 @@ module.exports = function (grunt) {
                 ]
             }
         },
-
+        <% if (wordpress === true) { %>
+        db_dump: {
+            dev: {
+                options: {
+                    title: 'Local database',
+                    database: '<%= dbName %>',
+                    user: '<%= dbUsername %>',
+                    pass: '<%= dbPassword %>',
+                    host: '<%= dbHost %>',
+                    backup_to: 'dev_db/<%= grunt.template.today("yyyy-mm-dd") %>_test_site.sql'
+                }
+            }
+        },
+        <% } %>
         imagemin: {
             dist: {
                 files: [{
