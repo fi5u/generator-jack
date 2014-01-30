@@ -21,7 +21,7 @@ class _sOptions
     public function add_contents_settings()
     {
         // This page will be under "Settings"
-        add_options_page(
+        add_theme_page(
             'Special theme settings', // Page title
             'Theme settings', // Menu title
             'manage_options', // Capability
@@ -137,7 +137,8 @@ class _sOptions
      */
     public function print_section_info($e)
     {
-        print __('Set ' . $e['title'] . ' options below:');
+        $section_title = $e['title'];
+        printf( __( 'Set %s options below:', 'test_site' ), $section_title );
     }
 
     /**
