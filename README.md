@@ -16,7 +16,7 @@ Once installed:
 * `grunt build` to build a production version of the site
 * `grunt server` work with a _LiveReloading_ dev version of the site, saves update browser automatically (When working with a _WordPress_ installation, first set up a server host pointed to the `dev` directory, then call `grunt server`), must have _LiveReload_ browser plugin installed.
 
-## General (concerning WP and non-WP projects)
+## General
 
 ### Spriting
 Handles automatic hiDPI spriting. Drop double-size _png_ assets into `app/assets/img/sprite-assets`. Import into scss file with `@include sprite($img1)` where `img1` is the image filename without extension - hiDPI media query automatically generated.
@@ -25,12 +25,15 @@ Handles automatic hiDPI spriting. Drop double-size _png_ assets into `app/assets
 To automatically convert SVGs to PNGs, just place the SVG assets in the `img` directory (or sub-directory), they will be generated during the `grunt build` process. SVG files will be minified.
 
 ### Modernizr
-Modernizr is included automatically. For the `dev` build the development version of Modernizr is used. Simply use whichever Modernizr tests you like (in your CSS or JavaScript) and then for the `build` version a custom build of Modernizr will be included that only contains the tests you need.
+Modernizr is included automatically. For the `dev` build the development version of Modernizr is used. Simply use whichever Modernizr tests you like (in your CSS or JavaScript) and then for the `dist` version a custom build of Modernizr will be included that only contains the tests you need.
+
+### Layout
+Automatically set up with a sticky footer. Simply define the footer height in `assets/scss/global/_variables.scss`.
 
 ### IE8 and Below
 Both _respond.js_ and _selectivizr.js_ are conditionally included for Internet Explorer versions 8 and below.
 
-## WordPress
+## WordPress Projects
 You will be provided with a barebones theme, based on [Underscores Starter Theme](http://underscores.me).
 
 To make any changes to the WordPress config files, edit the files in the `dev` directory. When you `grunt build` the config files from `dev` will be copied over to `build`.

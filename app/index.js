@@ -281,12 +281,10 @@ SiteGenerator.prototype.app = function app() {
         this.directory('assets/js/wordpress', appUrl + '/assets/js');
     }
 
+    this.directory('assets/scss/object', appUrl + '/assets/scss/object');
     if (this.wordpress) {
         this.directory('assets/scss/wordpress', appUrl + '/assets/scss/object');
         this.template('wp-config.php', 'dev/wp-config.php');
-
-    } else {
-        this.directory('assets/scss/object', appUrl + '/assets/scss/object');
     }
 };
 

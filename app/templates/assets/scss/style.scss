@@ -39,12 +39,14 @@ Tags: responsive-layout
 @import "local/_local";
 
 
-/* Object */<% if (wordpress === true) { %>
-@import "object/_wp_spec";
+/* Object */
 @import "object/_header";
-@import "object/_content";
 @import "object/_footer";
 @import "object/_main-page";
+@import "object/_page-header";
+@import "object/_page-footer";<% if (wordpress === true) { %>
+@import "object/_wp_spec";
+@import "object/_content";
 @import "object/_article";
 @import "object/_article--page";
 @import "object/_article--single";
@@ -54,11 +56,7 @@ Tags: responsive-layout
 @import "object/_error404";
 @import "object/_image";
 @import "object/_no-results";
-@import "object/_page-header";
-@import "object/_page-footer";
 @import "object/_search";
 @import "object/_search-form";
-@import "object/_widgets";<% } else { %>
-@import "object/_header";
-@import "object/_footer";
+@import "object/_widgets";
 <% } %>

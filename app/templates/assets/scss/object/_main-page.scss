@@ -1,4 +1,6 @@
 .main-page {
+    min-height: 100%;
+    margin-bottom: -$footer-h;
     <% if (cssFramework !== 'noFramework') { %>
     @include container;
     <% } %>
@@ -9,6 +11,12 @@
     @include transition(all $nav-trans-dur);
     @include transition-timing-function($nav-trans-ease);
     <% } %>
+
+    &:after {
+        content: "";
+        display: block;
+        height: $footer-h;
+    }
 }
 
 .nav-open .main-page {

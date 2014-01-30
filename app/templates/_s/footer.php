@@ -9,12 +9,11 @@
 ?>
 
 	</div><!-- #content -->
-
-	<footer class="footer  page-footer" role="contentinfo">
-
-	</footer>
 </div><!-- .main-page -->
 
+<footer class="footer  page-footer" role="contentinfo">
+
+</footer>
 <?php wp_footer(); ?>
 
 </body>

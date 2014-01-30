@@ -15,6 +15,7 @@ $size-padding-l: $size-padding * 2;
 $size-padding-s: $size-padding / 2;
 
 $offcanvas-nav-w: 70%;
+$footer-h: 200px;
 
 <% if (cssFramework === 'bourbonNeat') { %>/* grid */
 $grid-columns: 12;
