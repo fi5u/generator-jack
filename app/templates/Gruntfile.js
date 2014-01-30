@@ -137,6 +137,7 @@ module.exports = function (grunt) {
                     {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/scss/**', '!.htaccess', '!**/languages/**'], dest: '<%%= yeoman.dev %>'},
                     {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dev %>/assets/css/fonts'},<% if (wordpress === false) { %>
                     {expand: true, cwd: 'bower_components', src: ['**'], dest: '<%%= yeoman.dev %>/assets/bower_components'},<% } else { %>
+                    {expand: true, cwd: '<%%= yeoman.appBase %>', src: ['plugins/**'], dest: '<%%= yeoman.devBase %>/wp-content'},
                     {expand: true, cwd: 'bower_components/modernizr', src: ['modernizr.js'], dest: '<%%= yeoman.dev %>/assets/js/lib'},
                     {expand: true, cwd: 'bower_components/respond/dest', src: ['respond.min.js'], dest: '<%%= yeoman.dev %>/assets/js/lib'},
                     {expand: true, cwd: 'bower_components/selectivizr', src: ['selectivizr.js'], dest: '<%%= yeoman.dev %>/assets/js/lib'},
@@ -470,7 +471,7 @@ module.exports = function (grunt) {
                 tasks: ['spriteHD', 'copy:dev']
             },
             php: {
-                files: ['<%%= yeoman.app %>/{,*/{,*/}}*.php'],
+                files: ['<%%= yeoman.app %>/{,*/{,*/}}*.php', '<%%= yeoman.appBase %>/plugins/{,*/{,*/}}*.php'],
                 tasks: ['dev']
             },
             js: {

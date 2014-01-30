@@ -41,6 +41,10 @@ WordPress will install with the default US English language. However, you will h
 ### Database Backup
 Your local database running your WordPress installation will be backed up to the folder `dev_db` in your project's root. This will occur on every `dev` build. Backups on the same day will overwrite.
 
+
+### Plugins
+Custom plugins should be placed in `app/plugins` directory. They will automatically be copied over to the correct place for the `dev` and `dist` builds.
+
 ## License
 
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)

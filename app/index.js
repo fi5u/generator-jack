@@ -59,7 +59,7 @@ var SiteGenerator = module.exports = function SiteGenerator(args, options, confi
                                         replace({
                                             regex: regex,
                                             replacement: replacement,
-                                            paths: [paths],
+                                            paths: paths,
                                             include: include,
                                             recursive: true,
                                             count: true
@@ -81,15 +81,16 @@ var SiteGenerator = module.exports = function SiteGenerator(args, options, confi
 
                                         var mv = require('mv'),
                                             wpThemeDir = projectDir + '/app/' + siteCamel,
-                                            wpAssetsDir = wpThemeDir + '/assets';
+                                            wpAssetsDir = wpThemeDir + '/assets',
+                                            wpPluginDir = projectDir + '/app/plugins';
 
                                         console.log('Template WordPress theme copied successfully\nBeginning text replacement on theme files');
 
-                                        performReplacement('Text Domain: _s', 'Text Domain: ' + slugSite, wpThemeDir, '*.scss');
-                                        performReplacement("'_s'", "'" + slugSite + "'", wpThemeDir);
-                                        performReplacement('_s_', slugSite + '_', wpThemeDir);
-                                        performReplacement(' _s', ' ' + siteCamel.charAt(0).toUpperCase() + siteCamel.slice(1), wpThemeDir);
-                                        performReplacement('_s-', slugSite + '-', wpThemeDir);
+                                        performReplacement('Text Domain: _s', 'Text Domain: ' + slugSite, [wpThemeDir], '*.scss');
+                                        performReplacement("'_s'", "'" + slugSite + "'", [wpThemeDir, wpPluginDir]);
+                                        performReplacement('_s_', slugSite + '_', [wpThemeDir, wpPluginDir]);
+                                        performReplacement(' _s', ' ' + siteCamel.charAt(0).toUpperCase() + siteCamel.slice(1), [wpThemeDir, wpPluginDir]);
+                                        performReplacement('_s-', slugSite + '-', [wpThemeDir, wpPluginDir]);
 
                                         console.log('Setting the name for the language file');
                                         mv(wpThemeDir + '/languages/_s.pot', wpThemeDir + '/languages/' + slugSite + '.pot', function(err) {
@@ -263,6 +264,7 @@ SiteGenerator.prototype.app = function app() {
         this.copy('assets/scss/wp_style.css', appUrl + '/style.css');
         this.copy('assets/scss/editor-style.scss', appUrl + '/assets/scss/editor-style.scss');
         this.copy('backgroundsize.min.htc', devUrl + '/backgroundsize.min.htc');
+        this.directory('plugins', appUrl + '/../plugins');
     } else {
         this.copy('backgroundsize.min.htc', appUrl + '/backgroundsize.min.htc');
     }
@@ -278,7 +280,6 @@ SiteGenerator.prototype.app = function app() {
     if (this.wordpress) {
         this.directory('assets/js/wordpress', appUrl + '/assets/js');
     }
-
 
     if (this.wordpress) {
         this.directory('assets/scss/wordpress', appUrl + '/assets/scss/object');
