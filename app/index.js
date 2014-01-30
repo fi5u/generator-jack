@@ -250,7 +250,6 @@ SiteGenerator.prototype.app = function app() {
     this.directory('assets/img', appUrl + '/assets/img');
 
     this.template('Gruntfile.js', 'Gruntfile.js');
-    this.template('index.html', appUrl + '/index.html');
 
     this.template('_bower.json', 'bower.json');
     this.template('_config.json', 'config.json');
@@ -267,6 +266,7 @@ SiteGenerator.prototype.app = function app() {
         this.directory('plugins', appUrl + '/../plugins');
     } else {
         this.copy('backgroundsize.min.htc', appUrl + '/backgroundsize.min.htc');
+        this.template('index.html', appUrl + '/index.html');
     }
     this.copy('assets/scss/lteie8.scss', appUrl + '/assets/scss/lteie8.scss');
 
