@@ -12,6 +12,7 @@ get_header(); ?>
 
 		<section class="error-404">
 			<header class="header  error-404__header">
+                <?php //TRANSLATORS: &rsquo; represents an apostrophe ?>
 				<h2 class="header__title  error-404__header__title"><?php _e( 'Oops! That page can&rsquo;t be found.', '_s' ); ?></h2>
 			</header>
 
