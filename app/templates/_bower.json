@@ -9,7 +9,7 @@
         ,"selectivizr": "latest"
         ,"respond": "latest"
         ,"modernizr": "latest"<% if (cssFramework == 'compassSusy') { %>
-        ,"susy": "latest"<% } %><% if (cssFramework == 'bourbonNeat') { %>
+        ,"susy": "1.0.5"<% } %><% if (cssFramework == 'bourbonNeat') { %>
         ,"bourbon": "latest"
         ,"neat": "latest"<% } %><% if (wordpress == true) { %>
         <% } %>

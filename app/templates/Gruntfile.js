@@ -254,9 +254,15 @@ module.exports = function (grunt) {
                         jqMigrate: 'assets/bower_components/jquery-migrate/jquery-migrate.js'
                     }
                 },
-                files: {
-                    '<%%= yeoman.dev %>/index.html': ['<%%= yeoman.dev %>/index.html']
-                }
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%%= yeoman.dev %>/',
+                        src: ['**/*.html'],
+                        dest: '<%%= yeoman.dev %>/',
+                        ext: '.html'
+                    },
+                ]
             },
             dist: {
                 options: {
@@ -266,9 +272,15 @@ module.exports = function (grunt) {
                         jqMigrate: 'assets/js/lib/jquery-migrate.min.js'
                     }
                 },
-                files: {
-                    '<%%= yeoman.dist %>/index.html': ['<%%= yeoman.dist %>/index.html']
-                }
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%%= yeoman.dist %>/',
+                        src: ['**/*.html'],
+                        dest: '<%%= yeoman.dist %>/',
+                        ext: '.html'
+                    },
+                ]
             }
         },
 
@@ -351,7 +363,13 @@ module.exports = function (grunt) {
 
             dev: {
                 files: [
-                    {src: ['dev/index.html'], dest: 'dev/index.html'}
+                    {
+                        expand: true,
+                        cwd: '<%%= yeoman.dev %>/',
+                        src: ['**/*.html'],
+                        dest: '<%%= yeoman.dev %>/',
+                        ext: '.html'
+                    },
                 ]
             },
 
