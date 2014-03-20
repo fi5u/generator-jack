@@ -336,14 +336,14 @@ module.exports = function (grunt) {
                     match: '/@jquery-cdn/g',
                     replacement: function () {
                         var jQConf = grunt.file.readJSON('bower_components/jquery/bower.json');
-                        return '//ajax.googleapis.com/ajax/libs/jquery/' + jQConf.version + '/jquery.min.js';
+                        return 'http://ajax.googleapis.com/ajax/libs/jquery/' + jQConf.version + '/jquery.min.js';
                     },
                     expression: true
                 }, {
                     match: '/@jquery-legacy-cdn/g',
                     replacement: function () {
                         var jQLegConf = grunt.file.readJSON('bower_components/jquery-legacy/bower.json');
-                        return '//ajax.googleapis.com/ajax/libs/jquery/' + jQLegConf.version + '/jquery.min.js';
+                        return 'http://ajax.googleapis.com/ajax/libs/jquery/' + jQLegConf.version + '/jquery.min.js';
                     },
                     expression: true
                 }]
