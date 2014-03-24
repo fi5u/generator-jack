@@ -1,10 +1,16 @@
 {
   "name": "generator-jack",
-  "version": "0.5.3",
+  "version": "0.6.0",
   "description": "A multifunction generator for Yeoman",
   "keywords": [
     "yeoman-generator",
-    "jack"
+    "jack",
+    "responsive",
+    "jekyll",
+    "wordpress",
+    "static",
+    "sass",
+    "compass"
   ],
   "homepage": "https://github.com/fi5u/generator-jack",
   "bugs": "https://github.com/fi5u/generator-jack/issues",

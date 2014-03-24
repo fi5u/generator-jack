@@ -2,7 +2,7 @@
 
 A multifunctional [Yeoman](http://yeoman.io) generator.
 
-Option to setup _WordPress_ installation with a barebones theme, or without a CMS.
+Option to setup _WordPress_ installation with a barebones theme, or without a CMS. Non-CMS route includes option to use Jekyll static site templating.
 
 With options for working with _Compass_ / _Susy_, _Bourbon_ / _Neat_, or with no framework. CSS preprocessing is handled with SASS.
 
@@ -32,6 +32,9 @@ Automatically set up with a sticky footer. Simply define the footer height in `a
 
 ### IE8 and Below
 Both _respond.js_ and _selectivizr.js_ are conditionally included for Internet Explorer versions 8 and below.
+
+## Jekyll
+Your app directory will contain `_data`, `_includes` and `_layouts` directories. Upon `grunt-dev` or `grunt-build` your compiled static pages will be in `/dev` or `/build` respectively.
 
 ## WordPress Projects
 You will be provided with a barebones theme, based on [Underscores Starter Theme](http://underscores.me).

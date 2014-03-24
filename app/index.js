@@ -165,21 +165,21 @@ SiteGenerator.prototype.askFor = function askFor() {
             message: 'What is the password for the database',
             default: 'root',
             when: function (props) {
-              return props.wordpress;
+                return props.wordpress;
             }
         }, {
             name: 'dbHost',
             message: 'What is the host for the database',
             default: 'localhost',
             when: function (props) {
-              return props.wordpress;
+                return props.wordpress;
             }
         }, {
             name: 'dbTablePrefix',
             message: 'What is the table prefix',
             default: 'wp_',
             when: function (props) {
-              return props.wordpress;
+                return props.wordpress;
             }
         }, {
             type: 'list',
@@ -195,6 +195,14 @@ SiteGenerator.prototype.askFor = function askFor() {
                 name: 'No framework',
                 value: 'noFramework'
             }]
+        }, {
+            type: 'confirm',
+            name: 'jekyll',
+            message: 'Do you want to use Jekyll templating?',
+            default: true,
+            when: function (props) {
+                return !props.wordpress;
+            }
         }
     ];
 
@@ -208,6 +216,7 @@ SiteGenerator.prototype.askFor = function askFor() {
         this.dbPassword = props.dbPassword;
         this.dbHost = props.dbHost;
         this.dbTablePrefix = props.dbTablePrefix;
+        this.jekyll = props.jekyll;
 
         cb();
     }.bind(this));
@@ -215,12 +224,12 @@ SiteGenerator.prototype.askFor = function askFor() {
 
 SiteGenerator.prototype.app = function app() {
     function randomString() {
-        var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz@*{}[]()<>#,.;:+=-_%`~!?|";
-        var string_length = 64;
+        var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz@*{}[]()<>#,.;:+=-_%`~!?|';
+        var stringLength = 64;
         var randomstring = '';
-        for (var i=0; i<string_length; i++) {
+        for (var i = 0; i < stringLength; i++) {
             var rnum = Math.floor(Math.random() * chars.length);
-            randomstring += chars.substring(rnum,rnum+1);
+            randomstring += chars.substring(rnum, rnum + 1);
         }
         return randomstring;
     }
@@ -265,8 +274,16 @@ SiteGenerator.prototype.app = function app() {
         this.copy('backgroundsize.min.htc', devUrl + '/backgroundsize.min.htc');
         this.directory('plugins', appUrl + '/../plugins');
     } else {
+        if (this.jekyll) {
+            this.mkdir(appUrl + '/_data');
+            this.mkdir(appUrl + '/_includes');
+            this.mkdir(appUrl + '/_layouts');
+
+            this.directory('jekyll', appUrl + '/');
+        } else {
+            this.template('index.html', appUrl + '/index.html');
+        }
         this.copy('backgroundsize.min.htc', appUrl + '/backgroundsize.min.htc');
-        this.template('index.html', appUrl + '/index.html');
     }
     this.copy('assets/scss/lteie8.scss', appUrl + '/assets/scss/lteie8.scss');
 

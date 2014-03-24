@@ -32,7 +32,8 @@ module.exports = function (grunt) {
                     src: [
                         '.tmp',
                         '<%%= yeoman.dev %>/*',
-                        '!<%%= yeoman.dev %>/.git*'
+                        '!<%%= yeoman.dev %>/.git*',
+                        'tempAssets'
                     ]
                 }]
             },
@@ -43,15 +44,34 @@ module.exports = function (grunt) {
                     src: [
                         '.tmp',
                         '<%%= yeoman.distBase %>/*',
-                        '!<%%= yeoman.dist %>/.git*'
+                        '!<%%= yeoman.dist %>/.git*',
+                        'tempAssets'
                     ]
                 }]
-            }
+            }<% if (jekyll === true) { %>,
+
+            jekylldev: {
+                files: [{
+                    dot: true,
+                    src: [
+                        '<%%= yeoman.dev %>/assets/scss'
+                    ]
+                }]
+            },
+
+            jekylldist: {
+                files: [{
+                    dot: true,
+                    src: [
+                        '<%%= yeoman.dist %>/assets/scss'
+                    ]
+                }]
+            }<% } %>
         },
 
         concurrent: {
-            replacementsDev: ['processhtml:dev', 'replace:dev'<% if (wordpress === true) { %> , 'db_dump:dev', 'pot'<% } %>],
-            replacementsDist: ['processhtml:dist', 'replace:dist']
+            replacementsDev: ['processhtml:dev', 'replace:dev'<% if (wordpress === true) { %> , 'db_dump:dev', 'pot'<% } %><% if (jekyll === true) { %>, 'clean:jekylldev'<% } %>],
+            replacementsDist: ['processhtml:dist', 'replace:dist'<% if (jekyll === true) { %>, 'clean:jekylldist'<% } %>]
         },
 
         connect: {
@@ -75,7 +95,7 @@ module.exports = function (grunt) {
             dev: {
                 options: {
                     multiple: [
-                        <% if (wordpress === true) { %> {
+                        <% if (wordpress === true) { %>{
                             sassDir: '<%%= yeoman.app %>/assets/scss',
                             sassFiles: ['<%%= yeoman.app %>/assets/scss/style.scss'],
                             cssDir: '<%%= yeoman.dev %>'
@@ -95,7 +115,7 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     multiple: [
-                        <% if (wordpress === true) { %> {
+                        <% if (wordpress === true) { %>{
                             sassDir: '<%%= yeoman.app %>/assets/scss',
                             sassFiles: ['<%%= yeoman.app %>/assets/scss/style.scss'],
                             cssDir: '<%%= yeoman.dist %>'
@@ -103,10 +123,10 @@ module.exports = function (grunt) {
                             sassDir: '<%%= yeoman.app %>/assets/scss',
                             sassFiles: ['<%%= yeoman.app %>/assets/scss/editor-style.scss', '<%%= yeoman.app %>/assets/scss/lteie8.scss'],
                             cssDir: '<%%= yeoman.dist %>/assets/css'
-                        }<% } else { %> {
+                        }<% } else { %>{
                             sassDir: '<%%= yeoman.app %>/assets/scss',
                             cssDir: '<%%= yeoman.dist %>/assets/css'
-                        } <% } %>
+                        }<% } %>
                     ],
                     environment: 'production'
                 }
@@ -134,6 +154,9 @@ module.exports = function (grunt) {
         copy: {
             dev: {
                 files: [
+                    <% if (jekyll === true) { %>
+                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['assets/**', '!**/scss/', '!.htaccess', '!**/languages/**'], dest: '<%%= yeoman.dev %>'},
+                    {expand: true, cwd: 'bower_components', src: ['**'], dest: '<%%= yeoman.dev %>/assets/bower_components'},<% } else { %>
                     {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/*.psd', '!**/*.ai', '!**/scss/**', '!.htaccess', '!**/languages/**'], dest: '<%%= yeoman.dev %>'},
                     {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dev %>/assets/css/fonts'},<% if (wordpress === false) { %>
                     {expand: true, cwd: 'bower_components', src: ['**'], dest: '<%%= yeoman.dev %>/assets/bower_components'},<% } else { %>
@@ -144,15 +167,17 @@ module.exports = function (grunt) {
                     {expand: true, cwd: '<%%= yeoman.app %>/languages', src: ['_s.pot'], dest: '<%%= yeoman.dev %>/languages', rename: function (dest) {
                             return dest + '/<%= slugSiteName %>.pot';
                     }}<% } %>
+                    <% } %>
                 ]
             },
 
             dist: {
                 files: [<% if (wordpress === true) { %>
-                    {expand: true, cwd: '<%%= yeoman.devBase %>', src: ['**', '!**/bower_components/**'], dest: '<%%= yeoman.distBase %>'},<% } else { %>
-                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/*.psd', '!**/*.ai', '!**/img/sprite-assets/**', '!**/scss/**', '!**/js/*.js', '!**/languages/**'], dest: '<%%= yeoman.dist %>'},<% } %>
+                    {expand: true, cwd: '<%%= yeoman.devBase %>', src: ['**', '!**/bower_components/**'], dest: '<%%= yeoman.distBase %>'},<% } else { %><% if (jekyll === false) { %>
+                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/*.psd', '!**/*.ai', '!**/img/sprite-assets/**', '!**/scss/**', '!**/js/*.js', '!**/languages/**'], dest: '<%%= yeoman.dist %>'},<% } %><% } %>
                     {expand: true, cwd: '<%%= yeoman.app %>', src: ['.htaccess'], dest: '<%%= yeoman.distBase %>'},
-                    {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dist %>/assets/css/fonts'},<% if (wordpress === false) { %>
+                    {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dist %>/assets/css/fonts'},<% if (wordpress === false) { %><% if (jekyll === true) { %>
+                    {expand: true, cwd: '<%%= yeoman.app %>', src: ['assets/**', '!assets/scss/', '!.htaccess', '!**/languages/**'], dest: '<%%= yeoman.dist %>'},<% } %>
                     {expand: true, cwd: 'bower_components/jquery', src: ['jquery.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'},
                     {expand: true, cwd: 'bower_components/jquery-legacy', src: ['jquery.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib', rename: function (dest) {
                         return dest + '/jquery-legacy.min.js';
@@ -197,7 +222,25 @@ module.exports = function (grunt) {
                 }]
             }
         },
+        <% if (jekyll === true) { %>
+        jekyll: {
+            options: {
+                src : '<%%= yeoman.app %>'
+            },
 
+            dev: {
+                options: {
+                    dest: '<%%= yeoman.dev %>'
+                }
+            },
+
+            dist: {
+                options: {
+                    dest: '<%%= yeoman.dist %>'
+                }
+            }
+        },
+        <% } %>
         modernizr: {
             devFile: 'bower_components/modernizr/modernizr.js',
             outputFile: '<%%= yeoman.dist %>/assets/js/lib/modernizr.js',
@@ -375,7 +418,13 @@ module.exports = function (grunt) {
 
             dist: {
                 files: [
-                    {src: ['dist/index.html'], dest: 'dist/index.html'}
+                    {
+                        expand: true,
+                        cwd: '<%%= yeoman.dist %>/',
+                        src: ['**/*.html'],
+                        dest: '<%%= yeoman.dist %>/',
+                        ext: '.html'
+                    },
                 ]
             }
             <% } %>
@@ -463,8 +512,9 @@ module.exports = function (grunt) {
         useminPrepare: {
             options: {
                 dest: '<%%= yeoman.dist %>'
-            },
-            html: '<%%= yeoman.app %>/index.html',
+            },<% if (jekyll === true) { %>
+            html: '<%%= yeoman.dist %>/*.html',<% } else { %>
+            html: '<%%= yeoman.app %>/index.html',<% } %>
             css: '<%%= yeoman.app %>/assets/scss/**/*.scss'
         },
 
@@ -482,12 +532,14 @@ module.exports = function (grunt) {
                 <% } %>
             },
             html: {
-                files: ['<%%= yeoman.app %>/{,*/}*.html'],
-                tasks: ['copy:html', 'replace', 'processhtml:dev']
+                files: ['<%%= yeoman.app %>/{,*/}*.html'],<% if (jekyll === true) { %>
+                tasks: ['jekyll:dev', 'copy:dev', 'compassMultiple:dev', 'concurrent:replacementsDev']<% } else { %>
+                tasks: ['copy:html', 'replace', 'processhtml:dev']<% } %>
             },
             sprites: {
-                files: ['<%%= yeoman.app %>/assets/img/sprite-assets/*.png'],
-                tasks: ['spriteHD', 'copy:dev']
+                files: ['<%%= yeoman.app %>/assets/img/sprite-assets/*.png'],<% if (jekyll === true) { %>
+                tasks: ['dev']<% } else { %>
+                tasks: ['spriteHD', 'copy:dev']<% } %>
             },
             php: {
                 files: ['<%%= yeoman.app %>/{,*/{,*/}}*.php', '<%%= yeoman.appBase %>/plugins/{,*/{,*/}}*.php'],
@@ -500,7 +552,12 @@ module.exports = function (grunt) {
             img: {
                 files: ['<%%= yeoman.app %>/assets/img/**'],
                 tasks: ['dev']
+            }<% if (jekyll === true) { %>,
+            yml: {
+                files: ['<%%= yeoman.app %>/{,*/}*.yml'],
+                tasks: ['jekyll:dev', 'copy:dev', 'compassMultiple:dev', 'concurrent:replacementsDev']
             }
+            <% } %>
         }
     });
 
@@ -511,7 +568,8 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('dev', [
-        'clean:dev',
+        'clean:dev',<% if (jekyll === true) { %>
+        'jekyll:dev',<% } %>
         'spriteHD',
         'copy:dev',<% if (cssFramework === 'compassSusy') { %>
         'compassMultiple:dev',<% } else { %>
@@ -535,7 +593,8 @@ module.exports = function (grunt) {
 
         <% } else { %>
 
-        'clean:dist',
+        'clean:dist',<% if (jekyll === true) { %>
+        'jekyll:dist',<% } %>
         'spriteHD',<% if (cssFramework === 'compassSusy') { %>
         'compassMultiple:dist',<% } else { %>
         'sass:dist',<% } %>
@@ -548,7 +607,7 @@ module.exports = function (grunt) {
         'imagemin:dist',
         'svg2png',
         'modernizr',
-        'concurrent:replacementsDev',
+        'concurrent:replacementsDist',
         'usemin'
         <% } %>
     ]);

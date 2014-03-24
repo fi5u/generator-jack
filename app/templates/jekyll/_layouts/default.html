@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title><%= siteName %></title>
+    <title>{{ page.title }}</title>
 
     <meta name="description" content="">
     <meta name="author" content="">
@@ -36,26 +36,14 @@
 </head>
 <body>
     <div class="main-page">
-        <header class="header  page-header">
-            <button class="page-header__nav-trigger" id="nav-trigger">Navigation</button>
+        {% include header.html %}
 
-            <nav class="nav  header__nav  page-header__nav">
-                <ul class="header__nav__group  page-header__nav__group">
-                    <li class="header__nav__item  page-header__nav__item">
-                        <a href="/" class="header__nav__item__link  page-header__nav__item__link">Home</a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
-
-        <main class="main" role="main">
-
+        <main class="{{ page.main-class }}" role="main">
+            {{ content }}
         </main>
     </div>
 
-    <footer class="footer page-footer">
-
-    </footer>
+    {% include footer.html %}
 
     <!--[if gte IE 9]><!-->
         <script src="@jquery-cdn"></script>
