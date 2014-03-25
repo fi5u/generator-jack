@@ -156,7 +156,8 @@ module.exports = function (grunt) {
                 files: [
                     <% if (jekyll === true) { %>
                     {expand: true, cwd: '<%%= yeoman.app %>', src: ['assets/**', '!**/scss/', '!.htaccess', '!**/languages/**'], dest: '<%%= yeoman.dev %>'},
-                    {expand: true, cwd: 'bower_components', src: ['**'], dest: '<%%= yeoman.dev %>/assets/bower_components'},<% } else { %>
+                    {expand: true, cwd: 'bower_components', src: ['**'], dest: '<%%= yeoman.dev %>/assets/bower_components'},
+                    {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dev %>/assets/css/fonts'},<% } else { %>
                     {expand: true, cwd: '<%%= yeoman.app %>', src: ['**', '!**/*.psd', '!**/*.ai', '!**/scss/**', '!.htaccess', '!**/languages/**'], dest: '<%%= yeoman.dev %>'},
                     {expand: true, cwd: '<%%= yeoman.app %>/assets/scss/fonts', src: ['**'], dest: '<%%= yeoman.dev %>/assets/css/fonts'},<% if (wordpress === false) { %>
                     {expand: true, cwd: 'bower_components', src: ['**'], dest: '<%%= yeoman.dev %>/assets/bower_components'},<% } else { %>
