@@ -13,7 +13,7 @@ get_header(); ?>
 		<section class="error-404">
 			<header class="header  error-404__header">
                 <?php //TRANSLATORS: &rsquo; represents an apostrophe ?>
-				<h2 class="header__title  error-404__header__title"><?php _e( 'Oops! That page can&rsquo;t be found.', '_s' ); ?></h2>
+				<h2 class="header__title  error-404__header-title"><?php _e( 'Oops! That page can&rsquo;t be found.', '_s' ); ?></h2>
 			</header>
 
 			<div class="content  error-404__content">
@@ -25,7 +25,7 @@ get_header(); ?>
 
 				<?php if ( _s_categorized_blog() ) : // Only show the widget if site has multiple categories. ?>
 				<div class="widgets__widget  widgets__widget--categories">
-					<h2 class="widgets__widget__title  widgets__widget--categories__title"><?php _e( 'Most Used Categories', '_s' ); ?></h2>
+					<h2 class="widgets__widget-title  widgets__widget--categories__title"><?php _e( 'Most Used Categories', '_s' ); ?></h2>
 					<ul>
 					<?php
 						wp_list_categories( array(

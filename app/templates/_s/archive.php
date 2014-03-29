@@ -15,7 +15,7 @@ get_header(); ?>
 	<?php if ( have_posts() ) : ?>
 
 		<header class="header  archive__header">
-			<h1 class="header__title  archive__header__title">
+			<h1 class="header__title  archive__header-title">
 				<?php
 					if ( is_category() ) :
 						single_cat_title();
@@ -28,7 +28,7 @@ get_header(); ?>
 						 * what author we're dealing with (if that is the case).
 						*/
 						the_post();
-						printf( __( 'Author: %s', '_s' ), '<span class="archive__header__title__vcard">' . get_the_author() . '</span>' );
+						printf( __( 'Author: %s', '_s' ), '<span class="archive__header-title-vcard">' . get_the_author() . '</span>' );
 						/* Since we called the_post() above, we need to
 						 * rewind the loop back to the beginning that way
 						 * we can run the loop properly, in full.
@@ -69,7 +69,7 @@ get_header(); ?>
 				// Show an optional term description.
 				$term_description = term_description();
 				if ( ! empty( $term_description ) ) :
-					printf( '<div class="archive__header__taxonomy-description">%s</div>', $term_description );
+					printf( '<div class="archive__header-taxonomy-description">%s</div>', $term_description );
 				endif;
 			?>
 		</header>

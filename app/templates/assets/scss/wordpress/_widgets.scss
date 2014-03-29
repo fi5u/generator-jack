@@ -6,7 +6,7 @@
 
     }
 
-        .widgets__widget__title {
+        .widgets__widget-title {
 
         }
 
@@ -18,7 +18,7 @@
         @extend .widgets__widget !optional;
     }
 
-        .widgets__widget--archives__title {
+        .widgets__widget-title--archives {
 
         }
 
@@ -26,6 +26,6 @@
         @extend .widgets__widget !optional;
     }
 
-        .widgets__widget--meta__title {
+        .widgets__widget-title--meta {
 
         }

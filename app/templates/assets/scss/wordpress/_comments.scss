@@ -10,48 +10,48 @@
 
     }
 
-        %comments__nav__dir {
+        %comments__nav-dir {
 
         }
 
-        .comments__nav__dir--prev {
-            @extend %comments__nav__dir !optional;
+        .comments__nav-dir--prev {
+            @extend %comments__nav-dir !optional;
         }
 
-        .comments__nav__dir--next {
-            @extend %comments__nav__dir !optional;
+        .comments__nav-dir--next {
+            @extend %comments__nav-dir !optional;
         }
 
     .comments__nav--above {
         @extend %comments__nav !optional;
     }
 
-        %comments__nav--above__dir {
+        %comments__nav-dir--above {
 
         }
 
-        .comments__nav--above__dir--prev {
-            @extend %comments__nav--above__dir !optional;
+        .comments__nav-dir--above--prev {
+            @extend %comments__nav-dir--above !optional;
         }
 
-        .comments__nav--above__dir--next {
-            @extend %comments__nav--above__dir !optional;
+        .comments__nav-dir--above--next {
+            @extend %comments__nav-dir--above !optional;
         }
 
     .comments__nav--below {
         @extend %comments__nav !optional;
     }
 
-        %comments__nav--below__dir {
+        %comments__nav-dir--below {
 
         }
 
-        .comments__nav--below__dir--prev {
-            @extend %comments__nav--below__dir !optional;
+        .comments__nav-dir--below--prev {
+            @extend %comments__nav-dir--below !optional;
         }
 
-        .comments__nav--below__dir--next {
-            @extend %comments__nav--below__dir !optional;
+        .comments__nav-dir--below--next {
+            @extend %comments__nav-dir--below !optional;
         }
 
     .comments__list {

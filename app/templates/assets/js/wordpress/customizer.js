@@ -14,24 +14,24 @@
 	// Site title and description.
 	wp.customize( 'blogname', function( value ) {
 		value.bind( function( to ) {
-			$( '.page-header__branding__title a' ).text( to );
+			$( '.page-header__branding-title a' ).text( to );
 		} );
 	} );
 	wp.customize( 'blogdescription', function( value ) {
 		value.bind( function( to ) {
-			$( '.page-header__branding__description' ).text( to );
+			$( '.page-header__branding-description' ).text( to );
 		} );
 	} );
 	// Header text color.
 	wp.customize( 'header_textcolor', function( value ) {
 		value.bind( function( to ) {
 			if ( 'blank' === to ) {
-				$( '.page-header__branding__title, .page-header__branding__description' ).css( {
+				$( '.page-header__branding-title, .page-header__branding-description' ).css( {
 					'clip': 'rect(1px, 1px, 1px, 1px)',
 					'position': 'absolute'
 				} );
 			} else {
-				$( '.page-header__branding__title, .page-header__branding__description' ).css( {
+				$( '.page-header__branding-title, .page-header__branding-description' ).css( {
 					'clip': 'auto',
 					'color': to,
 					'position': 'relative'

@@ -2,66 +2,66 @@
 
 }
 
-    .article--image__header {
+    .article__header--image {
 
     }
 
-        .article--image__header__title {
+        .article__header-title--image {
 
         }
 
-        .article--image__header__meta {
+        .article__header-meta--image {
 
         }
 
-            .article--image__header__meta__date {
+            .article__header-meta-date--image {
 
             }
 
-            .article--image__header__meta__edit-link {
+            .article__header-meta-edit-link--image {
 
             }
 
-        .article--image__header__nav {
+        .article__header-nav--image {
 
         }
 
-            %article--image__header__nav__dir {
+            %article__header-nav-dir--image {
 
             }
 
-            .article--image__header__nav__dir--prev {
-                @extend %article--image__header__nav__dir !optional;
+            .article__header-nav-dir--prev--image {
+                @extend %article__header-nav-dir--image !optional;
             }
 
-            .article--image__header__nav__dir--next {
-                @extend %article--image__header__nav__dir !optional;
+            .article__header-nav-dir--next--image {
+                @extend %article__header-nav-dir--image !optional;
             }
 
-    .article--image__content {
+    .article__content--image {
 
     }
 
-        .article--image__content__attachment {
+        .article__content-attachment--image {
 
         }
 
-            .article--image__content__attachment__img {
+            .article__content-attachment-img--image {
 
             }
 
-            .article--image__content__attachment__caption {
+            .article__content-attachment-caption--image {
 
             }
 
-        .article--image__content__links {
+        .article__content-links--image {
 
         }
 
-    .article--image__footer {
+    .article__footer--image {
 
     }
 
-        .article--image__footer__edit-link {
+        .article__footer-edit-link--image {
 
         }
