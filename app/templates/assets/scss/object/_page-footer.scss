@@ -2,3 +2,7 @@
     position: relative;
     height: $footer-h;
 }
+
+    .page-footer__wrap {
+        @include container;
+    }

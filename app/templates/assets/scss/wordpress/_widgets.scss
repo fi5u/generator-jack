@@ -1,9 +1,22 @@
 .widgets {
+    @include span-columns(12, 12);
+}
 
+.with-sidebar + .widgets {
+    @include span-columns(12, 12);
+
+    @include at-breakpoint($break-m) {
+        @include span-columns(3 omega, 12);
+    }
 }
 
     .widgets__widget {
 
+    }
+
+    .page-footer .widgets__widget {
+        display: inline-block;
+        margin-right: $gutter-width;
     }
 
         .widgets__widget-title {

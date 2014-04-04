@@ -5,9 +5,12 @@
  * @package _s
  */
 
+$layout = get_post_meta($post->ID, '_s_layout', true);
+$classes = !empty($layout) && $layout === 'sidebar' ? 'main  with-sidebar' : 'main';
+
 get_header(); ?>
 
-	<main class="main" role="main">
+	<main class="<?php echo $classes; ?>" role="main">
 
 	<?php while ( have_posts() ) : the_post(); ?>
 
@@ -25,5 +28,8 @@ get_header(); ?>
 
 	</main>
 
-<?php get_sidebar(); ?>
+    <?php if(empty($layout) || $layout !== 'full') : ?>
+        <?php get_sidebar(); ?>
+    <?php endif; ?>
+
 <?php get_footer(); ?>

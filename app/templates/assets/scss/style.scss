@@ -41,6 +41,7 @@ Tags: responsive-layout
 
 /* Object */
 @import "object/_main-page";
+@import "object/_main";
 @import "object/_page-header";
 @import "object/_page-footer";<% if (wordpress === true) { %>
 @import "object/_wp_spec";

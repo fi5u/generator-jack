@@ -223,14 +223,15 @@ if ( ! isset( $content_width ) ) $content_width = 1170;
 /**
  * Custom meta box class
  * https://github.com/bainternet/My-Meta-Box/blob/master/class-usage-demo.php
+ * https://github.com/bainternet/My-Meta-Box/wiki
  */
-/*require_once("inc/meta-box-class/my-meta-box-class.php");
+require_once("inc/meta-box-class/my-meta-box-class.php");
 
 if (is_admin()) {
     $prefix = '_s_';
-    $config = array(
-        'id'             => 'demo_meta_box',          // meta box id, unique per meta box
-        'title'          => 'Simple Meta Box fields',          // meta box title
+    $layout_config = array(
+        'id'             => '_s_layout_meta_box',          // meta box id, unique per meta box
+        'title'          => 'Layout',          // meta box title
         'pages'          => array('post', 'page'),      // post types, accept custom post types as well, default is array('post'); optional
         'context'        => 'normal',            // where the meta box appear: normal (default), advanced, side; optional
         'priority'       => 'high',            // order of meta box: high (default), low; optional
@@ -238,8 +239,9 @@ if (is_admin()) {
         'local_images'   => false,          // Use local or hosted images (meta box images for add/remove)
         'use_with_theme' => false          //change path if used with theme set to true, false for a plugin or anything else for a custom path(default false).
         );
-    $my_meta =  new AT_Meta_Box($config);
-}*/
+    $layout_meta =  new AT_Meta_Box($layout_config);
+    $layout_meta->addSelect($prefix.'layout',array('sidebar'=>'With Sidebar','full'=>'Full Width'),array('name'=> 'Choose layout style', 'std'=> array('sidebar')));
+}
 
 
 /*=============================================================
@@ -353,9 +355,18 @@ function _s_widgets_init() {
 		'id'            => 'sidebar-1',
 		'before_widget' => '<aside id="%1$s" class="widgets__widget  widgets__widget--%2$s">',
 		'after_widget'  => '</aside>',
-		'before_title'  => '<h1 class="widgets__widget-title">',
-		'after_title'   => '</h1>',
+		'before_title'  => '<h2 class="widgets__widget-title">',
+		'after_title'   => '</h2>',
 	) );
+
+    register_sidebar( array(
+        'name'          => __( 'Footer', '_s' ),
+        'id'            => 'sidebar-footer',
+        'before_widget' => '<aside id="%1$s" class="widgets__widget  widgets__widget--%2$s">',
+        'after_widget'  => '</aside>',
+        'before_title'  => '<h2 class="widgets__widget-title">',
+        'after_title'   => '</h2>',
+    ) );
 }
 add_action( 'widgets_init', '_s_widgets_init' );
 endif; // _s_widgets_init
