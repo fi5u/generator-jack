@@ -28,7 +28,8 @@
         "grunt-php": "0.3.0",<% if (wordpress === true) { %>
         "grunt-pot": "0.1.1",<% } %>
         "grunt-processhtml": "0.2.7",
-        "grunt-replace": "0.5.1",
+        "grunt-replace": "0.5.1",<% if (wordpress === true) { %>
+        "grunt-r2": "0.1.1",<% } %>
         "grunt-rev": "0.1.0",
         "grunt-svg2png": "0.2.1",
         "grunt-svgmin": "0.2.0",

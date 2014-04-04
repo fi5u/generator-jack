@@ -70,8 +70,8 @@ module.exports = function (grunt) {
         },
 
         concurrent: {
-            replacementsDev: ['processhtml:dev', 'replace:dev'<% if (wordpress === true) { %> , 'db_dump:dev', 'pot'<% } %><% if (jekyll === true) { %>, 'clean:jekylldev'<% } %>],
-            replacementsDist: ['processhtml:dist', 'replace:dist'<% if (jekyll === true) { %>, 'clean:jekylldist'<% } %>]
+            replacementsDev: ['processhtml:dev', 'replace:dev'<% if (wordpress === true) { %>, 'db_dump:dev', 'pot'<% } %><% if (jekyll === true) { %>, 'clean:jekylldev'<% } %>],
+            replacementsDist: [<% if (wordpress !== true) { %>'processhtml:dist', <% } %>'replace:dist',<% if (wordpress === true) { %>'r2',<% } %><% if (jekyll === true) { %> 'clean:jekylldist'<% } %>]
         },
 
         connect: {
@@ -184,7 +184,7 @@ module.exports = function (grunt) {
                         return dest + '/jquery-legacy.min.js';
                     }},
                     // Only copy over the minified migrate plugin
-                    {expand: true, cwd: 'bower_components/jquery-migrate', src: ['jquery-migrate.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'}<% } else { %>,
+                    {expand: true, cwd: 'bower_components/jquery-migrate', src: ['jquery-migrate.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'},<% } else { %>
                     {expand: true, cwd: 'bower_components/respond/dest', src: ['respond.min.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'},
                     {expand: true, cwd: 'bower_components/selectivizr', src: ['selectivizr.js'], dest: '<%%= yeoman.dist %>/assets/js/lib'},
                     {expand: true, cwd: '<%%= yeoman.app %>/languages', src: ['_s.pot'], dest: '<%%= yeoman.dist %>/languages', rename: function (dest) {
@@ -327,7 +327,17 @@ module.exports = function (grunt) {
                 ]
             }
         },
-
+        <% if (wordpress === true) { %>
+        r2: {
+            dist: {
+                options: {
+                },
+                files: {
+                    '<%%= yeoman.dist %>/rtl.css': ['<%%= yeoman.dist %>/style.css']
+                }
+            }
+        },
+        <% } %>
         replace: {
             <% if (wordpress === true) { %>
             options: {
@@ -590,7 +600,7 @@ module.exports = function (grunt) {
         'imagemin:dist',
         'svg2png',
         'modernizr',
-        'replace:dist'
+        'concurrent:replacementsDist',
 
         <% } else { %>
 
